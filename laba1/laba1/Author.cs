@@ -23,6 +23,17 @@ namespace laba1
             this._bookList = new List<Book>();
         }
         public void AddBook(Book book) => this._bookList.Add(book);
+        public override string ToString()
+        {
+            string str = $"{_firstName} {_lastName} | Books: ";
+            string[] bookTitleList = new string[_bookList.Count];
+            for (int i = 0; i < _bookList.Count; i++)
+            {
+                bookTitleList[i] = _bookList[i].Title;
+            }
+            str += string.Join(", ", bookTitleList);
+            return str;
+        }
         public static List<Author> CreateAuthorList()
         {
             List<Author> authorList = new List<Author>()

@@ -2,3 +2,4 @@
 using laba1;
 Library library = new Library();
 library.DisplayLibrary();
+library.DisplayAllAuthors();

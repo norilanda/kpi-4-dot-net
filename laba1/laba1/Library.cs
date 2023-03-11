@@ -87,5 +87,13 @@ namespace laba1
             }
             Console.WriteLine();
         }
+        public void DisplayAllAuthors()
+        {
+            foreach (Author author in _authors)
+            {
+                Console.WriteLine(author.ToString());                
+            }
+            Console.WriteLine();
+        }
     }
 }

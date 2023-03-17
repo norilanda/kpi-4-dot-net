@@ -32,22 +32,20 @@ foreach (var bookOfAuthor in query1)
     }
     Console.WriteLine();
 }
-//, {bookOfAuthor.book}
-//  {String.Join(" ", bookOfAuthor.book)}
 
-//2.
+//2. Select authors for each book (with using query syntax)
 
-//3.
+//3. Order books by titles and show number of every book (count inventory number)
 
-//4.
+//4. Show inventory numbers of all books for each author
 
-//5.
+//5. Show all books published since 2000 year, sorted by date
 
-//6.
+//6. Show most expensive book/-s and its/their author/-s
 
-//7.
+//7. Show sum of all books multiplied by its inventory number for every author
 
-//8.
+//8. Select books written by more than one author
 
 //9.
 

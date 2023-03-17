@@ -129,6 +129,9 @@ foreach (var bookOfAuthor in query1)
 
 //5. Show all books published since 2000 year, sorted by date
 
+var query5 = lib1.Books.Where(b => b.PublishingDate.Year >= 2000).OrderBy(b => b.PublishingDate);
+foreach (var book in query5) Console.WriteLine(book.ToString());
+
 //6. Show most expensive book/-s and its/their author/-s
 
 //7. Show sum of all books multiplied by its inventory number for every author
@@ -153,7 +156,12 @@ foreach (var bookOfAuthor in query1)
 
 //17. Select the most frequent word in book titles
 
+//var query17 = lib1.
+
 //18. Select percent of sum of all books for every book
+double sumPriceOfAllBooks = lib1.Books.Sum(b => b.Price);
+var query18 = lib1.Books.Select(b => new { book = b, Percent = (double)b.Price / sumPriceOfAllBooks });
+foreach (var b in query18) Console.WriteLine($"{b.book.Title},\t{b.book.Price},\t{b.Percent.ToString("0.00")}");
 
 //19. Group books by their publishing month
 

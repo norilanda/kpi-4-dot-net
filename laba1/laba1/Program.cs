@@ -24,6 +24,15 @@ List<Book> books1 = new List<Book>()
                 new Book(17, "The Lord of the Rings", 3055, new DateOnly(1954, 09, 21), "George Allen & Unwin", new List<int>(){39, 40, 41, 42}),
                 new Book(18, "The Girl with the Dragon Tattoo", 1875, new DateOnly(2005, 08, 01), "Norstedts Förlag", new List<int>(){43}),
             };
+List<Book> books2 = new List<Book>()
+{
+                new Book(0, "Fahrenheit 451", 830, new DateOnly(1953, 10, 19), "Ballantine Books", new List<int>(){1, 2, 3, 4, 5}),
+                new Book(1, "Dandelion Wine", 900, new DateOnly(1957, 09, 21), "Doubleday", new List<int>(){6, 7, 8}),
+                new Book(2, "The Hobbit", 2100, new DateOnly(1937, 09, 21), "George Allen & Unwin", new List<int>(){37, 38}),
+                new Book(3, "A Tale of Two Cities ", 830, new DateOnly(1959, 04, 30), "Chapman & Hall", new List<int>(){1, 2, 3, 4, 5}),
+                new Book(4, "The Metamorphosis", 743, new DateOnly(1915, 08, 25), "Kurt Wolff Verlag", new List<int>(){6, 7, 8}),
+                new Book(5, "The Trial", 3045, new DateOnly(1925, 09, 21), "Verlag Die Schmiede", new List<int>(){37, 38}),
+};
 List<Author> authors1 = new List<Author>()
             {
                 new Author(1, "Ray", "Bradbury"),
@@ -40,9 +49,17 @@ List<Author> authors1 = new List<Author>()
                 new Author(12, "J. R. R.", "Tolkien"),
                 new Author(13, "Stieg", "Larsson")
             };
+List<Author> authors2 = new List<Author>()
+{
+                new Author(0, "Ray", "Bradbury"),
+                new Author(1, "J. R. R.", "Tolkien"),
+                new Author(2, "Charles", "Dickens"),
+                new Author(3, "Franz", "Kafka"),
+              };
 List<BookOfAuthor> bookOfAuthorList1 = new List<BookOfAuthor>();
+List<BookOfAuthor> bookOfAuthorList2 = new List<BookOfAuthor>();
 try
-{ 
+{
     bookOfAuthorList1.Add(new BookOfAuthor(books1[0].BookId, authors1[0].AuthorId));
     bookOfAuthorList1.Add(new BookOfAuthor(books1[1].BookId, authors1[0].AuthorId));
     bookOfAuthorList1.Add(new BookOfAuthor(books1[2].BookId, authors1[0].AuthorId));
@@ -63,8 +80,15 @@ try
     bookOfAuthorList1.Add(new BookOfAuthor(books1[16].BookId, authors1[11].AuthorId));
     bookOfAuthorList1.Add(new BookOfAuthor(books1[17].BookId, authors1[11].AuthorId));
     bookOfAuthorList1.Add(new BookOfAuthor(books1[18].BookId, authors1[12].AuthorId));
-    }
-    catch (IndexOutOfRangeException e)
+
+    bookOfAuthorList2.Add(new BookOfAuthor(books2[0].BookId, authors2[0].AuthorId));
+    bookOfAuthorList2.Add(new BookOfAuthor(books2[1].BookId, authors2[0].AuthorId));
+    bookOfAuthorList2.Add(new BookOfAuthor(books2[2].BookId, authors2[1].AuthorId));
+    bookOfAuthorList2.Add(new BookOfAuthor(books2[3].BookId, authors2[2].AuthorId));
+    bookOfAuthorList2.Add(new BookOfAuthor(books2[4].BookId, authors2[3].AuthorId));
+    bookOfAuthorList2.Add(new BookOfAuthor(books2[5].BookId, authors2[3].AuthorId));
+}
+catch (IndexOutOfRangeException e)
     { Console.WriteLine(e.Message); }
 
 Library lib1 = new Library("Library 1", books1, authors1, bookOfAuthorList1);

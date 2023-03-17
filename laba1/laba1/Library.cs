@@ -14,7 +14,7 @@ namespace laba1
         private List<Book> _books;
         private List<Author> _authors;
         private List<BookOfAuthor> _bookOfAuthorList;
-        public List<BookOfAuthor> BookOfAuthorList { get; set; }
+        public List<BookOfAuthor> BookOfAuthorList { get => _bookOfAuthorList; set => _bookOfAuthorList = value; }
         public List<Book> Books { get => _books; set => _books = value; }
         public List<Author> Authors { get => _authors; set => _authors = value; }
 

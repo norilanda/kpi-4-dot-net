@@ -16,8 +16,8 @@ namespace laba1
         private string _lastName;
 
         public int AuthorId => _authorId;
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+        public string Firstname => _firstName;
+        public string Lastname => _lastName;
 
         public Author(int id, string firstName, string lastName)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,10 +22,10 @@ namespace laba1
 
         public int BookId => _bookId;
         public string Title => _title;
-        public double Price { get; set; }
-        public DateOnly PublishingDate { get; set; }
-        public string Publisher { get; set; }
-        public List<int> InventoryNumbers { get; set; }
+        public double Price => _price;
+        public DateOnly PublishingDate => _publishingDate;
+        public string Publisher => _publisher;
+        public List<int> InventoryNumbers => _inventoryNumbers;
 
         public Book(int id, string title, double price, DateOnly date, string publisher, List<int> inventoryNumbers)
         {
@@ -33,8 +34,16 @@ namespace laba1
             this._price = price;
             this._publishingDate = date;
             this._publisher = publisher;
-            this._inventoryNumbers = inventoryNumbers;
             this._inventoryNumbers = new List<int>(inventoryNumbers);
+        }
+        public Book(Book b)
+        {
+            this._bookId = b._bookId;
+            this._title = b._title;
+            this._price = b._price;
+            this._publishingDate = b._publishingDate;
+            this._publisher = b._publisher;
+            this._inventoryNumbers = new List<int>(b._inventoryNumbers);
         }
         public override string ToString()
         {

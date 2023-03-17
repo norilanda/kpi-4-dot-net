@@ -15,8 +15,8 @@ namespace laba1
         private int _idOfBook;
         private int _idOfAuthor;
 
-        public int IdOfBook { get; set; }
-        public int IdOfAuthor { get; set; }
+        public int IdOfBook => _idOfBook;
+        public int IdOfAuthor => _idOfAuthor;
 
         public BookOfAuthor(int book, int author)
         {

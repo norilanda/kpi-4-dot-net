@@ -92,6 +92,7 @@ catch (IndexOutOfRangeException e)
     { Console.WriteLine(e.Message); }
 
 Library lib1 = new Library("Library 1", books1, authors1, bookOfAuthorList1);
+Library lib2 = new Library("Library 2", books2, authors2, bookOfAuthorList2);
 
 
 //foreach (var book in library.Books) Console.WriteLine(book.ToString());
@@ -136,24 +137,24 @@ foreach (var bookOfAuthor in query1)
 
 //9. Select all books that are in libraries
 
-//10. Select books that
+//10. Select books that are common for 2 libraries
 
-//11.
+//11. Select books that are in lib2 but are not in lib1
 
-//12.
+//12. Show authors and publishers of their books
 
-//13.
+//13. Select average number of number of each book (count inventory numbers) in library
 
-//14.
+//14. Select the latest books by publishing date
 
-//15.
+//15. Select all publishers from 2 libs
 
-//16.
+//16. Select price sum of top 5 expensive books
 
-//17.
+//17. Select the most frequent word in book titles
 
-//18.
+//18. Select percent of sum of all books for every book
 
-//19.
+//19. Group books by their publishing month
 
-//20.
+//20. Show books that have only one inventory number

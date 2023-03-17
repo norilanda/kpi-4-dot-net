@@ -4,3 +4,7 @@ Library library = new Library();
 library.Books = Book.CreateBookList();
 library.Authors = Author.CreateAuthorList();
 library.ConnectBookAndAuthor();
+
+foreach (var book in library.Books) Console.WriteLine(book.ToString());
+foreach (var author in library.Authors) Console.WriteLine(author.ToString());
+

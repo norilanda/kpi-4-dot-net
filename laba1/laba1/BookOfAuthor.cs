@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace laba1
 {
+    /// <summary>
+    /// Contains information about connections between books and authors.
+    /// Shows authors of each book and books of each authors
+    /// </summary>
     public class BookOfAuthor
     {
         private int _idOfBook;

@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace laba1
 {
+    /// <summary>
+    /// Class contains information about specific book in a library.
+    /// It has such fields as bookId, title, price, publishing date, publisher and inventory numbers
+    /// </summary>
     public class Book
     {
         private int _bookId;
@@ -34,7 +38,7 @@ namespace laba1
         }
         public override string ToString()
         {
-            string str = $"Id: {_bookId} Title: {_title}; price: {_price}; publishing date: {_publishingDate}; publisher: {_publisher} | Inventory numbers: {string.Join(", ", _inventoryNumbers.ToArray())}\nAuthor(s): ";
+            string str = $"Id: {_bookId} Title: {_title}; price: {_price}; publishing date: {_publishingDate}; publisher: {_publisher} | Inventory numbers: {string.Join(", ", _inventoryNumbers.ToArray())}";
             return str;
         }
         public static List<Book> CreateBookList()

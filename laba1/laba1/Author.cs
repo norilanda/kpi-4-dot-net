@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace laba1
 {
+    /// <summary>
+    /// Author class contains author's id, his first name and last name
+    /// </summary>
     public class Author
     {
         private int _authorId;

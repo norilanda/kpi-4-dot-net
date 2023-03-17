@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace laba1
 {
+    /// <summary>
+    /// Contains information about all books, authors and connections between them
+    /// </summary>
     public class Library
     {
         private List<Book> _books;

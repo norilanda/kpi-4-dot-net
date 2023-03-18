@@ -273,7 +273,12 @@ var query13 = allLibs.Select(l => new { Name = l.Name,
 
 //15. Select all publishers from 2 libs
 
-//16. Select price sum of top 5 expensive books
+//16. From lib1 select all books that have price bigger than average price of all books in lib2
+double averagePriceOfBooksInlib2 = lib2.Books.Average(b => b.Price);
+var query16 = lib1.Books.Where(b => b.Price >  averagePriceOfBooksInlib2);
+Console.WriteLine($"Books that have price bigger than {averagePriceOfBooksInlib2}:");
+//foreach (var item in query16)
+//    Console.WriteLine(item);
 
 //17. Select the most frequent word in book titles
 
@@ -304,4 +309,5 @@ var query20 = from book in lib1.Books
 //foreach (var item in query20)
 //    Console.WriteLine(item);
 
-//21. From lib1 select all books that have price bigger than average price of all books in lib2
+//21. Select price sum of top 5 expensive books
+

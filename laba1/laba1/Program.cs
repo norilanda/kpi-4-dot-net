@@ -20,7 +20,7 @@ List<Book> books1 = new List<Book>()
                 new Book(13, "The Theory of Everything: The Origin and Fate of the Universe", 1300, new DateOnly(2010, 09, 07), "Bantam Books", new List<int>(){31, 32}),
                 new Book(14, "A Brief History of Time", 1300, new DateOnly(1988, 03, 19), "Bantam Books", new List<int>(){33, 34, 35}),
                 new Book(15, "The Book Thief", 800, new DateOnly(2005, 03, 14), "Picador", new List<int>(){36}),
-                new Book(16, "The Hobbit", 3045, new DateOnly(1937, 09, 21), "George Allen & Unwin", new List<int>(){37, 38}),
+                new Book(16, "The Hobbit", 3210, new DateOnly(1937, 09, 21), "George Allen & Unwin", new List<int>(){37, 38}),
                 new Book(17, "The Lord of the Rings", 3055, new DateOnly(1954, 09, 21), "George Allen & Unwin", new List<int>(){39, 40, 41, 42}),
                 new Book(18, "The Girl with the Dragon Tattoo", 1875, new DateOnly(2005, 08, 01), "Norstedts Förlag", new List<int>(){43}),
             };
@@ -216,7 +216,14 @@ var query7 = from aBookn in(
 //    Console.WriteLine($"{item.author}\t{item.bookNum}");
 
 
-//8. Select books written by more than one author
+//8. Select books with max price
+var query8 = from b in lib1.Books
+             where b.Price == (from b1 in lib1.Books
+                              select b1.Price).Max()
+             select b;
+//foreach (var item in query8)
+//    Console.WriteLine(item);
+
 
 //9. Select titles of all books that are in lib1 and lib2 ordered by titles
 
@@ -321,4 +328,6 @@ var query20 = from book in lib1.Books
 //21. Select price sum of top 5 expensive books
 //Select the latest books by publishing date
 //Select all publishers from 2 libs
+//Select books written by more than one author
+//Select max number of books that has price sum not bigger than 5000
 

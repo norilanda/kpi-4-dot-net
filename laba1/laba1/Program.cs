@@ -119,15 +119,15 @@ var query1 = lib1.Authors.GroupJoin(
                                    (_, book) => book)                                   
                                 }
     );
-foreach (var bookOfAuthor in query1)
-{
-    Console.WriteLine($"{bookOfAuthor.author}:");
-    foreach (var book in bookOfAuthor.book)
-    {
-        Console.WriteLine(book.Title);
-    }
-    Console.WriteLine();
-}
+//foreach (var bookOfAuthor in query1)
+//{
+//    Console.WriteLine($"{bookOfAuthor.author}:");
+//    foreach (var book in bookOfAuthor.book)
+//    {
+//        Console.WriteLine(book.Title);
+//    }
+//    Console.WriteLine();
+//}
 
 //2. Select authors for each book (with using query syntax)
 var query2 = from b in lib1.Books
@@ -224,10 +224,15 @@ var query9 = lib1.Books.Select(b => b.Title)
                        .Union(lib2.Books.Select(b => b.Title))
                        .OrderBy(title => title);
 
-foreach (var item in query9)
-    Console.WriteLine($"{item}");
+//foreach (var item in query9)
+//    Console.WriteLine($"{item}");
 
-//10. Select books that are common for 2 libraries
+//10. Select authors that are common for 2 libraries
+
+var query10 = lib1.Authors.Intersect(lib2.Authors, new AuthorComparerByName());
+
+foreach (var item in query10)
+    Console.WriteLine($"{item.Firstname} {item.Lastname}");
 
 //11. Select books that are in lib2 but are not in lib1
 

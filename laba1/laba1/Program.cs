@@ -259,10 +259,15 @@ var query12 = allLibs.SelectMany(l => l.Authors
                                                      .ToList()
                                 })
                       .OrderBy(item => item.author.Firstname);
-foreach (var item in query12)
-    Console.WriteLine($"{item.author}:\t{String.Join(", ", item.publishers)}");
+//foreach (var item in query12)
+//    Console.WriteLine($"{item.author}:\t{String.Join(", ", item.publishers)}");
 
-//13. Select average number of number of each book (count inventory numbers) in library
+//13. Select average number of copies of each book (count inventory numbers) for each library
+var query13 = allLibs.Select(l => new { Name = l.Name,
+                                        averageNumOfCopies = l.Books.Any() ? l.Books.Average(b => b.InventoryNumbers.Count()) : 0
+                                        });
+//foreach (var item in query13)
+//    Console.WriteLine($"{item.Name}: {item.averageNumOfCopies.ToString("0.00")}");
 
 //14. Select the latest books by publishing date
 

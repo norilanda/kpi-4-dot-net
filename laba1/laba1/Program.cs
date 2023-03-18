@@ -276,7 +276,11 @@ var query14 = lib1.Books.OrderBy(b => b.PublishingDate)
 //Console.WriteLine($"Book on the {indexOfBookInList + 1} place:\n\t{query14}");
 
 
-//15. Select all publishers from 2 libs
+//15. Select books with shortest Title
+var query15 = lib1.Books.Where(b => b.Title.Count()
+                                    == lib1.Books.Min(b => b.Title.Count()));
+//foreach (var item in query15)
+//    Console.WriteLine(item);
 
 //16. From lib1 select all books that have price bigger than average price of all books in lib2
 double averagePriceOfBooksInlib2 = lib2.Books.Average(b => b.Price);
@@ -316,4 +320,5 @@ var query20 = from book in lib1.Books
 
 //21. Select price sum of top 5 expensive books
 //Select the latest books by publishing date
+//Select all publishers from 2 libs
 

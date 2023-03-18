@@ -285,6 +285,17 @@ var query18 = lib1.Books.Select(b => new { book = b, Percent = (double)b.Price /
 //foreach (var b in query18) Console.WriteLine($"{b.book.Title},\t{b.book.Price},\t{b.Percent.ToString("0.00")}");
 
 //19. Group books by their publishing month
+var query19 = from book in lib1.Books
+              group book by book.PublishingDate.Month
+              into groupByMonths
+              orderby groupByMonths.Key
+              select groupByMonths;
+//foreach (var item in query19)
+//{
+//    Console.WriteLine($"Month {item.Key}");
+//    foreach (var item1 in item)
+//        Console.WriteLine($"\t{item1}");
+//}
 
 //20. Show books that have only one inventory number
 

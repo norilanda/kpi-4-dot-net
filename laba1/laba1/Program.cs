@@ -14,8 +14,8 @@ List<Book> books1 = new List<Book>()
                 new Book(7, "To Kill a Mockingbird", 398, new DateOnly(1960, 07, 11), "J. B. Lippincott & Co.", new List<int>(){18, 19, 20}),
                 new Book(8, "Sense and Sensibility", 962, new DateOnly(1811, 10, 30), "T. Egerton", new List<int>(){21, 22}),
                 new Book(9, "Animal Farm", 280, new DateOnly(1945, 08, 17), "Secker and Warburg", new List<int>(){23}),
-                new Book(11, "Nineteen Eighty-Four", 978, new DateOnly(1949, 06, 08), "Secker and Warburg", new List<int>(){24, 25}),
-                new Book(11, "he Sun Also Rises", 3210, new DateOnly(1926, 10, 22), "Scribner's", new List<int>(){26, 27}),
+                new Book(10, "Nineteen Eighty-Four", 978, new DateOnly(1949, 06, 08), "Secker and Warburg", new List<int>(){24, 25}),
+                new Book(11, "The Sun Also Rises", 3210, new DateOnly(1926, 10, 22), "Scribner's", new List<int>(){26, 27}),
                 new Book(12, "A Farewell to Arms", 1090, new DateOnly(1926, 10, 22), "Scribner's", new List<int>(){28, 29, 30}),
                 new Book(13, "The Theory of Everything: The Origin and Fate of the Universe", 1300, new DateOnly(2010, 09, 07), "Bantam Books", new List<int>(){31, 32}),
                 new Book(14, "A Brief History of Time", 1300, new DateOnly(1988, 03, 19), "Bantam Books", new List<int>(){33, 34, 35}),
@@ -165,15 +165,36 @@ var query4 = lib1.Authors.GroupJoin(
                         .SelectMany(y => y.InventoryNumbers)
         }
         );
-foreach (var item in query4)
-    Console.WriteLine($"{item.author}\t{String.Join(", ", item.inventNumbers)}");
+//foreach (var item in query4)
+//    Console.WriteLine($"{item.author}\t{String.Join(", ", item.inventNumbers)}");
 
 //5. Show all books published since 2000 year, sorted by date
 
 var query5 = lib1.Books.Where(b => b.PublishingDate.Year >= 2000).OrderBy(b => b.PublishingDate);
 //foreach (var book in query5) Console.WriteLine(book.ToString());
 
-//6. Show most expensive book/-s and its/their author/-s
+//6. Show top 5 most expensive books and its/their author/-s
+
+var query6 = lib1.Books
+        .OrderByDescending(b => b.Price)
+        .Take(5)
+        .GroupJoin(
+        lib1.BookOfAuthorList,
+        b => b.BookId,
+        ab => ab.IdOfBook,
+        (b, ab) => new
+        {
+            book = b,
+            authors = ab.Select(x => x.IdOfAuthor)
+                    .Join(
+                        lib1.Authors,
+                        ab => ab,
+                        a => a.AuthorId,
+                        (_, a) => a).ToList()
+        }
+    );
+//foreach(var item in query6)
+//    Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
 
 //7. Show sum of all books multiplied by its inventory number for every author
 

@@ -231,12 +231,36 @@ var query9 = lib1.Books.Select(b => b.Title)
 
 var query10 = lib1.Authors.Intersect(lib2.Authors, new AuthorComparerByName());
 
-foreach (var item in query10)
-    Console.WriteLine($"{item.Firstname} {item.Lastname}");
+//foreach (var item in query10)
+//    Console.WriteLine($"{item.Firstname} {item.Lastname}");
 
 //11. Select books that are in lib2 but are not in lib1
 
-//12. Show authors and publishers of their books
+//12. Show authors in all libraries and publishers of their books
+
+var query12 = allLibs.SelectMany(l => l.Authors
+                     .GroupJoin(
+                            l.BookOfAuthorList,
+                            a => a.AuthorId,
+                            ab => ab.IdOfAuthor,
+                            (a, ab) => new
+                            {
+                                author = a,
+                                publishers = l.Books.Where(b => ab.Select(x => x.IdOfBook)
+                                    .Contains(b.BookId))
+                                    .Select(b => b.Publisher),
+                            })).GroupBy(item => item.author,
+                                item => item.publishers,
+                                new AuthorComparerByName()
+                                ).Select(item => new {
+                                    author = item.Key,
+                                    publishers = item.SelectMany(x => x)
+                                                     .Distinct()
+                                                     .ToList()
+                                })
+                      .OrderBy(item => item.author.Firstname);
+foreach (var item in query12)
+    Console.WriteLine($"{item.author}:\t{String.Join(", ", item.publishers)}");
 
 //13. Select average number of number of each book (count inventory numbers) in library
 

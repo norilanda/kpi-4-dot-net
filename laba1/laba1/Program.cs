@@ -93,6 +93,14 @@ catch (IndexOutOfRangeException e)
 
 Library lib1 = new Library("Library 1", books1, authors1, bookOfAuthorList1);
 Library lib2 = new Library("Library 2", books2, authors2, bookOfAuthorList2);
+Library lib3 = new Library("Empty Library 3", new List<Book>(), new List<Author>(), new List<BookOfAuthor>());
+
+List<Library> allLibs = new List<Library>()
+{
+    lib1,
+    lib2,
+    lib3
+};
 
 
 //foreach (var book in library.Books) Console.WriteLine(book.ToString());
@@ -122,6 +130,15 @@ foreach (var bookOfAuthor in query1)
 }
 
 //2. Select authors for each book (with using query syntax)
+var query2 = from b in lib1.Books
+             select new {
+                 book = b,
+                 authors = (from ab in lib1.BookOfAuthorList 
+                 join a in lib1.Authors on ab.IdOfAuthor equals a.AuthorId
+                 where b.BookId == ab.IdOfBook
+                 select a).ToList() };
+foreach (var item in query2)
+    Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
 
 //3. Order books by titles and show number of every book (count inventory number)
 
@@ -130,7 +147,7 @@ foreach (var bookOfAuthor in query1)
 //5. Show all books published since 2000 year, sorted by date
 
 var query5 = lib1.Books.Where(b => b.PublishingDate.Year >= 2000).OrderBy(b => b.PublishingDate);
-foreach (var book in query5) Console.WriteLine(book.ToString());
+//foreach (var book in query5) Console.WriteLine(book.ToString());
 
 //6. Show most expensive book/-s and its/their author/-s
 
@@ -161,8 +178,10 @@ foreach (var book in query5) Console.WriteLine(book.ToString());
 //18. Select percent of sum of all books for every book
 double sumPriceOfAllBooks = lib1.Books.Sum(b => b.Price);
 var query18 = lib1.Books.Select(b => new { book = b, Percent = (double)b.Price / sumPriceOfAllBooks });
-foreach (var b in query18) Console.WriteLine($"{b.book.Title},\t{b.book.Price},\t{b.Percent.ToString("0.00")}");
+//foreach (var b in query18) Console.WriteLine($"{b.book.Title},\t{b.book.Price},\t{b.Percent.ToString("0.00")}");
 
 //19. Group books by their publishing month
 
 //20. Show books that have only one inventory number
+
+//21. From lib1 select all books that have price bigger than average price of all books in lib2

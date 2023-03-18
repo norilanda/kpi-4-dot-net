@@ -218,7 +218,14 @@ var query7 = from aBookn in(
 
 //8. Select books written by more than one author
 
-//9. Select all books that are in libraries
+//9. Select titles of all books that are in lib1 and lib2 ordered by titles
+
+var query9 = lib1.Books.Select(b => b.Title)
+                       .Union(lib2.Books.Select(b => b.Title))
+                       .OrderBy(title => title);
+
+foreach (var item in query9)
+    Console.WriteLine($"{item}");
 
 //10. Select books that are common for 2 libraries
 

@@ -269,14 +269,19 @@ var query13 = allLibs.Select(l => new { Name = l.Name,
 //foreach (var item in query13)
 //    Console.WriteLine($"{item.Name}: {item.averageNumOfCopies.ToString("0.00")}");
 
-//14. Select the latest books by publishing date
+//14. Select 5-th book from list ordered by date
+int indexOfBookInList = 4;
+var query14 = lib1.Books.OrderBy(b => b.PublishingDate)
+        .ElementAtOrDefault(indexOfBookInList);
+//Console.WriteLine($"Book on the {indexOfBookInList + 1} place:\n\t{query14}");
+
 
 //15. Select all publishers from 2 libs
 
 //16. From lib1 select all books that have price bigger than average price of all books in lib2
 double averagePriceOfBooksInlib2 = lib2.Books.Average(b => b.Price);
 var query16 = lib1.Books.Where(b => b.Price >  averagePriceOfBooksInlib2);
-Console.WriteLine($"Books that have price bigger than {averagePriceOfBooksInlib2}:");
+//Console.WriteLine($"Books that have price bigger than {averagePriceOfBooksInlib2}:");
 //foreach (var item in query16)
 //    Console.WriteLine(item);
 
@@ -310,4 +315,5 @@ var query20 = from book in lib1.Books
 //    Console.WriteLine(item);
 
 //21. Select price sum of top 5 expensive books
+//Select the latest books by publishing date
 

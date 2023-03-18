@@ -298,5 +298,10 @@ var query19 = from book in lib1.Books
 //}
 
 //20. Show books that have only one inventory number
+var query20 = from book in lib1.Books
+              where book.InventoryNumbers.Count() == 1
+              select book;
+//foreach (var item in query20)
+//    Console.WriteLine(item);
 
 //21. From lib1 select all books that have price bigger than average price of all books in lib2

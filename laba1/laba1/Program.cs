@@ -148,10 +148,25 @@ var query3 = lib1.Books.OrderBy(b => b.Title)
                     book = b,
                     copyNumber = b.InventoryNumbers.Count()
                 });
-foreach (var item in query3)
-    Console.WriteLine($"{item.book}\t{item.copyNumber}");
+//foreach (var item in query3)
+//    Console.WriteLine($"{item.book}\t{item.copyNumber}");
 
 //4. Show inventory numbers of all books for each author
+var query4 = lib1.Authors.GroupJoin(
+        lib1.BookOfAuthorList,
+        a => a.AuthorId,
+        ab => ab.IdOfAuthor,
+        (a, ab) => new
+        {
+            author = a,
+            inventNumbers = lib1.Books
+                        .Where(b => ab.Select(x => x.IdOfBook)
+                                      .Contains(b.BookId))
+                        .SelectMany(y => y.InventoryNumbers)
+        }
+        );
+foreach (var item in query4)
+    Console.WriteLine($"{item.author}\t{String.Join(", ", item.inventNumbers)}");
 
 //5. Show all books published since 2000 year, sorted by date
 

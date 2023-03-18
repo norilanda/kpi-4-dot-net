@@ -137,10 +137,19 @@ var query2 = from b in lib1.Books
                  join a in lib1.Authors on ab.IdOfAuthor equals a.AuthorId
                  where b.BookId == ab.IdOfBook
                  select a).ToList() };
-foreach (var item in query2)
-    Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
+//foreach (var item in query2)
+//    Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
 
-//3. Order books by titles and show number of every book (count inventory number)
+//3. Order books published before 2000 by titles and show number of every book (count inventory number)
+var query3 = lib1.Books.OrderBy(b => b.Title)
+                .Where(b => b.PublishingDate.Year < 2000)
+                .Select(b => new
+                {
+                    book = b,
+                    copyNumber = b.InventoryNumbers.Count()
+                });
+foreach (var item in query3)
+    Console.WriteLine($"{item.book}\t{item.copyNumber}");
 
 //4. Show inventory numbers of all books for each author
 

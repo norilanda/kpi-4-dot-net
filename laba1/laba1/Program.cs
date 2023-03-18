@@ -196,7 +196,25 @@ var query6 = lib1.Books
 //foreach(var item in query6)
 //    Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
 
-//7. Show sum of all books multiplied by its inventory number for every author
+//7. Show sum of all books for every author and order them by book number from bigger to smaller and then by author firstname
+
+var query7 = from aBookn in(
+                 from ab in lib1.BookOfAuthorList
+                 group ab by ab.IdOfAuthor
+                 into authorGroup         
+                 select new
+                 {
+                     author = (from a in lib1.Authors
+                              where a.AuthorId == authorGroup.Key
+                              select a).Single(),
+                     bookNum = authorGroup.Count()
+                 })
+             orderby aBookn.author.Firstname
+             orderby aBookn.bookNum descending
+             select aBookn;
+//foreach (var item in query7)
+//    Console.WriteLine($"{item.author}\t{item.bookNum}");
+
 
 //8. Select books written by more than one author
 

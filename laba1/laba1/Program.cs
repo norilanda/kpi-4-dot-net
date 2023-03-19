@@ -242,7 +242,21 @@ var query10 = lib1.Authors.Intersect(lib2.Authors, new AuthorComparerByName());
 //foreach (var item in query10)
 //    Console.WriteLine($"{item.Firstname} {item.Lastname}");
 
-//11. Select books that are in lib2 but are not in lib1
+//11. Select authors different for 2 libs
+var query11 = (from a1 in lib1.Authors
+               select a1)
+                   .Union(
+                   from a2 in lib2.Authors
+                   select a2, new AuthorComparerByName())
+               .Except(
+                    (from a1 in lib1.Authors
+                     select a1)
+                    .Intersect(from a2 in lib2.Authors
+                               select a2,
+                               new AuthorComparerByName())
+                    );
+//foreach (var item in query11)
+//    Console.WriteLine(item);
 
 //12. Show authors in all libraries and publishers of their books
 
@@ -301,9 +315,7 @@ var query16 = lib1.Books.Where(b => b.Price >  averagePriceOfBooksInlib2);
 Regex rgx = new Regex("[^a-zA-Z0-9 -]");
 var query17 = lib1.Books.SelectMany(b => rgx.Replace(b.Title, "")
                                             .ToLower()
-                                            .Split())
-                        //.Distinct();
-
+                                            .Split())                        
                         .GroupBy(word => word,
                                  word => lib1.Books.SelectMany(b => rgx.Replace(b.Title, "")
                                             .ToLower()
@@ -314,8 +326,8 @@ var query17 = lib1.Books.SelectMany(b => rgx.Replace(b.Title, "")
                         .OrderByDescending(item => item.Num)
                         .ThenBy(item => item.Word)
                         .Take(10);
-foreach (var item in query17)
-    Console.WriteLine($"{item.Word}, {item.Num}");
+//foreach (var item in query17)
+//    Console.WriteLine($"{item.Word}, {item.Num}");
 
 //18. Select percent of sum of all books for every book
 double sumPriceOfAllBooks = lib1.Books.Sum(b => b.Price);

@@ -1,6 +1,7 @@
 ﻿//Розробити структуру даних для зберігання інформації про книги в бібліотеці. Книга характеризується: назвою, прізвищем автора, вартістю, датою видання, видавництвом, списком інвентарних номерів (книга в кількох примірниках). У одного автора може бути декілька книг.
 using laba1;
 using static System.Reflection.Metadata.BlobBuilder;
+using System.Text.RegularExpressions;
 
 List<Book> books1 = new List<Book>()
             {
@@ -296,9 +297,25 @@ var query16 = lib1.Books.Where(b => b.Price >  averagePriceOfBooksInlib2);
 //foreach (var item in query16)
 //    Console.WriteLine(item);
 
-//17. Select the most frequent word in book titles
+//17. Select the top 10 most frequent words in book titles
+Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+var query17 = lib1.Books.SelectMany(b => rgx.Replace(b.Title, "")
+                                            .ToLower()
+                                            .Split())
+                        //.Distinct();
 
-//var query17 = lib1.
+                        .GroupBy(word => word,
+                                 word => lib1.Books.SelectMany(b => rgx.Replace(b.Title, "")
+                                            .ToLower()
+                                            .Split())
+                                 .Where(w => w.Equals(word))
+                                 .Count(),
+                                 (word, num) => new { Word = word, Num = num.Count() })
+                        .OrderByDescending(item => item.Num)
+                        .ThenBy(item => item.Word)
+                        .Take(10);
+foreach (var item in query17)
+    Console.WriteLine($"{item.Word}, {item.Num}");
 
 //18. Select percent of sum of all books for every book
 double sumPriceOfAllBooks = lib1.Books.Sum(b => b.Price);

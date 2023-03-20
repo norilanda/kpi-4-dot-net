@@ -26,8 +26,7 @@ class Program
                 new Book(14, "A Brief History of Time", 1300, new DateOnly(1988, 03, 19), "Bantam Books", new List<int>(){33, 34, 35}),
                 new Book(15, "The Book Thief", 800, new DateOnly(2005, 03, 14), "Picador", new List<int>(){36}),
                 new Book(16, "The Hobbit", 3210, new DateOnly(1937, 09, 21), "George Allen & Unwin", new List<int>(){37, 38}),
-                new Book(17, "The Lord of the Rings", 3055, new DateOnly(1954, 09, 21), "George Allen & Unwin", new List<int>(){39, 40, 41, 42}),
-                new Book(18, "The Girl with the Dragon Tattoo", 1875, new DateOnly(2005, 08, 01), "Norstedts Förlag", new List<int>(){43}),
+                new Book(17, "The Lord of the Rings", 3055, new DateOnly(1954, 09, 21), "George Allen & Unwin", new List<int>(){39, 40, 41, 42})
             };
         List<Book> books2 = new List<Book>()
 {
@@ -51,8 +50,7 @@ class Program
                 new Author(9, "Stephen", "Hawkingon"),
                 new Author(10, "Leonard", "Mlodinow"),
                 new Author(11, "Markus", "Zusak"),
-                new Author(12, "J. R. R.", "Tolkien"),
-                new Author(13, "Stieg", "Larsson")
+                new Author(12, "J. R. R.", "Tolkien")
             };
         List<Author> authors2 = new List<Author>()
         {
@@ -84,7 +82,6 @@ class Program
             bookOfAuthorList1.Add(new BookOfAuthor(books1[15].BookId, authors1[10].AuthorId));
             bookOfAuthorList1.Add(new BookOfAuthor(books1[16].BookId, authors1[11].AuthorId));
             bookOfAuthorList1.Add(new BookOfAuthor(books1[17].BookId, authors1[11].AuthorId));
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[18].BookId, authors1[12].AuthorId));
 
             bookOfAuthorList2.Add(new BookOfAuthor(books2[0].BookId, authors2[0].AuthorId));
             bookOfAuthorList2.Add(new BookOfAuthor(books2[1].BookId, authors2[0].AuthorId));

@@ -166,12 +166,6 @@ class Program
 
         //20. Show books that have only one inventory number
         Query20(lib1);
-
-        //21. Select price sum of top 5 expensive books
-        //Select the latest books by publishing date
-        //Select all publishers from 2 libs
-        //Select books written by more than one author
-        //Select max number of books that has price sum not bigger than 5000
     }
 
     /// <summary>

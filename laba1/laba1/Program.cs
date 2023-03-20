@@ -204,6 +204,7 @@ class Program
             Console.WriteLine();
         }
     }
+
     /// <summary>
     /// 2. Select authors for each book (with using query syntax)
     /// </summary>
@@ -222,6 +223,11 @@ class Program
         foreach (var item in query2)
             Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
     }
+
+    /// <summary>
+    /// 3. Order books published before 2000 by titles and show number of every book (count inventory number)
+    /// </summary>
+    /// <param name="lib"></param>
     public static void Query3(Library lib)
     {
         var query3 = lib.Books.OrderBy(b => b.Title)
@@ -234,6 +240,11 @@ class Program
         foreach (var item in query3)
             Console.WriteLine($"{item.book}\t{item.copyNumber}");
     }
+
+    /// <summary>
+    /// 4. Show inventory numbers of all books for each author
+    /// </summary>
+    /// <param name="lib"></param>
     public static void Query4(Library lib)
     {
         var query4 = lib.Authors.GroupJoin(
@@ -252,12 +263,22 @@ class Program
         foreach (var item in query4)
             Console.WriteLine($"{item.author}\t{String.Join(", ", item.inventNumbers)}");
     }
+
+    /// <summary>
+    /// 5. Show all books published since 2000 year, sorted by date
+    /// </summary>
+    /// <param name="lib"></param>
     public static void Query5(Library lib)
     {
         var query5 = lib.Books.Where(b => b.PublishingDate.Year >= 2000)
                               .OrderBy(b => b.PublishingDate);
         foreach (var book in query5) Console.WriteLine(book.ToString());
     }
+
+    /// <summary>
+    /// 6. Show top 5 most expensive books and its/their author/-s
+    /// </summary>
+    /// <param name="lib"></param>
     public static void Query6(Library lib)
     {
         var query6 = lib.Books
@@ -281,6 +302,11 @@ class Program
         foreach (var item in query6)
             Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
     }
+
+    /// <summary>
+    /// 7. Show sum of all books for every author and order them by book number from bigger to smaller and then by author firstname
+    /// </summary>
+    /// <param name="lib"></param>
     public static void Query7(Library lib)
     {
         var query7 = from aBookn in (
@@ -301,6 +327,11 @@ class Program
             Console.WriteLine($"{item.author}\t{item.bookNum}");
 
     }
+
+    /// <summary>
+    /// 8. Select books with max price
+    /// </summary>
+    /// <param name="lib"></param>
     public static void Query8(Library lib)
     {
         var query8 = from b in lib.Books
@@ -310,6 +341,12 @@ class Program
         foreach (var item in query8)
             Console.WriteLine(item);
     }
+
+    /// <summary>
+    /// 9. Select titles of all books that are in lib1 and lib2 ordered by titles
+    /// </summary>
+    /// <param name="lib1"></param>
+    /// <param name="lib2"></param>
     public static void Query9(Library lib1, Library lib2)
     {
         var query9 = lib1.Books.Select(b => b.Title)
@@ -319,12 +356,24 @@ class Program
         foreach (var item in query9)
             Console.WriteLine($"{item}");
     }
+
+    /// <summary>
+    /// 10. Select authors that are common for 2 libraries
+    /// </summary>
+    /// <param name="lib1"></param>
+    /// <param name="lib2"></param>
     public static void Query10(Library lib1, Library lib2)
     {
         var query10 = lib1.Authors.Intersect(lib2.Authors, new AuthorComparerByName());
         foreach (var item in query10)
             Console.WriteLine($"{item.Firstname} {item.Lastname}");
     }
+
+    /// <summary>
+    /// 11. Select authors different for 2 libs
+    /// </summary>
+    /// <param name="lib1"></param>
+    /// <param name="lib2"></param>
     public static void Query11(Library lib1, Library lib2)
     {
         var query11 = (from a1 in lib1.Authors
@@ -342,6 +391,11 @@ class Program
         foreach (var item in query11)
             Console.WriteLine(item);
     }
+
+    /// <summary>
+    /// 12. Show authors in all libraries and publishers of their books
+    /// </summary>
+    /// <param name="allLibs"></param>
     public static void Query12(List<Library> allLibs)
     {
         var query12 = allLibs.SelectMany(l => l.Authors
@@ -369,6 +423,11 @@ class Program
         foreach (var item in query12)
             Console.WriteLine($"{item.author}:\t{String.Join(", ", item.publishers)}");
     }
+
+    /// <summary>
+    /// 13. Select average number of copies of each book (count inventory numbers) for each library
+    /// </summary>
+    /// <param name="allLibs"></param>
     public static void Query13(List<Library> allLibs)
     {
         var query13 = allLibs.Select(l => new
@@ -379,6 +438,11 @@ class Program
         foreach (var item in query13)
             Console.WriteLine($"{item.Name}: {item.averageNumOfCopies.ToString("0.00")}");
     }
+
+    /// <summary>
+    /// 14. Select 5-th book from list ordered by date
+    /// </summary>
+    /// <param name="lib"></param>
     public static void Query14(Library lib)
     {
         int indexOfBookInList = 4;
@@ -387,6 +451,11 @@ class Program
         Console.WriteLine($"Book on the {indexOfBookInList + 1} place:\n\t{query14}");
 
     }
+
+    /// <summary>
+    /// 15. Select books with shortest Title
+    /// </summary>
+    /// <param name="lib"></param>
     public static void Query15(Library lib)
     {
         var query15 = lib.Books.Where(b => b.Title.Count()
@@ -394,6 +463,12 @@ class Program
         foreach (var item in query15)
             Console.WriteLine(item);
     }
+
+    /// <summary>
+    /// 16. From lib1 select all books that have price bigger than average price of all books in lib2
+    /// </summary>
+    /// <param name="lib1"></param>
+    /// <param name="lib2"></param>
     public static void Query16(Library lib1, Library lib2)
     {
         double averagePriceOfBooksInlib2 = lib2.Books.Average(b => b.Price);
@@ -402,6 +477,11 @@ class Program
         foreach (var item in query16)
             Console.WriteLine(item);
     }
+
+    /// <summary>
+    /// 17. Select the top 10 most frequent words in book titles
+    /// </summary>
+    /// <param name="lib"></param>
     public static void Query17(Library lib)
     {
         Regex rgx = new Regex("[^a-zA-Z0-9 -]");
@@ -421,6 +501,11 @@ class Program
         foreach (var item in query17)
             Console.WriteLine($"{item.Word}, {item.Num}");
     }
+
+    /// <summary>
+    /// 18. Select percent of sum of all books for every book
+    /// </summary>
+    /// <param name="lib"></param>
     public static void Query18(Library lib)
     {
         double sumPriceOfAllBooks = lib.Books.Sum(b => b.Price);
@@ -428,6 +513,11 @@ class Program
         foreach (var b in query18) 
             Console.WriteLine($"{b.book.Title},\t{b.book.Price},\t{b.Percent.ToString("0.00")}");
     }
+
+    /// <summary>
+    /// 19. Group books by their publishing month
+    /// </summary>
+    /// <param name="lib"></param>
     public static void Query19(Library lib)
     {
         var query19 = from book in lib.Books
@@ -442,6 +532,10 @@ class Program
                 Console.WriteLine($"\t{item1}");
         }
     }
+    /// <summary>
+    /// 20. Show books that have only one inventory number
+    /// </summary>
+    /// <param name="lib"></param>
     public static void Query20(Library lib)
     {
         var query20 = from book in lib.Books

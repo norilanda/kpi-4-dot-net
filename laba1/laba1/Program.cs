@@ -3,7 +3,11 @@ using laba1;
 using static System.Reflection.Metadata.BlobBuilder;
 using System.Text.RegularExpressions;
 
-List<Book> books1 = new List<Book>()
+class Program
+{
+    static void Main(string[] args)
+    {
+        List<Book> books1 = new List<Book>()
             {
                 new Book(0, "Fahrenheit 451", 730, new DateOnly(1953, 10, 19), "Ballantine Books", new List<int>(){1, 2, 3, 4, 5}),
                 new Book(1, "Dandelion Wine", 1900, new DateOnly(1957, 09, 21), "Doubleday", new List<int>(){6, 7, 8}),
@@ -25,7 +29,7 @@ List<Book> books1 = new List<Book>()
                 new Book(17, "The Lord of the Rings", 3055, new DateOnly(1954, 09, 21), "George Allen & Unwin", new List<int>(){39, 40, 41, 42}),
                 new Book(18, "The Girl with the Dragon Tattoo", 1875, new DateOnly(2005, 08, 01), "Norstedts Förlag", new List<int>(){43}),
             };
-List<Book> books2 = new List<Book>()
+        List<Book> books2 = new List<Book>()
 {
                 new Book(0, "Fahrenheit 451", 830, new DateOnly(1953, 10, 19), "Ballantine Books", new List<int>(){1, 2, 3, 4}),
                 new Book(1, "Dandelion Wine", 900, new DateOnly(1957, 09, 21), "Doubleday", new List<int>(){5, 6, 7, 8}),
@@ -34,7 +38,7 @@ List<Book> books2 = new List<Book>()
                 new Book(4, "The Metamorphosis", 743, new DateOnly(1915, 08, 25), "Kurt Wolff Verlag", new List<int>(){14, 15}),
                 new Book(5, "The Trial", 3045, new DateOnly(1925, 09, 21), "Verlag Die Schmiede", new List<int>(){16, 17, 18}),
 };
-List<Author> authors1 = new List<Author>()
+        List<Author> authors1 = new List<Author>()
             {
                 new Author(1, "Ray", "Bradbury"),
                 new Author(2, "Jack", "London"),
@@ -50,201 +54,281 @@ List<Author> authors1 = new List<Author>()
                 new Author(12, "J. R. R.", "Tolkien"),
                 new Author(13, "Stieg", "Larsson")
             };
-List<Author> authors2 = new List<Author>()
-{
+        List<Author> authors2 = new List<Author>()
+        {
                 new Author(0, "Ray", "Bradbury"),
                 new Author(1, "J. R. R.", "Tolkien"),
                 new Author(2, "Charles", "Dickens"),
                 new Author(3, "Franz", "Kafka"),
-              };
-List<BookOfAuthor> bookOfAuthorList1 = new List<BookOfAuthor>();
-List<BookOfAuthor> bookOfAuthorList2 = new List<BookOfAuthor>();
-try
-{
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[0].BookId, authors1[0].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[1].BookId, authors1[0].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[2].BookId, authors1[0].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[3].BookId, authors1[1].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[4].BookId, authors1[2].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[5].BookId, authors1[3].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[6].BookId, authors1[4].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[7].BookId, authors1[5].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[8].BookId, authors1[3].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[9].BookId, authors1[6].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[10].BookId, authors1[6].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[11].BookId, authors1[7].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[12].BookId, authors1[7].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[13].BookId, authors1[8].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[13].BookId, authors1[9].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[14].BookId, authors1[8].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[15].BookId, authors1[10].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[16].BookId, authors1[11].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[17].BookId, authors1[11].AuthorId));
-    bookOfAuthorList1.Add(new BookOfAuthor(books1[18].BookId, authors1[12].AuthorId));
+        };
+        List<BookOfAuthor> bookOfAuthorList1 = new List<BookOfAuthor>();
+        List<BookOfAuthor> bookOfAuthorList2 = new List<BookOfAuthor>();
+        try
+        {
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[0].BookId, authors1[0].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[1].BookId, authors1[0].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[2].BookId, authors1[0].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[3].BookId, authors1[1].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[4].BookId, authors1[2].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[5].BookId, authors1[3].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[6].BookId, authors1[4].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[7].BookId, authors1[5].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[8].BookId, authors1[3].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[9].BookId, authors1[6].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[10].BookId, authors1[6].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[11].BookId, authors1[7].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[12].BookId, authors1[7].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[13].BookId, authors1[8].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[13].BookId, authors1[9].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[14].BookId, authors1[8].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[15].BookId, authors1[10].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[16].BookId, authors1[11].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[17].BookId, authors1[11].AuthorId));
+            bookOfAuthorList1.Add(new BookOfAuthor(books1[18].BookId, authors1[12].AuthorId));
 
-    bookOfAuthorList2.Add(new BookOfAuthor(books2[0].BookId, authors2[0].AuthorId));
-    bookOfAuthorList2.Add(new BookOfAuthor(books2[1].BookId, authors2[0].AuthorId));
-    bookOfAuthorList2.Add(new BookOfAuthor(books2[2].BookId, authors2[1].AuthorId));
-    bookOfAuthorList2.Add(new BookOfAuthor(books2[3].BookId, authors2[2].AuthorId));
-    bookOfAuthorList2.Add(new BookOfAuthor(books2[4].BookId, authors2[3].AuthorId));
-    bookOfAuthorList2.Add(new BookOfAuthor(books2[5].BookId, authors2[3].AuthorId));
-}
-catch (IndexOutOfRangeException e)
-    { Console.WriteLine(e.Message); }
+            bookOfAuthorList2.Add(new BookOfAuthor(books2[0].BookId, authors2[0].AuthorId));
+            bookOfAuthorList2.Add(new BookOfAuthor(books2[1].BookId, authors2[0].AuthorId));
+            bookOfAuthorList2.Add(new BookOfAuthor(books2[2].BookId, authors2[1].AuthorId));
+            bookOfAuthorList2.Add(new BookOfAuthor(books2[3].BookId, authors2[2].AuthorId));
+            bookOfAuthorList2.Add(new BookOfAuthor(books2[4].BookId, authors2[3].AuthorId));
+            bookOfAuthorList2.Add(new BookOfAuthor(books2[5].BookId, authors2[3].AuthorId));
+        }
+        catch (IndexOutOfRangeException e)
+        { Console.WriteLine(e.Message); }
 
-Library lib1 = new Library("Library 1", books1, authors1, bookOfAuthorList1);
-Library lib2 = new Library("Library 2", books2, authors2, bookOfAuthorList2);
-Library lib3 = new Library("Empty Library 3", new List<Book>(), new List<Author>(), new List<BookOfAuthor>());
+        Library lib1 = new Library("Library 1", books1, authors1, bookOfAuthorList1);
+        Library lib2 = new Library("Library 2", books2, authors2, bookOfAuthorList2);
+        Library lib3 = new Library("Empty Library 3", new List<Book>(), new List<Author>(), new List<BookOfAuthor>());
 
-List<Library> allLibs = new List<Library>()
-{
-    lib1,
-    lib2,
-    lib3
-};
+        List<Library> allLibs = new List<Library>()
+        {
+            lib1,
+            lib2,
+            lib3
+        };
 
+        //1. Selects all authors and titles of all their books
+        Query1(lib1);
 
-//foreach (var book in library.Books) Console.WriteLine(book.ToString());
-//foreach (var author in library.Authors) Console.WriteLine(author.ToString());
+        //2. Select authors for each book (with using query syntax)
+        Query2(lib1);
 
-//1. Selects all authors and titles of all their books
-var query1 = lib1.Authors.GroupJoin(
-        lib1.BookOfAuthorList,
+        //3. Order books published before 2000 by titles and show number of every book (count inventory number)
+        Query3(lib1);
+
+        //4. Show inventory numbers of all books for each author
+        Query4(lib1);
+
+        //5. Show all books published since 2000 year, sorted by date
+        Query5(lib1);
+
+        //6. Show top 5 most expensive books and its/their author/-s
+        Query6(lib1);
+
+        //7. Show sum of all books for every author and order them by book number from bigger to smaller and then by author firstname
+        Query7(lib1);
+
+        //8. Select books with max price
+        Query8(lib1);
+
+        //9. Select titles of all books that are in lib1 and lib2 ordered by titles
+        Query9(lib1, lib2);
+
+        //10. Select authors that are common for 2 libraries
+        Query10(lib1, lib2);
+
+        //11. Select authors different for 2 libs
+        Query11(lib1, lib2);
+
+        //12. Show authors in all libraries and publishers of their books
+        Query12(allLibs);
+
+        //13. Select average number of copies of each book (count inventory numbers) for each library
+        Query13(allLibs);
+
+        //14. Select 5-th book from list ordered by date
+        Query14(lib1);
+
+        //15. Select books with shortest Title
+        Query15(lib1);
+
+        //16. From lib1 select all books that have price bigger than average price of all books in lib2
+        Query16(lib1, lib2);
+
+        //17. Select the top 10 most frequent words in book titles
+        Query17(lib1);
+
+        //18. Select percent of sum of all books for every book
+        Query18(lib1);
+
+        //19. Group books by their publishing month
+        Query19(lib1);
+
+        //20. Show books that have only one inventory number
+        Query20(lib1);
+
+        //21. Select price sum of top 5 expensive books
+        //Select the latest books by publishing date
+        //Select all publishers from 2 libs
+        //Select books written by more than one author
+        //Select max number of books that has price sum not bigger than 5000
+    }
+
+    /// <summary>
+    /// 1. Selects all authors and titles of all their books
+    /// </summary>
+    /// <param name="lib"></param>
+    public static void Query1(Library lib)
+    {
+        var query1 = lib.Authors.GroupJoin(
+        lib.BookOfAuthorList,
         author => author.AuthorId,
         book => book.IdOfAuthor,
-        (auth, books) => new { author = auth,
-                               book = books.Select(b => b.IdOfBook).Join(
-                                   lib1.Books,
+        (auth, books) => new
+        {
+            author = auth,
+            book = books.Select(b => b.IdOfBook).Join(
+                                   lib.Books,
                                    bookId => bookId,
                                    book => book.BookId,
-                                   (_, book) => book)                                   
-                                }
+                                   (_, book) => book)
+        }
     );
-//foreach (var bookOfAuthor in query1)
-//{
-//    Console.WriteLine($"{bookOfAuthor.author}:");
-//    foreach (var book in bookOfAuthor.book)
-//    {
-//        Console.WriteLine(book.Title);
-//    }
-//    Console.WriteLine();
-//}
-
-//2. Select authors for each book (with using query syntax)
-var query2 = from b in lib1.Books
-             select new {
-                 book = b,
-                 authors = (from ab in lib1.BookOfAuthorList 
-                 join a in lib1.Authors on ab.IdOfAuthor equals a.AuthorId
-                 where b.BookId == ab.IdOfBook
-                 select a).ToList() };
-//foreach (var item in query2)
-//    Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
-
-//3. Order books published before 2000 by titles and show number of every book (count inventory number)
-var query3 = lib1.Books.OrderBy(b => b.Title)
+        foreach (var bookOfAuthor in query1)
+        {
+            Console.WriteLine($"{bookOfAuthor.author}:");
+            foreach (var book in bookOfAuthor.book)
+            {
+                Console.WriteLine(book.Title);
+            }
+            Console.WriteLine();
+        }
+    }
+    /// <summary>
+    /// 2. Select authors for each book (with using query syntax)
+    /// </summary>
+    /// <param name="lib"></param>
+    public static void Query2(Library lib)
+    {
+        var query2 = from b in lib.Books
+                     select new
+                     {
+                         book = b,
+                         authors = (from ab in lib.BookOfAuthorList
+                                    join a in lib.Authors on ab.IdOfAuthor equals a.AuthorId
+                                    where b.BookId == ab.IdOfBook
+                                    select a).ToList()
+                     };
+        foreach (var item in query2)
+            Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
+    }
+    public static void Query3(Library lib)
+    {
+        var query3 = lib.Books.OrderBy(b => b.Title)
                 .Where(b => b.PublishingDate.Year < 2000)
                 .Select(b => new
                 {
                     book = b,
                     copyNumber = b.InventoryNumbers.Count()
                 });
-//foreach (var item in query3)
-//    Console.WriteLine($"{item.book}\t{item.copyNumber}");
-
-//4. Show inventory numbers of all books for each author
-var query4 = lib1.Authors.GroupJoin(
-        lib1.BookOfAuthorList,
+        foreach (var item in query3)
+            Console.WriteLine($"{item.book}\t{item.copyNumber}");
+    }
+    public static void Query4(Library lib)
+    {
+        var query4 = lib.Authors.GroupJoin(
+        lib.BookOfAuthorList,
         a => a.AuthorId,
         ab => ab.IdOfAuthor,
         (a, ab) => new
         {
             author = a,
-            inventNumbers = lib1.Books
+            inventNumbers = lib.Books
                         .Where(b => ab.Select(x => x.IdOfBook)
                                       .Contains(b.BookId))
                         .SelectMany(y => y.InventoryNumbers)
         }
         );
-//foreach (var item in query4)
-//    Console.WriteLine($"{item.author}\t{String.Join(", ", item.inventNumbers)}");
+        foreach (var item in query4)
+            Console.WriteLine($"{item.author}\t{String.Join(", ", item.inventNumbers)}");
+    }
+    public static void Query5(Library lib)
+    {
+        var query5 = lib.Books.Where(b => b.PublishingDate.Year >= 2000)
+                              .OrderBy(b => b.PublishingDate);
+        foreach (var book in query5) Console.WriteLine(book.ToString());
+    }
+    public static void Query6(Library lib)
+    {
+        var query6 = lib.Books
+                .OrderByDescending(b => b.Price)
+                .Take(5)
+                .GroupJoin(
+                lib.BookOfAuthorList,
+                b => b.BookId,
+                ab => ab.IdOfBook,
+                (b, ab) => new
+                {
+                    book = b,
+                    authors = ab.Select(x => x.IdOfAuthor)
+                            .Join(
+                                lib.Authors,
+                                ab => ab,
+                                a => a.AuthorId,
+                                (_, a) => a).ToList()
+                }
+            );
+        foreach (var item in query6)
+            Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
+    }
+    public static void Query7(Library lib)
+    {
+        var query7 = from aBookn in (
+                         from ab in lib.BookOfAuthorList
+                         group ab by ab.IdOfAuthor
+                         into authorGroup
+                         select new
+                         {
+                             author = (from a in lib.Authors
+                                       where a.AuthorId == authorGroup.Key
+                                       select a).Single(),
+                             bookNum = authorGroup.Count()
+                         })
+                     orderby aBookn.author.Firstname
+                     orderby aBookn.bookNum descending
+                     select aBookn;
+        foreach (var item in query7)
+            Console.WriteLine($"{item.author}\t{item.bookNum}");
 
-//5. Show all books published since 2000 year, sorted by date
+    }
+    public static void Query8(Library lib)
+    {
+        var query8 = from b in lib.Books
+                     where b.Price == (from b1 in lib.Books
+                                       select b1.Price).Max()
+                     select b;
+        foreach (var item in query8)
+            Console.WriteLine(item);
+    }
+    public static void Query9(Library lib1, Library lib2)
+    {
+        var query9 = lib1.Books.Select(b => b.Title)
+                               .Union(lib2.Books.Select(b => b.Title))
+                               .OrderBy(title => title);
 
-var query5 = lib1.Books.Where(b => b.PublishingDate.Year >= 2000).OrderBy(b => b.PublishingDate);
-//foreach (var book in query5) Console.WriteLine(book.ToString());
-
-//6. Show top 5 most expensive books and its/their author/-s
-
-var query6 = lib1.Books
-        .OrderByDescending(b => b.Price)
-        .Take(5)
-        .GroupJoin(
-        lib1.BookOfAuthorList,
-        b => b.BookId,
-        ab => ab.IdOfBook,
-        (b, ab) => new
-        {
-            book = b,
-            authors = ab.Select(x => x.IdOfAuthor)
-                    .Join(
-                        lib1.Authors,
-                        ab => ab,
-                        a => a.AuthorId,
-                        (_, a) => a).ToList()
-        }
-    );
-//foreach(var item in query6)
-//    Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
-
-//7. Show sum of all books for every author and order them by book number from bigger to smaller and then by author firstname
-
-var query7 = from aBookn in(
-                 from ab in lib1.BookOfAuthorList
-                 group ab by ab.IdOfAuthor
-                 into authorGroup         
-                 select new
-                 {
-                     author = (from a in lib1.Authors
-                              where a.AuthorId == authorGroup.Key
-                              select a).Single(),
-                     bookNum = authorGroup.Count()
-                 })
-             orderby aBookn.author.Firstname
-             orderby aBookn.bookNum descending
-             select aBookn;
-//foreach (var item in query7)
-//    Console.WriteLine($"{item.author}\t{item.bookNum}");
-
-
-//8. Select books with max price
-var query8 = from b in lib1.Books
-             where b.Price == (from b1 in lib1.Books
-                              select b1.Price).Max()
-             select b;
-//foreach (var item in query8)
-//    Console.WriteLine(item);
-
-
-//9. Select titles of all books that are in lib1 and lib2 ordered by titles
-
-var query9 = lib1.Books.Select(b => b.Title)
-                       .Union(lib2.Books.Select(b => b.Title))
-                       .OrderBy(title => title);
-
-//foreach (var item in query9)
-//    Console.WriteLine($"{item}");
-
-//10. Select authors that are common for 2 libraries
-
-var query10 = lib1.Authors.Intersect(lib2.Authors, new AuthorComparerByName());
-
-//foreach (var item in query10)
-//    Console.WriteLine($"{item.Firstname} {item.Lastname}");
-
-//11. Select authors different for 2 libs
-var query11 = (from a1 in lib1.Authors
-               select a1)
+        foreach (var item in query9)
+            Console.WriteLine($"{item}");
+    }
+    public static void Query10(Library lib1, Library lib2)
+    {
+        var query10 = lib1.Authors.Intersect(lib2.Authors, new AuthorComparerByName());
+        foreach (var item in query10)
+            Console.WriteLine($"{item.Firstname} {item.Lastname}");
+    }
+    public static void Query11(Library lib1, Library lib2)
+    {
+        var query11 = (from a1 in lib1.Authors
+                       select a1)
                    .Union(
                    from a2 in lib2.Authors
                    select a2, new AuthorComparerByName())
@@ -255,108 +339,116 @@ var query11 = (from a1 in lib1.Authors
                                select a2,
                                new AuthorComparerByName())
                     );
-//foreach (var item in query11)
-//    Console.WriteLine(item);
+        foreach (var item in query11)
+            Console.WriteLine(item);
+    }
+    public static void Query12(List<Library> allLibs)
+    {
+        var query12 = allLibs.SelectMany(l => l.Authors
+                             .GroupJoin(
+                                    l.BookOfAuthorList,
+                                    a => a.AuthorId,
+                                    ab => ab.IdOfAuthor,
+                                    (a, ab) => new
+                                    {
+                                        author = a,
+                                        publishers = l.Books.Where(b => ab.Select(x => x.IdOfBook)
+                                            .Contains(b.BookId))
+                                            .Select(b => b.Publisher),
+                                    })).GroupBy(item => item.author,
+                                        item => item.publishers,
+                                        new AuthorComparerByName()
+                                        ).Select(item => new
+                                        {
+                                            author = item.Key,
+                                            publishers = item.SelectMany(x => x)
+                                                             .Distinct()
+                                                             .ToList()
+                                        })
+                              .OrderBy(item => item.author.Firstname);
+        foreach (var item in query12)
+            Console.WriteLine($"{item.author}:\t{String.Join(", ", item.publishers)}");
+    }
+    public static void Query13(List<Library> allLibs)
+    {
+        var query13 = allLibs.Select(l => new
+        {
+            Name = l.Name,
+            averageNumOfCopies = l.Books.Any() ? l.Books.Average(b => b.InventoryNumbers.Count()) : 0
+        });
+        foreach (var item in query13)
+            Console.WriteLine($"{item.Name}: {item.averageNumOfCopies.ToString("0.00")}");
+    }
+    public static void Query14(Library lib)
+    {
+        int indexOfBookInList = 4;
+        var query14 = lib.Books.OrderBy(b => b.PublishingDate)
+                .ElementAtOrDefault(indexOfBookInList);
+        Console.WriteLine($"Book on the {indexOfBookInList + 1} place:\n\t{query14}");
 
-//12. Show authors in all libraries and publishers of their books
-
-var query12 = allLibs.SelectMany(l => l.Authors
-                     .GroupJoin(
-                            l.BookOfAuthorList,
-                            a => a.AuthorId,
-                            ab => ab.IdOfAuthor,
-                            (a, ab) => new
-                            {
-                                author = a,
-                                publishers = l.Books.Where(b => ab.Select(x => x.IdOfBook)
-                                    .Contains(b.BookId))
-                                    .Select(b => b.Publisher),
-                            })).GroupBy(item => item.author,
-                                item => item.publishers,
-                                new AuthorComparerByName()
-                                ).Select(item => new {
-                                    author = item.Key,
-                                    publishers = item.SelectMany(x => x)
-                                                     .Distinct()
-                                                     .ToList()
-                                })
-                      .OrderBy(item => item.author.Firstname);
-//foreach (var item in query12)
-//    Console.WriteLine($"{item.author}:\t{String.Join(", ", item.publishers)}");
-
-//13. Select average number of copies of each book (count inventory numbers) for each library
-var query13 = allLibs.Select(l => new { Name = l.Name,
-                                        averageNumOfCopies = l.Books.Any() ? l.Books.Average(b => b.InventoryNumbers.Count()) : 0
-                                        });
-//foreach (var item in query13)
-//    Console.WriteLine($"{item.Name}: {item.averageNumOfCopies.ToString("0.00")}");
-
-//14. Select 5-th book from list ordered by date
-int indexOfBookInList = 4;
-var query14 = lib1.Books.OrderBy(b => b.PublishingDate)
-        .ElementAtOrDefault(indexOfBookInList);
-//Console.WriteLine($"Book on the {indexOfBookInList + 1} place:\n\t{query14}");
-
-
-//15. Select books with shortest Title
-var query15 = lib1.Books.Where(b => b.Title.Count()
-                                    == lib1.Books.Min(b => b.Title.Count()));
-//foreach (var item in query15)
-//    Console.WriteLine(item);
-
-//16. From lib1 select all books that have price bigger than average price of all books in lib2
-double averagePriceOfBooksInlib2 = lib2.Books.Average(b => b.Price);
-var query16 = lib1.Books.Where(b => b.Price >  averagePriceOfBooksInlib2);
-//Console.WriteLine($"Books that have price bigger than {averagePriceOfBooksInlib2}:");
-//foreach (var item in query16)
-//    Console.WriteLine(item);
-
-//17. Select the top 10 most frequent words in book titles
-Regex rgx = new Regex("[^a-zA-Z0-9 -]");
-var query17 = lib1.Books.SelectMany(b => rgx.Replace(b.Title, "")
-                                            .ToLower()
-                                            .Split())                        
-                        .GroupBy(word => word,
-                                 word => lib1.Books.SelectMany(b => rgx.Replace(b.Title, "")
-                                            .ToLower()
-                                            .Split())
-                                 .Where(w => w.Equals(word))
-                                 .Count(),
-                                 (word, num) => new { Word = word, Num = num.Count() })
-                        .OrderByDescending(item => item.Num)
-                        .ThenBy(item => item.Word)
-                        .Take(10);
-//foreach (var item in query17)
-//    Console.WriteLine($"{item.Word}, {item.Num}");
-
-//18. Select percent of sum of all books for every book
-double sumPriceOfAllBooks = lib1.Books.Sum(b => b.Price);
-var query18 = lib1.Books.Select(b => new { book = b, Percent = (double)b.Price / sumPriceOfAllBooks });
-//foreach (var b in query18) Console.WriteLine($"{b.book.Title},\t{b.book.Price},\t{b.Percent.ToString("0.00")}");
-
-//19. Group books by their publishing month
-var query19 = from book in lib1.Books
-              group book by book.PublishingDate.Month
+    }
+    public static void Query15(Library lib)
+    {
+        var query15 = lib.Books.Where(b => b.Title.Count()
+                                    == lib.Books.Min(b => b.Title.Count()));
+        foreach (var item in query15)
+            Console.WriteLine(item);
+    }
+    public static void Query16(Library lib1, Library lib2)
+    {
+        double averagePriceOfBooksInlib2 = lib2.Books.Average(b => b.Price);
+        var query16 = lib1.Books.Where(b => b.Price > averagePriceOfBooksInlib2);
+        Console.WriteLine($"Books that have price bigger than {averagePriceOfBooksInlib2}:");
+        foreach (var item in query16)
+            Console.WriteLine(item);
+    }
+    public static void Query17(Library lib)
+    {
+        Regex rgx = new Regex("[^a-zA-Z0-9 -]");
+        var query17 = lib.Books.SelectMany(b => rgx.Replace(b.Title, "")
+                                                    .ToLower()
+                                                    .Split())
+                                .GroupBy(word => word,
+                                         word => lib.Books.SelectMany(b => rgx.Replace(b.Title, "")
+                                                    .ToLower()
+                                                    .Split())
+                                         .Where(w => w.Equals(word))
+                                         .Count(),
+                                         (word, num) => new { Word = word, Num = num.Count() })
+                                .OrderByDescending(item => item.Num)
+                                .ThenBy(item => item.Word)
+                                .Take(10);
+        foreach (var item in query17)
+            Console.WriteLine($"{item.Word}, {item.Num}");
+    }
+    public static void Query18(Library lib)
+    {
+        double sumPriceOfAllBooks = lib.Books.Sum(b => b.Price);
+        var query18 = lib.Books.Select(b => new { book = b, Percent = (double)b.Price / sumPriceOfAllBooks });
+        foreach (var b in query18) 
+            Console.WriteLine($"{b.book.Title},\t{b.book.Price},\t{b.Percent.ToString("0.00")}");
+    }
+    public static void Query19(Library lib)
+    {
+        var query19 = from book in lib.Books
+                      group book by book.PublishingDate.Month
               into groupByMonths
-              orderby groupByMonths.Key
-              select groupByMonths;
-//foreach (var item in query19)
-//{
-//    Console.WriteLine($"Month {item.Key}");
-//    foreach (var item1 in item)
-//        Console.WriteLine($"\t{item1}");
-//}
-
-//20. Show books that have only one inventory number
-var query20 = from book in lib1.Books
-              where book.InventoryNumbers.Count() == 1
-              select book;
-//foreach (var item in query20)
-//    Console.WriteLine(item);
-
-//21. Select price sum of top 5 expensive books
-//Select the latest books by publishing date
-//Select all publishers from 2 libs
-//Select books written by more than one author
-//Select max number of books that has price sum not bigger than 5000
+                      orderby groupByMonths.Key
+                      select groupByMonths;
+        foreach (var item in query19)
+        {
+            Console.WriteLine($"Month {item.Key}");
+            foreach (var item1 in item)
+                Console.WriteLine($"\t{item1}");
+        }
+    }
+    public static void Query20(Library lib)
+    {
+        var query20 = from book in lib.Books
+                      where book.InventoryNumbers.Count() == 1
+                      select book;
+        foreach (var item in query20)
+            Console.WriteLine(item);
+    }
+}
 

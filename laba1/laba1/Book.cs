@@ -40,7 +40,7 @@ namespace laba1
         }
         public override string ToString()
         {
-            string str = $"{_bookId.ToString().PadRight(3)} {_title.PadRight(25)} {_price.ToString().PadRight(7)} {_publishingDate}    {_publisherId.ToString().PadRight(25)}";
+            string str = $"{_bookId.ToString().PadRight(3)} {_title.PadRight(25)} {_price.ToString().PadRight(7)} {_publishingDate}    {_publisherId.ToString().PadRight(3)}";
             return str;
         }
     }

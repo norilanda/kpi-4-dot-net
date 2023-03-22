@@ -4,6 +4,7 @@
 using laba1;
 using static System.Reflection.Metadata.BlobBuilder;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 class Program
 {
@@ -149,8 +150,8 @@ class Program
         ////12. (Extentions syntax) Show authors in all libraries and publishers of their books
         //Query12(books, authors, bookOfAuthorList, publishers);
 
-        ////13. (Extentions syntax) Select average number of copies of each book (count inventory numbers) for each library
-        //Query13(libraries, bookOfLibraryList);
+        //13. (Query syntax + Extentions syntax) 
+        Query13(books, bookOfLibraryList, 0.5);
 
         //14. (Extentions syntax) Select 5-th book from list ordered by date
         Query14(books, 5);
@@ -377,7 +378,6 @@ class Program
             .Select(a => a.authorsGrouped.Distinct(new AuthorComparerByName()));
     }
 
-
     // 11. (Extentions syntax) Select authors different (unique) for all libs
     public static void Query11(List<Author> authors, List<BookOfLibrary> bookOfLibraryList, List<BookOfAuthor> bookOfAuthorList)
     {
@@ -396,25 +396,42 @@ class Program
         Console.WriteLine();
     }
 
-    //    /// 12. (Extentions syntax) Show authors and publishers of their books
-    //    public static void Query12(List<Book> books, List<Author> authors, List<BookOfAuthor> bookOfAuthorList, List<Publisher> publishers)
-    //    {
-    //        var query12 = 
-    //        Console.WriteLine("12. Authors and publishers of their books:");
-    //        foreach (var item in query12)
-    //            Console.WriteLine($"\t{item.author.ToString().PadRight(18)}\t{String.Join(", ", item.publishers)}");
-    //        Console.WriteLine();
-    //    }
+    ///// 12. (Extentions syntax) 
+    //public static void Query12(List<Book> books, List<Author> authors, List<BookOfAuthor> bookOfAuthorList, List<Publisher> publishers)
+    //{
+    //    var query12 =
+    //    Console.WriteLine("12. Authors and publishers of their books:");
+    //    foreach (var item in query12)
+    //        Console.WriteLine($"\t{item.author.ToString().PadRight(18)}\t{String.Join(", ", item.publishers)}");
+    //    Console.WriteLine();
+    //}
 
-    //    /// 13. (Extentions syntax) Select average number of copies of each book (count inventory numbers) for each library
-    //    public static void Query13(List<Library> libs, List<BookOfLibrary> bookOfLibraryList)
-    //    {
-    //        var query13 = 
-    //        Console.WriteLine("13. Average number of copies of books for each library:");
-    //        foreach (var item in query13)
-    //            Console.WriteLine($"\t{item.Name.PadRight(18)} {item.averageNumOfCopies.ToString("0.00")}");
-    //        Console.WriteLine();
-    //    }
+    /// 13. (Extentions syntax) Select 'percentFilter' number of books ordered by number of sum of copies in all libraries from max to min
+    public static void Query13(List<Book> books, List<BookOfLibrary> bookOfLibraryList, double percentFilter = 0.3)
+    {
+        var query13 = (from b in books
+                      join gb in
+                          (from bl in bookOfLibraryList
+                           group bl.InventoryNumbers by bl.BookId
+                          into g
+                           select new
+                           {
+                               Key = g.Key,
+                               CountOfCopies = g.SelectMany(n => n).Count()
+                           })
+                          on b.BookId equals gb.Key
+                      select new
+                      {
+                          book = b,
+                          CountOfCopies = gb.CountOfCopies
+                      })
+                      .OrderByDescending(item => item.CountOfCopies)
+                      .Take((int)(books.Count()* percentFilter));
+        Console.WriteLine("13. :");
+        foreach (var item in query13)
+            Console.WriteLine($"\t{item.book} copies num={item.CountOfCopies}");
+        Console.WriteLine();
+    }
 
     /// 14. (Extentions syntax) Select n-th book from list ordered by date
     public static void Query14(List<Book> books, int n = 5)

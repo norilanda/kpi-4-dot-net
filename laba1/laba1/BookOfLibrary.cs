@@ -18,6 +18,8 @@ namespace laba1
         private int _bookId;
         private List<int> _inventoryNumbers;
 
+        public int LibraryId => _libraryId;
+        public int BookId => _bookId;
         public List<int> InventoryNumbers => _inventoryNumbers;
 
         public BookOfLibrary(int libraryId, int bookId, List<int> inventoryNumbers)

@@ -104,68 +104,69 @@ class Program
             lib3
         };
 
-        //1. Selects all authors and titles of all their books
+        //1. (Extentions syntax) Selects all authors and titles of all their books
         Query1(lib1);
 
-        //2. Select authors for each book (with using query syntax)
+        //2. (Query syntax) Select authors for each book
         Query2(lib1);
 
-        //3. Order books published before 2000 by titles and show number of every book (count inventory number)
+        //3. (Extentions syntax) Order books published before 2000 by titles and show number of every book (count inventory number)
         Query3(lib1);
 
-        //4. Show inventory numbers of all books for each author
+        //4. (Extentions syntax) Show inventory numbers of all books for each author
         Query4(lib1);
 
-        //5. Show all books published since 2000 year, sorted by date
+        //5. (Extentions syntax) Show all books published since 2000 year, sorted by date
         Query5(lib1);
 
-        //6. Show top 5 most expensive books and its/their author/-s
+        //6. (Extentions syntax) Show top 5 most expensive books and its/their author/-s
         Query6(lib1);
 
-        //7. Show sum of all books for every author and order them by book number from bigger to smaller and then by author firstname
+        //7. (Query syntax) Show sum of all books for every author and order them by book number from bigger to smaller and then by author firstname
         Query7(lib1);
 
-        //8. Select books with max price
+        //8. (Query syntax) Select books with max price
         Query8(lib1);
 
-        //9. Select titles of all books that are in lib1 and lib2 ordered by titles
+        //9. (Extentions syntax) Select titles of all books that are in lib1 and lib2 ordered by titles
         Query9(lib1, lib2);
 
-        //10. Select authors that are common for 2 libraries
+        //10. (Extentions syntax) Select authors that are common for 2 libraries
         Query10(lib1, lib2);
 
-        //11. Select authors different for 2 libs
+        //11. (Extentions syntax) Select authors different for 2 libs
         Query11(lib1, lib2);
 
-        //12. Show authors in all libraries and publishers of their books
+        //12. (Extentions syntax) Show authors in all libraries and publishers of their books
         Query12(allLibs);
 
-        //13. Select average number of copies of each book (count inventory numbers) for each library
+        //13. (Extentions syntax) Select average number of copies of each book (count inventory numbers) for each library
         Query13(allLibs);
 
-        //14. Select 5-th book from list ordered by date
+        //14. (Extentions syntax) Select 5-th book from list ordered by date
         Query14(lib1);
 
-        //15. Select books with shortest Title
+        //15. (Extentions syntax) Select books with shortest Title
         Query15(lib1);
 
-        //16. From lib1 select all books that have price bigger than average price of all books in lib2
+        //16. (Extentions syntax) From lib1 select all books that have price bigger than average price of all books in lib2
         Query16(lib1, lib2);
 
-        //17. Select the top 10 most frequent words in book titles
+        //17. (Extentions syntax) Select the top 10 most frequent words in book titles
         Query17(lib1);
 
-        //18. Select percent of sum of all books for every book
+        //18. (Extentions syntax) Select percent of sum of all books for every book
         Query18(lib1);
 
-        //19. Group books by their publishing month
+        //19. (Query syntax) Group books by their publishing month
         Query19(lib1);
 
-        //20. Show books that have only one inventory number
+        //20. (Query syntax) Show books that have only one inventory number
         Query20(lib1);
     }
 
     /// <summary>
+    /// (Extentions syntax)
     /// 1. Selects all authors and titles of all their books
     /// </summary>
     /// <param name="lib"></param>
@@ -197,6 +198,7 @@ class Program
     }
 
     /// <summary>
+    /// (Query syntax)
     /// 2. Select authors for each book (with using query syntax)
     /// </summary>
     /// <param name="lib"></param>
@@ -216,6 +218,7 @@ class Program
     }
 
     /// <summary>
+    /// (Extentions syntax)
     /// 3. Order books published before 2000 by titles and show number of every book (count inventory number)
     /// </summary>
     /// <param name="lib"></param>
@@ -233,7 +236,7 @@ class Program
     }
 
     /// <summary>
-    /// 4. Show inventory numbers of all books for each author
+    /// 4. (Extentions syntax) Show inventory numbers of all books for each author
     /// </summary>
     /// <param name="lib"></param>
     public static void Query4(Library lib)
@@ -256,7 +259,7 @@ class Program
     }
 
     /// <summary>
-    /// 5. Show all books published since 2000 year, sorted by date
+    /// 5. (Extentions syntax) Show all books published since 2000 year, sorted by date
     /// </summary>
     /// <param name="lib"></param>
     public static void Query5(Library lib)
@@ -267,7 +270,7 @@ class Program
     }
 
     /// <summary>
-    /// 6. Show top 5 most expensive books and its/their author/-s
+    /// 6. (Extentions syntax) Show top 5 most expensive books and its/their author/-s
     /// </summary>
     /// <param name="lib"></param>
     public static void Query6(Library lib)
@@ -295,7 +298,7 @@ class Program
     }
 
     /// <summary>
-    /// 7. Show sum of all books for every author and order them by book number from bigger to smaller and then by author firstname
+    /// 7. (Query syntax) Show sum of all books for every author and order them by book number from bigger to smaller and then by author firstname
     /// </summary>
     /// <param name="lib"></param>
     public static void Query7(Library lib)
@@ -320,7 +323,7 @@ class Program
     }
 
     /// <summary>
-    /// 8. Select books with max price
+    /// 8. (Query syntax) Select books with max price
     /// </summary>
     /// <param name="lib"></param>
     public static void Query8(Library lib)
@@ -334,7 +337,7 @@ class Program
     }
 
     /// <summary>
-    /// 9. Select titles of all books that are in lib1 and lib2 ordered by titles
+    /// 9. (Extentions syntax) Select titles of all books that are in lib1 and lib2 ordered by titles
     /// </summary>
     /// <param name="lib1"></param>
     /// <param name="lib2"></param>
@@ -349,7 +352,7 @@ class Program
     }
 
     /// <summary>
-    /// 10. Select authors that are common for 2 libraries
+    /// 10. (Extentions syntax) Select authors that are common for 2 libraries
     /// </summary>
     /// <param name="lib1"></param>
     /// <param name="lib2"></param>
@@ -361,7 +364,7 @@ class Program
     }
 
     /// <summary>
-    /// 11. Select authors different for 2 libs
+    /// 11. (Extentions syntax) Select authors different for 2 libs
     /// </summary>
     /// <param name="lib1"></param>
     /// <param name="lib2"></param>
@@ -384,7 +387,7 @@ class Program
     }
 
     /// <summary>
-    /// 12. Show authors in all libraries and publishers of their books
+    /// 12. (Extentions syntax) Show authors in all libraries and publishers of their books
     /// </summary>
     /// <param name="allLibs"></param>
     public static void Query12(List<Library> allLibs)
@@ -416,7 +419,7 @@ class Program
     }
 
     /// <summary>
-    /// 13. Select average number of copies of each book (count inventory numbers) for each library
+    /// 13. (Extentions syntax) Select average number of copies of each book (count inventory numbers) for each library
     /// </summary>
     /// <param name="allLibs"></param>
     public static void Query13(List<Library> allLibs)
@@ -431,7 +434,7 @@ class Program
     }
 
     /// <summary>
-    /// 14. Select 5-th book from list ordered by date
+    /// 14. (Extentions syntax) Select 5-th book from list ordered by date
     /// </summary>
     /// <param name="lib"></param>
     public static void Query14(Library lib)
@@ -444,7 +447,7 @@ class Program
     }
 
     /// <summary>
-    /// 15. Select books with shortest Title
+    /// 15. (Extentions syntax) Select books with shortest Title
     /// </summary>
     /// <param name="lib"></param>
     public static void Query15(Library lib)
@@ -456,7 +459,7 @@ class Program
     }
 
     /// <summary>
-    /// 16. From lib1 select all books that have price bigger than average price of all books in lib2
+    /// 16. (Extentions syntax) From lib1 select all books that have price bigger than average price of all books in lib2
     /// </summary>
     /// <param name="lib1"></param>
     /// <param name="lib2"></param>
@@ -470,7 +473,7 @@ class Program
     }
 
     /// <summary>
-    /// 17. Select the top 10 most frequent words in book titles
+    /// 17. (Extentions syntax) Select the top 10 most frequent words in book titles
     /// </summary>
     /// <param name="lib"></param>
     public static void Query17(Library lib)
@@ -494,7 +497,7 @@ class Program
     }
 
     /// <summary>
-    /// 18. Select percent of sum of all books for every book
+    /// 18. (Extentions syntax) Select percent of sum of all books for every book
     /// </summary>
     /// <param name="lib"></param>
     public static void Query18(Library lib)
@@ -506,7 +509,7 @@ class Program
     }
 
     /// <summary>
-    /// 19. Group books by their publishing month
+    /// 19. (Query syntax) Group books by their publishing month
     /// </summary>
     /// <param name="lib"></param>
     public static void Query19(Library lib)
@@ -523,8 +526,9 @@ class Program
                 Console.WriteLine($"\t{item1}");
         }
     }
+
     /// <summary>
-    /// 20. Show books that have only one inventory number
+    /// 20. (Query syntax) Show books that have only one inventory number
     /// </summary>
     /// <param name="lib"></param>
     public static void Query20(Library lib)

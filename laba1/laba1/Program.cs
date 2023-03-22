@@ -1,4 +1,6 @@
-﻿//Розробити структуру даних для зберігання інформації про книги в бібліотеці. Книга характеризується: назвою, прізвищем автора, вартістю, датою видання, видавництвом, списком інвентарних номерів (книга в кількох примірниках). У одного автора може бути декілька книг.
+﻿//Розробити структуру даних для зберігання інформації про книги в бібліотеці.
+//Книга характеризується: назвою, прізвищем автора, вартістю, датою видання, видавництвом, списком інвентарних номерів (книга в кількох примірниках).
+//У одного автора може бути декілька книг.
 using laba1;
 using static System.Reflection.Metadata.BlobBuilder;
 using System.Text.RegularExpressions;
@@ -7,6 +9,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        //creating 2 lists of books
         List<Book> books1 = new List<Book>()
             {
                 new Book(0, "Fahrenheit 451", 730, new DateOnly(1953, 10, 19), "Ballantine Books", new List<int>(){1, 2, 3, 4, 5}),
@@ -22,14 +25,15 @@ class Program
                 new Book(10, "The Lord of the Rings", 3055, new DateOnly(1954, 09, 21), "George Allen & Unwin", new List<int>(){25, 26, 27, 28})
             };
         List<Book> books2 = new List<Book>()
-{
+        {
                 new Book(0, "Fahrenheit 451", 830, new DateOnly(1953, 10, 19), "Ballantine Books", new List<int>(){1, 2, 3, 4}),
                 new Book(1, "Dandelion Wine", 900, new DateOnly(1957, 09, 21), "Doubleday", new List<int>(){5, 6, 7, 8}),
                 new Book(2, "The Hobbit", 2100, new DateOnly(1937, 09, 21), "George Allen & Unwin", new List<int>(){9, 10}),
                 new Book(3, "A Tale of Two Cities ", 830, new DateOnly(1959, 04, 30), "Chapman & Hall", new List<int>(){11, 12, 13}),
                 new Book(4, "The Metamorphosis", 743, new DateOnly(1915, 08, 25), "Kurt Wolff Verlag", new List<int>(){14, 15}),
                 new Book(5, "The Trial", 3045, new DateOnly(1925, 09, 21), "Verlag Die Schmiede", new List<int>(){16, 17, 18}),
-};
+        };
+        //creating 2 lists of authors
         List<Author> authors1 = new List<Author>()
             {
                 new Author(0, "Ray", "Bradbury"),
@@ -47,10 +51,12 @@ class Program
                 new Author(2, "Charles", "Dickens"),
                 new Author(3, "Franz", "Kafka"),
         };
+        //creating 2 lists of BookOfAuthor objects that connect books and corresponding authors from lists
         List<BookOfAuthor> bookOfAuthorList1 = new List<BookOfAuthor>();
         List<BookOfAuthor> bookOfAuthorList2 = new List<BookOfAuthor>();
         try
         {
+            //connecting books with authors from first lists
             bookOfAuthorList1.Add(new BookOfAuthor(books1[0].BookId, authors1[0].AuthorId));
             bookOfAuthorList1.Add(new BookOfAuthor(books1[1].BookId, authors1[0].AuthorId));
             bookOfAuthorList1.Add(new BookOfAuthor(books1[2].BookId, authors1[0].AuthorId));
@@ -64,6 +70,7 @@ class Program
             bookOfAuthorList1.Add(new BookOfAuthor(books1[9].BookId, authors1[6].AuthorId));
             bookOfAuthorList1.Add(new BookOfAuthor(books1[10].BookId, authors1[6].AuthorId));
 
+            //connecting books with authors from second lists
             bookOfAuthorList2.Add(new BookOfAuthor(books2[0].BookId, authors2[0].AuthorId));
             bookOfAuthorList2.Add(new BookOfAuthor(books2[1].BookId, authors2[0].AuthorId));
             bookOfAuthorList2.Add(new BookOfAuthor(books2[2].BookId, authors2[1].AuthorId));
@@ -74,10 +81,13 @@ class Program
         catch (IndexOutOfRangeException e)
         { Console.WriteLine(e.Message); }
 
+        //creating 3 libraries and adding books, authors and their connections to them.
+        //Third library is an empty one, so it has empy lists of books, authors and connections between them
         Library lib1 = new Library("Library 1", books1, authors1, bookOfAuthorList1);
         Library lib2 = new Library("Library 2", books2, authors2, bookOfAuthorList2);
         Library lib3 = new Library("Empty Library 3", new List<Book>(), new List<Author>(), new List<BookOfAuthor>());
 
+        //adding all libraries to a list
         List<Library> allLibs = new List<Library>()
         {
             lib1,

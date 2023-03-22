@@ -9,32 +9,40 @@ class Program
 {
     static void Main(string[] args)
     {
-        //creating 2 lists of books
-        List<Book> books1 = new List<Book>()
-            {
-                new Book(0, "Fahrenheit 451", 730, new DateOnly(1953, 10, 19), "Ballantine Books", new List<int>(){1, 2, 3, 4, 5}),
-                new Book(1, "Dandelion Wine", 1900, new DateOnly(1957, 09, 21), "Doubleday", new List<int>(){6, 7, 8}),
-                new Book(2, "The Martian Chronicles", 100, new DateOnly(1950, 04, 06), "Doubleday", new List<int>(){9, 10}),
-                new Book(3, "Pride and Prejudice", 962, new DateOnly(1813, 01, 28), "T. Egerton", new List<int>(){11, 12}),
-                new Book(4, "The Great Gatsby", 1200, new DateOnly(1925, 04, 10), "Charles Scribner's Sons", new List<int>(){13}),
-                new Book(5, "The Sun Also Rises", 3210, new DateOnly(1926, 10, 22), "Scribner's", new List<int>(){14, 15}),
-                new Book(6, "A Farewell to Arms", 1090, new DateOnly(1926, 10, 22), "Scribner's", new List<int>(){16, 17, 18}),
-                new Book(7, "The Theory of Everything", 1300, new DateOnly(2010, 09, 07), "Bantam Books", new List<int>(){19, 20}),
-                new Book(8, "A Brief History of Time", 1300, new DateOnly(1988, 03, 19), "Bantam Books", new List<int>(){21, 22, 23}),
-                new Book(9, "The Hobbit", 3210, new DateOnly(1937, 09, 21), "George Allen & Unwin", new List<int>(){24}),
-                new Book(10, "The Lord of the Rings", 3055, new DateOnly(1954, 09, 21), "George Allen & Unwin", new List<int>(){25, 26, 27, 28})
-            };
-        List<Book> books2 = new List<Book>()
-        {
-                new Book(0, "Fahrenheit 451", 830, new DateOnly(1953, 10, 19), "Ballantine Books", new List<int>(){1, 2, 3, 4}),
-                new Book(1, "Dandelion Wine", 900, new DateOnly(1957, 09, 21), "Doubleday", new List<int>(){5, 6, 7, 8}),
-                new Book(2, "The Hobbit", 2100, new DateOnly(1937, 09, 21), "George Allen & Unwin", new List<int>(){9, 10}),
-                new Book(3, "A Tale of Two Cities ", 830, new DateOnly(1959, 04, 30), "Chapman & Hall", new List<int>(){11, 12, 13}),
-                new Book(4, "The Metamorphosis", 743, new DateOnly(1915, 08, 25), "Kurt Wolff Verlag", new List<int>(){14, 15}),
-                new Book(5, "The Trial", 3045, new DateOnly(1925, 09, 21), "Verlag Die Schmiede", new List<int>(){16, 17, 18}),
+        //creating publisher list
+        List<Publisher> publishers = new List<Publisher>()
+        { 
+            new Publisher(0, "Ballantine Books"),
+            new Publisher(1, "Doubleday"),
+            new Publisher(2, "T. Egerton"),
+            new Publisher(3, "Charles Scribner's Sons"),
+            new Publisher(4, "Scribner's"),
+            new Publisher(5, "Bantam Books"),
+            new Publisher(6, "George Allen & Unwin"),
+            new Publisher(7, "Chapman & Hall"),
+            new Publisher(8, "Kurt Wolff Verlag"),
+            new Publisher(9, "Verlag Die Schmiede")
         };
-        //creating 2 lists of authors
-        List<Author> authors1 = new List<Author>()
+        //creating list of books
+        List<Book> books = new List<Book>()
+            {
+                new Book(0, "Fahrenheit 451", 730, new DateOnly(1953, 10, 19), publishers[0].PublisherId),
+                new Book(1, "Dandelion Wine", 1900, new DateOnly(1957, 09, 21), publishers[1].PublisherId),
+                new Book(2, "The Martian Chronicles", 100, new DateOnly(1950, 04, 06), publishers[1].PublisherId),
+                new Book(3, "Pride and Prejudice", 962, new DateOnly(1813, 01, 28), publishers[2].PublisherId),
+                new Book(4, "The Great Gatsby", 1200, new DateOnly(1925, 04, 10), publishers[3].PublisherId),
+                new Book(5, "The Sun Also Rises", 3210, new DateOnly(1926, 10, 22), publishers[4].PublisherId),
+                new Book(6, "A Farewell to Arms", 1090, new DateOnly(1926, 10, 22), publishers[4].PublisherId),
+                new Book(7, "The Theory of Everything", 1300, new DateOnly(2010, 09, 07), publishers[5].PublisherId),
+                new Book(8, "A Brief History of Time", 1300, new DateOnly(1988, 03, 19), publishers[5].PublisherId),
+                new Book(9, "The Hobbit", 3210, new DateOnly(1937, 09, 21), publishers[6].PublisherId),
+                new Book(10, "The Lord of the Rings", 3055, new DateOnly(1954, 09, 21), publishers[6].PublisherId),
+                new Book(11, "A Tale of Two Cities ", 830, new DateOnly(1959, 04, 30), publishers[7].PublisherId),
+                new Book(12, "The Metamorphosis", 743, new DateOnly(1915, 08, 25), publishers[8].PublisherId),
+                new Book(13, "The Trial", 3045, new DateOnly(1925, 09, 21), publishers[9].PublisherId),
+            };
+        //creating list of authors
+        List<Author> authors = new List<Author>()
             {
                 new Author(0, "Ray", "Bradbury"),
                 new Author(1, "Jane", "Austen"),
@@ -42,58 +50,68 @@ class Program
                 new Author(3, "Ernest", "Hemingway"),
                 new Author(4, "Stephen", "Hawkingon"),
                 new Author(5, "Leonard", "Mlodinow"),
-                new Author(6, "J. R. R.", "Tolkien")
+                new Author(6, "J. R. R.", "Tolkien"),
+                new Author(7, "Charles", "Dickens"),
+                new Author(8, "Franz", "Kafka"),
             };
-        List<Author> authors2 = new List<Author>()
-        {
-                new Author(0, "Ray", "Bradbury"),
-                new Author(1, "J. R. R.", "Tolkien"),
-                new Author(2, "Charles", "Dickens"),
-                new Author(3, "Franz", "Kafka"),
-        };
-        //creating 2 lists of BookOfAuthor objects that connect books and corresponding authors from lists
-        List<BookOfAuthor> bookOfAuthorList1 = new List<BookOfAuthor>();
-        List<BookOfAuthor> bookOfAuthorList2 = new List<BookOfAuthor>();
+
+        //creating list of BookOfAuthor objects that connect books and corresponding authors from lists
+        List<BookOfAuthor> bookOfAuthorList = new List<BookOfAuthor>();
         try
         {
             //connecting books with authors from first lists
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[0].BookId, authors1[0].AuthorId));
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[1].BookId, authors1[0].AuthorId));
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[2].BookId, authors1[0].AuthorId));
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[3].BookId, authors1[1].AuthorId));
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[4].BookId, authors1[2].AuthorId));
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[5].BookId, authors1[3].AuthorId));
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[6].BookId, authors1[3].AuthorId));
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[7].BookId, authors1[4].AuthorId));
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[7].BookId, authors1[5].AuthorId));
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[8].BookId, authors1[4].AuthorId));
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[9].BookId, authors1[6].AuthorId));
-            bookOfAuthorList1.Add(new BookOfAuthor(books1[10].BookId, authors1[6].AuthorId));
-
-            //connecting books with authors from second lists
-            bookOfAuthorList2.Add(new BookOfAuthor(books2[0].BookId, authors2[0].AuthorId));
-            bookOfAuthorList2.Add(new BookOfAuthor(books2[1].BookId, authors2[0].AuthorId));
-            bookOfAuthorList2.Add(new BookOfAuthor(books2[2].BookId, authors2[1].AuthorId));
-            bookOfAuthorList2.Add(new BookOfAuthor(books2[3].BookId, authors2[2].AuthorId));
-            bookOfAuthorList2.Add(new BookOfAuthor(books2[4].BookId, authors2[3].AuthorId));
-            bookOfAuthorList2.Add(new BookOfAuthor(books2[5].BookId, authors2[3].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[0].BookId, authors[0].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[1].BookId, authors[0].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[2].BookId, authors[0].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[3].BookId, authors[1].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[4].BookId, authors[2].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[5].BookId, authors[3].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[6].BookId, authors[3].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[7].BookId, authors[4].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[7].BookId, authors[5].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[8].BookId, authors[4].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[9].BookId, authors[6].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[10].BookId, authors[6].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[11].BookId, authors[7].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[12].BookId, authors[8].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[13].BookId, authors[8].AuthorId));
         }
         catch (IndexOutOfRangeException e)
         { Console.WriteLine(e.Message); }
 
-        //creating 3 libraries and adding books, authors and their connections to them.
-        //Third library is an empty one, so it has empy lists of books, authors and connections between them
-        Library lib1 = new Library("Library 1", books1, authors1, bookOfAuthorList1);
-        Library lib2 = new Library("Library 2", books2, authors2, bookOfAuthorList2);
-        Library lib3 = new Library("Empty Library 3", new List<Book>(), new List<Author>(), new List<BookOfAuthor>());
-
-        //adding all libraries to a list
-        List<Library> allLibs = new List<Library>()
+        //creating 3 libraries
+        List<Library> libraries = new List<Library>()
         {
-            lib1,
-            lib2,
-            lib3
+            new Library(0, "Library 1"),
+            new Library(1, "Library 2"),
+            new Library(2, "Library 3")
         };
+
+        //creating connections between books and libraries
+        List<BookOfLibrary> bookOfLibraryList = new List<BookOfLibrary>()
+        {
+            new BookOfLibrary(libraries[0].LibraryId, books[0].BookId, new List<int>(){1, 2, 3, 4, 5} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[1].BookId, new List<int>(){6, 7, 8} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[2].BookId, new List<int>(){9, 10} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[3].BookId, new List<int>(){11, 12} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[4].BookId, new List<int>(){13} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[5].BookId, new List<int>(){14, 15} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[6].BookId, new List<int>(){16, 17, 18} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[7].BookId, new List<int>(){19, 20} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[8].BookId, new List<int>(){21, 22, 23} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[9].BookId, new List<int>(){24} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[10].BookId, new List<int>(){25, 26, 27, 28} ),
+
+            new BookOfLibrary(libraries[1].LibraryId, books[0].BookId, new List<int>(){1, 2, 3}  ),
+            new BookOfLibrary(libraries[1].LibraryId, books[1].BookId, new List<int>(){4, 5}  ),
+            new BookOfLibrary(libraries[1].LibraryId, books[9].BookId, new List<int>(){6} ),
+            new BookOfLibrary(libraries[1].LibraryId, books[11].BookId, new List<int>(){7, 8} ),
+            new BookOfLibrary(libraries[1].LibraryId, books[12].BookId, new List<int>(){9, 10} ),
+
+            new BookOfLibrary(libraries[0].LibraryId, books[13].BookId, new List<int>(){1, 2, 3} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[0].BookId, new List<int>(){4} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[7].BookId, new List<int>(){5, 6} )
+    };
 
         //1. (Extentions syntax) Selects all authors and titles of all their books
         Query1(lib1);
@@ -129,10 +147,10 @@ class Program
         Query11(lib1, lib2);
 
         //12. (Extentions syntax) Show authors in all libraries and publishers of their books
-        Query12(allLibs);
+        Query12(libraries);
 
         //13. (Extentions syntax) Select average number of copies of each book (count inventory numbers) for each library
-        Query13(allLibs);
+        Query13(libraries);
 
         //14. (Extentions syntax) Select 5-th book from list ordered by date
         Query14(lib1);

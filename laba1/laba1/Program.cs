@@ -349,7 +349,17 @@ class Program
     /// 10. (Extentions syntax) Select authors that are common for all libraries
     public static void Query10(List<Author> authors, List<BookOfLibrary> bookOfLibraryList, List<BookOfAuthor> bookOfAuthorList)
     {
-        var authorsGroupedByLib = bookOfLibraryList.GroupBy(
+        var authorsGroupedByLib = GetAuthorsGroupedByLib(authors, bookOfLibraryList, bookOfAuthorList);
+        var query10 = authorsGroupedByLib
+            .Aggregate((first, next) => first.Intersect(next, new AuthorComparerByName()));
+        Console.WriteLine("10. All authors that are in all libraries:");
+        foreach (var item in query10)
+            Console.WriteLine($"\t{item.Firstname} {item.Lastname}");
+        Console.WriteLine();
+    }
+    public static IEnumerable<IEnumerable<Author>> GetAuthorsGroupedByLib(List<Author> authors, List<BookOfLibrary> bookOfLibraryList, List<BookOfAuthor> bookOfAuthorList)
+    {
+        return bookOfLibraryList.GroupBy(
             bl => bl.LibraryId,
             bl => bl.BookId,
             (key, g) => new
@@ -364,12 +374,6 @@ class Program
                     (ba, a) => a)
             })
             .Select(a => a.authorsGrouped);
-        var query10 = authorsGroupedByLib
-            .Aggregate((first, next) => first.Intersect(next, new AuthorComparerByName()));
-        Console.WriteLine("10. All authors that are in all libraries:");
-        foreach (var item in query10)
-            Console.WriteLine($"\t{item.Firstname} {item.Lastname}");
-        Console.WriteLine();
     }
 
 

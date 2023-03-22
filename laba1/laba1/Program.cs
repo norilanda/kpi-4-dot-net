@@ -140,11 +140,11 @@ class Program
         ////9. (Extentions syntax) 
         //Query9();
 
-        //10. (Extentions syntax) Select authors that are common for 2 libraries
+        //10. (Extentions syntax) Select authors that are common for all libraries
         Query10(authors, bookOfLibraryList, bookOfAuthorList);
 
-        ////11. (Extentions syntax) Select authors different for 2 libs
-        //Query11();
+        //11. (Extentions syntax) Select authors different for all libraries
+        Query11(authors, bookOfLibraryList, bookOfAuthorList);
 
         ////12. (Extentions syntax) Show authors in all libraries and publishers of their books
         //Query12(books, authors, bookOfAuthorList, publishers);
@@ -357,6 +357,7 @@ class Program
             Console.WriteLine($"\t{item.Firstname} {item.Lastname}");
         Console.WriteLine();
     }
+    //returns authors objects grouped by library
     public static IEnumerable<IEnumerable<Author>> GetAuthorsGroupedByLib(List<Author> authors, List<BookOfLibrary> bookOfLibraryList, List<BookOfAuthor> bookOfAuthorList)
     {
         return bookOfLibraryList.GroupBy(
@@ -373,30 +374,27 @@ class Program
                     a => a.AuthorId,
                     (ba, a) => a)
             })
-            .Select(a => a.authorsGrouped);
+            .Select(a => a.authorsGrouped.Distinct(new AuthorComparerByName()));
     }
 
 
-    //    /// 11. (Extentions syntax) Select authors different for all libs
-    //    public static void Query11(List<Author> authors, List<Library> libs)
-    //    {
-    //        var query11 = (from a1 in lib1.Authors
-    //                       select a1)
-    //                   .Union(
-    //                   from a2 in lib2.Authors
-    //                   select a2, new AuthorComparerByName())
-    //               .Except(
-    //                    (from a1 in lib1.Authors
-    //                     select a1)
-    //                    .Intersect(from a2 in lib2.Authors
-    //                               select a2,
-    //                               new AuthorComparerByName())
-    //                    );
-    //        Console.WriteLine("11. All authors that are different for all libraries:");
-    //        foreach (var item in query11)
-    //            Console.WriteLine("\t" + item);
-    //        Console.WriteLine();
-    //    }
+    // 11. (Extentions syntax) Select authors different (unique) for all libs
+    public static void Query11(List<Author> authors, List<BookOfLibrary> bookOfLibraryList, List<BookOfAuthor> bookOfAuthorList)
+    {
+        var authorsGroupedByLib = GetAuthorsGroupedByLib(authors, bookOfLibraryList, bookOfAuthorList);
+        AuthorComparerByName comparer = new AuthorComparerByName();
+        var query11 = authorsGroupedByLib
+            .Aggregate((first, next) => first
+                .Union(next, new AuthorComparerByName())
+                .Except(authorsGroupedByLib
+                    .SelectMany(a => a)
+                    .Where(a => authorsGroupedByLib.SelectMany(a1 => a1)
+                                                   .Count(x => comparer.Equals(x, a)) > 1)));
+        Console.WriteLine("11. All authors that are different for all libraries:");
+        foreach (var item in query11)
+            Console.WriteLine("\t" + item);
+        Console.WriteLine();
+    }
 
     //    /// 12. (Extentions syntax) Show authors and publishers of their books
     //    public static void Query12(List<Book> books, List<Author> authors, List<BookOfAuthor> bookOfAuthorList, List<Publisher> publishers)

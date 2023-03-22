@@ -140,8 +140,8 @@ class Program
         ////9. (Extentions syntax) 
         //Query9();
 
-        ////10. (Extentions syntax) Select authors that are common for 2 libraries
-        //Query10(authors, libraries);
+        //10. (Extentions syntax) Select authors that are common for 2 libraries
+        Query10(authors, bookOfLibraryList, bookOfAuthorList);
 
         ////11. (Extentions syntax) Select authors different for 2 libs
         //Query11();
@@ -346,15 +346,32 @@ class Program
     //    Console.WriteLine();
     //}
 
-    //    /// 10. (Extentions syntax) Select authors that are common for all libraries
-    //    public static void Query10(List<Author> authors, List <Library> libs)
-    //    {
-    //        var query10 = lib1.Authors.Intersect(lib2.Authors, new AuthorComparerByName());
-    //        Console.WriteLine("10. All authors that are in all libraries:");
-    //        foreach (var item in query10)
-    //            Console.WriteLine($"\t{item.Firstname} {item.Lastname}");
-    //        Console.WriteLine();
-    //    }
+    /// 10. (Extentions syntax) Select authors that are common for all libraries
+    public static void Query10(List<Author> authors, List<BookOfLibrary> bookOfLibraryList, List<BookOfAuthor> bookOfAuthorList)
+    {
+        var authorsGroupedByLib = bookOfLibraryList.GroupBy(
+            bl => bl.LibraryId,
+            bl => bl.BookId,
+            (key, g) => new
+            {
+                Key = key,
+                authorsGrouped = bookOfAuthorList.Where(
+                    ba => g.Contains(ba.IdOfBook))
+                    .Join(
+                    authors,
+                    ba => ba.IdOfAuthor,
+                    a => a.AuthorId,
+                    (ba, a) => a)
+            })
+            .Select(a => a.authorsGrouped);
+        var query10 = authorsGroupedByLib
+            .Aggregate((first, next) => first.Intersect(next, new AuthorComparerByName()));
+        Console.WriteLine("10. All authors that are in all libraries:");
+        foreach (var item in query10)
+            Console.WriteLine($"\t{item.Firstname} {item.Lastname}");
+        Console.WriteLine();
+    }
+
 
     //    /// 11. (Extentions syntax) Select authors different for all libs
     //    public static void Query11(List<Author> authors, List<Library> libs)

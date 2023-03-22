@@ -47,7 +47,8 @@ namespace laba1
         }
         public override string ToString()
         {
-            string str = $"Id: {_bookId} Title: {_title}; price: {_price}; date: {_publishingDate}; publisher: {_publisher}; | Inventory numbers: {string.Join(", ", _inventoryNumbers.ToArray())}";
+            string str = $"{_bookId.ToString().PadRight(3)} {_title.PadRight(25)} {_price.ToString().PadRight(7)} {_publishingDate}    {_publisher.PadRight(25)} [{new string(string.Join(", ", _inventoryNumbers.ToArray())+"]").PadRight(18)}";
+            //string str = $"Id: {_bookId} Title: {_title}; price: {_price}; date: {_publishingDate}; publisher: {_publisher}; | Inventory numbers: {string.Join(", ", _inventoryNumbers.ToArray())}";
             return str;
         }
     }

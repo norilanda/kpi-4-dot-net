@@ -22,7 +22,7 @@ class Program
                 new Book(10, "Nineteen Eighty-Four", 978, new DateOnly(1949, 06, 08), "Secker and Warburg", new List<int>(){24, 25}),
                 new Book(11, "The Sun Also Rises", 3210, new DateOnly(1926, 10, 22), "Scribner's", new List<int>(){26, 27}),
                 new Book(12, "A Farewell to Arms", 1090, new DateOnly(1926, 10, 22), "Scribner's", new List<int>(){28, 29, 30}),
-                new Book(13, "The Theory of Everything: The Origin and Fate of the Universe", 1300, new DateOnly(2010, 09, 07), "Bantam Books", new List<int>(){31, 32}),
+                new Book(13, "The Theory of Everything", 1300, new DateOnly(2010, 09, 07), "Bantam Books", new List<int>(){31, 32}),
                 new Book(14, "A Brief History of Time", 1300, new DateOnly(1988, 03, 19), "Bantam Books", new List<int>(){33, 34, 35}),
                 new Book(15, "The Book Thief", 800, new DateOnly(2005, 03, 14), "Picador", new List<int>(){36}),
                 new Book(16, "The Hobbit", 3210, new DateOnly(1937, 09, 21), "George Allen & Unwin", new List<int>(){37, 38}),
@@ -107,7 +107,7 @@ class Program
         //1. (Extentions syntax) Selects all authors and titles of all their books
         Query1(lib1);
 
-        //2. (Query syntax) Select authors for each book
+        //2. (Query syntax) Select authors for each book that has price bigger than 1000
         Query2(lib1);
 
         //3. (Extentions syntax) Order books published before 2000 by titles and show number of every book (count inventory number)
@@ -186,25 +186,29 @@ class Program
                                    (_, book) => book)
         }
     );
+        Console.WriteLine("1. Authors and all their books titles:");
         foreach (var bookOfAuthor in query1)
         {
-            Console.WriteLine($"{bookOfAuthor.author}:");
+            Console.WriteLine($"\t{bookOfAuthor.author}:");
             foreach (var book in bookOfAuthor.book)
             {
-                Console.WriteLine(book.Title);
+                Console.WriteLine("\t\t"+book.Title);
             }
             Console.WriteLine();
         }
+        Console.WriteLine();
     }
 
     /// <summary>
     /// (Query syntax)
-    /// 2. Select authors for each book (with using query syntax)
+    /// 2. Select authors for each book that has price bigger than 1000
     /// </summary>
     /// <param name="lib"></param>
     public static void Query2(Library lib)
     {
+        int priceToFilter = 1000;
         var query2 = from b in lib.Books
+                     where b.Price > priceToFilter
                      select new
                      {
                          book = b,
@@ -213,8 +217,11 @@ class Program
                                     where b.BookId == ab.IdOfBook
                                     select a).ToList()
                      };
+        Console.WriteLine($"2. Books that have price > {priceToFilter} and their authors:");
         foreach (var item in query2)
-            Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
+            Console.WriteLine($"\t{item.book.Title.PadRight(25)}\t{item.book.Price}" +
+                $"\n\t\t{String.Join(", ", item.authors)}");
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -224,15 +231,18 @@ class Program
     /// <param name="lib"></param>
     public static void Query3(Library lib)
     {
+        int yearFilter = 2000;
         var query3 = lib.Books.OrderBy(b => b.Title)
-                .Where(b => b.PublishingDate.Year < 2000)
+                .Where(b => b.PublishingDate.Year < yearFilter)
                 .Select(b => new
                 {
                     book = b,
                     copyNumber = b.InventoryNumbers.Count()
                 });
+        Console.WriteLine($"3. Ordered by titles list of books published in 2000 with count of their inventory numbers{yearFilter}");
         foreach (var item in query3)
-            Console.WriteLine($"{item.book}\t{item.copyNumber}");
+            Console.WriteLine($"\t{item.book} {item.copyNumber}");
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -254,8 +264,10 @@ class Program
                         .SelectMany(y => y.InventoryNumbers)
         }
         );
+        Console.WriteLine("4. Authors and their books inventory numbers:");
         foreach (var item in query4)
-            Console.WriteLine($"{item.author}\t{String.Join(", ", item.inventNumbers)}");
+            Console.WriteLine($"\t{item.author.ToString().PadRight(20)} {String.Join(", ", item.inventNumbers)}");
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -264,9 +276,13 @@ class Program
     /// <param name="lib"></param>
     public static void Query5(Library lib)
     {
-        var query5 = lib.Books.Where(b => b.PublishingDate.Year >= 2000)
-                              .OrderBy(b => b.PublishingDate);
-        foreach (var book in query5) Console.WriteLine(book.ToString());
+        int yearFilter = 2000;
+        var query5 = lib.Books
+                         .OrderBy(b => b.PublishingDate)
+                         .SkipWhile(b => b.PublishingDate.Year < yearFilter);
+        Console.WriteLine($"5. All book published after {yearFilter} ordered by date");
+        foreach (var book in query5) Console.WriteLine("\t" + book.ToString());
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -275,9 +291,10 @@ class Program
     /// <param name="lib"></param>
     public static void Query6(Library lib)
     {
+        int topNumberFilter = 5;
         var query6 = lib.Books
                 .OrderByDescending(b => b.Price)
-                .Take(5)
+                .Take(topNumberFilter)
                 .GroupJoin(
                 lib.BookOfAuthorList,
                 b => b.BookId,
@@ -293,8 +310,10 @@ class Program
                                 (_, a) => a).ToList()
                 }
             );
+        Console.WriteLine($"6. Top {topNumberFilter} expensive books and their authors");
         foreach (var item in query6)
-            Console.WriteLine($"{item.book}\t{String.Join(", ", item.authors)}");
+            Console.WriteLine($"\t{item.book} {String.Join(", ", item.authors)}");
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -314,12 +333,12 @@ class Program
                                        select a).Single(),
                              bookNum = authorGroup.Count()
                          })
-                     orderby aBookn.author.Firstname
-                     orderby aBookn.bookNum descending
+                     orderby aBookn.bookNum descending, aBookn.author.Firstname
                      select aBookn;
+        Console.WriteLine("7. Authors' number of books, ordered by this number and then by author's first name:");
         foreach (var item in query7)
-            Console.WriteLine($"{item.author}\t{item.bookNum}");
-
+            Console.WriteLine($"\t{item.author.ToString().PadRight(18)} {item.bookNum}");
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -332,8 +351,9 @@ class Program
                      where b.Price == (from b1 in lib.Books
                                        select b1.Price).Max()
                      select b;
+        Console.WriteLine("8. All books which price is max:");
         foreach (var item in query8)
-            Console.WriteLine(item);
+            Console.WriteLine("\t"+item);
     }
 
     /// <summary>
@@ -346,9 +366,10 @@ class Program
         var query9 = lib1.Books.Select(b => b.Title)
                                .Union(lib2.Books.Select(b => b.Title))
                                .OrderBy(title => title);
-
+        Console.WriteLine("9. All books titles from lib1 and lib2:");
         foreach (var item in query9)
-            Console.WriteLine($"{item}");
+            Console.WriteLine($"\t{item}");
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -359,8 +380,10 @@ class Program
     public static void Query10(Library lib1, Library lib2)
     {
         var query10 = lib1.Authors.Intersect(lib2.Authors, new AuthorComparerByName());
+        Console.WriteLine("10. All authors that are in both lib1 and lib2:");
         foreach (var item in query10)
-            Console.WriteLine($"{item.Firstname} {item.Lastname}");
+            Console.WriteLine($"\t{item.Firstname} {item.Lastname}");
+        Console.WriteLine();
     }
 
     /// <summary>

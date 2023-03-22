@@ -239,7 +239,7 @@ class Program
                     book = b,
                     copyNumber = b.InventoryNumbers.Count()
                 });
-        Console.WriteLine($"3. Ordered by titles list of books published in 2000 with count of their inventory numbers{yearFilter}");
+        Console.WriteLine($"3. Ordered by titles list of books published before {yearFilter} with count of their inventory numbers");
         foreach (var item in query3)
             Console.WriteLine($"\t{item.book} {item.copyNumber}");
         Console.WriteLine();
@@ -405,8 +405,10 @@ class Program
                                select a2,
                                new AuthorComparerByName())
                     );
+        Console.WriteLine("11. All authors that are in lib1 but are not in lib2 and that are in lib2 but are not in lib1:");
         foreach (var item in query11)
-            Console.WriteLine(item);
+            Console.WriteLine("\t" + item);
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -437,8 +439,10 @@ class Program
                                                              .ToList()
                                         })
                               .OrderBy(item => item.author.Firstname);
+        Console.WriteLine("12. Authors and publishers of their books:");
         foreach (var item in query12)
-            Console.WriteLine($"{item.author}:\t{String.Join(", ", item.publishers)}");
+            Console.WriteLine($"\t{item.author.ToString().PadRight(18)}\t{String.Join(", ", item.publishers)}");
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -452,8 +456,10 @@ class Program
             Name = l.Name,
             averageNumOfCopies = l.Books.Any() ? l.Books.Average(b => b.InventoryNumbers.Count()) : 0
         });
+        Console.WriteLine("13. Average number of copies of books for each library:");
         foreach (var item in query13)
-            Console.WriteLine($"{item.Name}: {item.averageNumOfCopies.ToString("0.00")}");
+            Console.WriteLine($"\t{item.Name.PadRight(18)} {item.averageNumOfCopies.ToString("0.00")}");
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -465,8 +471,9 @@ class Program
         int indexOfBookInList = 4;
         var query14 = lib.Books.OrderBy(b => b.PublishingDate)
                 .ElementAtOrDefault(indexOfBookInList);
-        Console.WriteLine($"Book on the {indexOfBookInList + 1} place:\n\t{query14}");
-
+        Console.WriteLine($"14. {indexOfBookInList+1}th book in ordered by date list of books:");
+        Console.WriteLine($"\t{query14}");
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -477,8 +484,10 @@ class Program
     {
         var query15 = lib.Books.Where(b => b.Title.Count()
                                     == lib.Books.Min(b => b.Title.Count()));
+        Console.WriteLine("15. All books with shortest titles:");
         foreach (var item in query15)
-            Console.WriteLine(item);
+            Console.WriteLine("\t"+item);
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -490,9 +499,10 @@ class Program
     {
         double averagePriceOfBooksInlib2 = lib2.Books.Average(b => b.Price);
         var query16 = lib1.Books.Where(b => b.Price > averagePriceOfBooksInlib2);
-        Console.WriteLine($"Books that have price bigger than {averagePriceOfBooksInlib2}:");
+        Console.WriteLine($"16. Books in lib1 that have price bigger than average price of books in lib2({averagePriceOfBooksInlib2}):");
         foreach (var item in query16)
-            Console.WriteLine(item);
+            Console.WriteLine("\t"+item);
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -501,6 +511,7 @@ class Program
     /// <param name="lib"></param>
     public static void Query17(Library lib)
     {
+        int topNumberFilter = 10;
         Regex rgx = new Regex("[^a-zA-Z0-9 -]");
         var query17 = lib.Books.SelectMany(b => rgx.Replace(b.Title, "")
                                                     .ToLower()
@@ -514,9 +525,11 @@ class Program
                                          (word, num) => new { Word = word, Num = num.Count() })
                                 .OrderByDescending(item => item.Num)
                                 .ThenBy(item => item.Word)
-                                .Take(10);
+                                .Take(topNumberFilter);
+        Console.WriteLine($"17. Top {topNumberFilter} most frequent words in books' titles:");
         foreach (var item in query17)
-            Console.WriteLine($"{item.Word}, {item.Num}");
+            Console.WriteLine($"\t{item.Word.PadRight(12)} {item.Num}");
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -527,8 +540,10 @@ class Program
     {
         double sumPriceOfAllBooks = lib.Books.Sum(b => b.Price);
         var query18 = lib.Books.Select(b => new { book = b, Percent = (double)b.Price / sumPriceOfAllBooks });
+        Console.WriteLine("18. Percentage of price for every book: ");
         foreach (var b in query18) 
-            Console.WriteLine($"{b.book.Title},\t{b.book.Price},\t{b.Percent.ToString("0.00")}");
+            Console.WriteLine($"\t{b.book} {b.Percent.ToString("0.00")}%");
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -542,12 +557,14 @@ class Program
               into groupByMonths
                       orderby groupByMonths.Key
                       select groupByMonths;
+        Console.WriteLine("19. Books grouped by month they where published:");
         foreach (var item in query19)
         {
-            Console.WriteLine($"Month {item.Key}");
+            Console.WriteLine($"\tMonth {item.Key}");
             foreach (var item1 in item)
-                Console.WriteLine($"\t{item1}");
+                Console.WriteLine($"\t\t{item1}");
         }
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -556,11 +573,14 @@ class Program
     /// <param name="lib"></param>
     public static void Query20(Library lib)
     {
+        int inventoryNumberCountFilter = 1;
         var query20 = from book in lib.Books
-                      where book.InventoryNumbers.Count() == 1
+                      where book.InventoryNumbers.Count() == inventoryNumberCountFilter
                       select book;
+        Console.WriteLine($"20. Books that have {inventoryNumberCountFilter} inventory numbers:");
         foreach (var item in query20)
-            Console.WriteLine(item);
+            Console.WriteLine("\t"+item);
+        Console.WriteLine();
     }
 }
 

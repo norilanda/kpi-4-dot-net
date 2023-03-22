@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 namespace laba1
 {
     /// <summary>
-    /// Author class contains author's id, his first name and last name
+    ///     Author class contains such attributes as 
+    ///     _authorId - unique id of an author. Same authors in different libraries may have different ids;
+    ///     _firstName - author's first name;
+    ///     _lastName - last name;
     /// </summary>
     public class Author
     {

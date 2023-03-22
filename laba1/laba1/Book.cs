@@ -8,8 +8,13 @@ using System.Threading.Tasks;
 namespace laba1
 {
     /// <summary>
-    /// Class contains information about specific book in a library.
-    /// It has such fields as bookId, title, price, publishing date, publisher and inventory numbers
+    ///     Class contains information about specific book in a library.
+    ///     Its attributes are: 
+    ///     _bookId - a unique id of book in a specific library. Books with the same title in different libraries may have different ids;
+    ///     _title - title of a book;
+    ///     _price - book's price;
+    ///     _publishingDate, _publisher - these fields show who and when published the book for the first time;
+    ///     _inventoryNumbers - numbers that numerate copies of book
     /// </summary>
     public class Book
     {
@@ -48,7 +53,6 @@ namespace laba1
         public override string ToString()
         {
             string str = $"{_bookId.ToString().PadRight(3)} {_title.PadRight(25)} {_price.ToString().PadRight(7)} {_publishingDate}    {_publisher.PadRight(25)} [{new string(string.Join(", ", _inventoryNumbers.ToArray())+"]").PadRight(18)}";
-            //string str = $"Id: {_bookId} Title: {_title}; price: {_price}; date: {_publishingDate}; publisher: {_publisher}; | Inventory numbers: {string.Join(", ", _inventoryNumbers.ToArray())}";
             return str;
         }
     }

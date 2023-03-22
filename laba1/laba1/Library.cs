@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 namespace laba1
 {
     /// <summary>
-    /// Contains information about all books, authors and connections between them
+    ///     Contains information about all books, authors and connections between them.
+    ///     The attributes of the class are:
+    ///     _name - library name;
+    ///     _books - all books present in library. This is the list of Book objects;
+    ///     _authors - all authors whose book are present in library. This is the list of Author objects;
+    ///     _bookOfAuthorList - list of connections between books and their authors. Shows books for a specific author and vice versa. This is the list of BookOfAuthor objects
     /// </summary>
     public class Library
     {

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace laba1
 {
+    /// <summary>
+    ///     Comparer that allow to compare authors only by their first and last name
+    /// </summary>
     public class AuthorComparerByName : IEqualityComparer<Author>
     {
         public bool Equals(Author x, Author y)

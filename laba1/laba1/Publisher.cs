@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace laba1
 {
+    /// <summary>
+    ///     Information about publisher, its properties are:
+    ///     _publisherId - unique publisher id;
+    ///     _publisherName - publisher name
+    /// </summary>
     public class Publisher
     {
         private int _publisherId;

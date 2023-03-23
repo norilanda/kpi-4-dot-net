@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 namespace laba1
 {
     /// <summary>
-    ///     Comparer that allow to compare authors only by their first and last name
+    ///     Comparer that allow to compare authors by their ids
     /// </summary>
-    public class AuthorComparerByName : IEqualityComparer<Author>
+    public class AuhtorComparerById : IEqualityComparer<Author>
     {
         public bool Equals(Author x, Author y)
         {
-            return x.Firstname.Equals(y.Firstname) && x.Lastname.Equals(y.Lastname);
+            return x.AuthorId == y.AuthorId;
         }
         public int GetHashCode(Author obj)
         {
             if (obj == null) return 0;
-            return (obj.Firstname+obj.Lastname).GetHashCode();
+            return obj.AuthorId.GetHashCode();
         }
     }
 }

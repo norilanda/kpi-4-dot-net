@@ -19,5 +19,9 @@ namespace laba1
             this._publisherId = id;
             this._publisherName = name;
         }
+        public override string ToString()
+        {
+            return $"{_publisherId.ToString().PadRight(3)} {_publisherName.PadRight(20)}";
+        }
     }
 }

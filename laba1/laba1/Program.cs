@@ -126,8 +126,8 @@ class Program
         //4. (Query syntax) Show books and libraries they are in
         Query4(books, libraries, bookOfLibraryList);
 
-        ////5. (Extentions syntax) Show all books published since 2000 year, sorted by date
-        //Query5();
+        ////5. (Extentions syntax) Select book with minimum price for every library
+        Query5(books, libraries, bookOfLibraryList);
 
         //6. (Extentions syntax) Show top 5 most expensive books and its/their author/-s
         Query6(books, authors, bookOfAuthorList, 5);
@@ -175,8 +175,8 @@ class Program
         Query20(books, publishers);
     }
 
-    /// (Extentions syntax)
-    /// 1. Selects all authors and titles of all their books from all libraries
+    // (Extentions syntax)
+    // 1. Selects all authors and titles of all their books from all libraries
     public static void Query1(List<Book> books, List<Author> authors, List<BookOfAuthor> bookOfAuthorList)
     {
         var query1 = authors.GroupJoin(
@@ -206,8 +206,8 @@ class Program
         Console.WriteLine();
     }
 
-    /// (Query syntax)
-    /// 2. Select authors for each book that has price bigger than priceToFilter
+    // (Query syntax)
+    // 2. Select authors for each book that has price bigger than priceToFilter
     public static void Query2(List<Book> books, List<Author> authors, List<BookOfAuthor> bookOfAuthorList, int priceToFilter)
     {
         var query2 = from b in books
@@ -227,8 +227,8 @@ class Program
         Console.WriteLine();
     }
 
-    /// (Extentions syntax)
-    /// 3. Order books published before yearFilter by titles
+    // (Extentions syntax)
+    // 3. Order books published before yearFilter by titles
     public static void Query3(List<Book> books, int yearFilter)
     {
         var query3 = books.OrderBy(b => b.Title)
@@ -264,17 +264,38 @@ class Program
         Console.WriteLine();
     }
 
+    // 5. (Extentions syntax) Select book with minimum price for every library
+    public static void Query5(List<Book> books, List<Library> libraries, List<BookOfLibrary> bookOfLibraryList)
+    {
+        var booksGrouped = bookOfLibraryList.GroupBy(
+                    bl => bl.LibraryId,
+                    (bl, b) => new {
+                        Key = libraries.Where(l=>l.LibraryId == bl).Single(),
+                        booksCollection = b
+                            .Join(books,
+                                  lb => lb.BookId,
+                                  bb => bb.BookId,
+                                  (_, bb) => bb)
+                    });
+        var query5 = booksGrouped
+                        .Select(item => new
+                        {
+                            Key = item.Key,
+                            minBookCollection = item.booksCollection
+                            .Where(x => x.Price == item.booksCollection
+                            .Min(y => y.Price))
+                        });
+        Console.WriteLine($"5. Book with minimum price for every library");
+        foreach (var item in query5)
+        { 
+            Console.WriteLine($"\t{item.Key}");
+            foreach(var book in item.minBookCollection)
+                Console.WriteLine($"\t\t{book}");
+        }
+        Console.WriteLine();
+    }
 
-    //    /// 5. (Extentions syntax) Show 
-    //    public static void Query5(Library lib)
-    //    {
-    //        var query5 =
-    //        Console.WriteLine($"5. ");
-    //        foreach (var book in query5) Console.WriteLine("\t" + book.ToString());
-    //        Console.WriteLine();
-    //    }
-
-    /// 6. (Extentions syntax) Show top 'topNumberFilter' most expensive books and its/their author/-s
+    // 6. (Extentions syntax) Show top 'topNumberFilter' most expensive books and its/their author/-s
     public static void Query6(List<Book> books, List<Author> authors, List<BookOfAuthor> bookOfAuthorList, int topNumberFilter = 5)
     {
         var query6 = books
@@ -302,7 +323,7 @@ class Program
         Console.WriteLine();
     }
 
-    ///  7. (Query syntax) Show sum of all books for every author and order them by book number from bigger to smaller and then by author firstname
+    //  7. (Query syntax) Show sum of all books for every author and order them by book number from bigger to smaller and then by author firstname
     public static void Query7(List<Book> books, List<Author> authors, List<BookOfAuthor> bookOfAuthorList)
     {
         var query7 = from aBookn in (
@@ -324,7 +345,7 @@ class Program
         Console.WriteLine();
     }
 
-    /// 8. (Query syntax) Select books with max price
+    // 8. (Query syntax) Select books with max price
     public static void Query8(List<Book> books)
     {
         var query8 = from b in books

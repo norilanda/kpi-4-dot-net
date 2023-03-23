@@ -138,8 +138,8 @@ class Program
         //8. (Query syntax) Select books with max price
         Query8(books);
 
-        ////9. (Extentions syntax) 
-        //Query9();
+        //9. (Extentions syntax) 
+        Query9(books, 2);
 
         //10. (Extentions syntax) Select authors that are common for all libraries
         Query10(authors, bookOfLibraryList, bookOfAuthorList);
@@ -337,22 +337,27 @@ class Program
         Console.WriteLine();
     }
 
-    ///// 9. (Extentions syntax) Select 
-    //public static void Query9()
-    //{
-    //    var query9 =
-    //    Console.WriteLine("9. ");
-    //    foreach (var item in query9)
-    //        Console.WriteLine($"\t{item}");
-    //    Console.WriteLine();
-    //}
+    // 9. (Extentions syntax) Select first 'numberToTake' and last 'numberToTake' books, ordered by price
+    public static void Query9(List<Book> books, int numberToTake = 2)
+    {
+        IEnumerable<Book> orderedBooks = books
+            .OrderBy(b => b.Price)
+            .ThenBy(b => b.Title.FirstOrDefault());
+        var query9 = orderedBooks.Take(numberToTake)
+                    .Union(
+                    orderedBooks.TakeLast(numberToTake), new BookComparerById());
+        Console.WriteLine($"9. There are first {numberToTake} and last {numberToTake} number of books from book list ordered by price and title:");
+        foreach (var item in query9)
+            Console.WriteLine($"\t{item}");
+        Console.WriteLine();
+    }
 
-    /// 10. (Extentions syntax) Select authors that are common for all libraries
+    // 10. (Extentions syntax) Select authors that are common for all libraries
     public static void Query10(List<Author> authors, List<BookOfLibrary> bookOfLibraryList, List<BookOfAuthor> bookOfAuthorList)
     {
         var authorsGroupedByLib = GetAuthorsGroupedByLib(authors, bookOfLibraryList, bookOfAuthorList);
         var query10 = authorsGroupedByLib
-            .Aggregate((first, next) => first.Intersect(next, new AuthorComparerByName()));
+            .Aggregate((first, next) => first.Intersect(next, new AuhtorComparerById()));
         Console.WriteLine("10. All authors that are in all libraries:");
         foreach (var item in query10)
             Console.WriteLine($"\t{item.Firstname} {item.Lastname}");
@@ -375,17 +380,17 @@ class Program
                     a => a.AuthorId,
                     (ba, a) => a)
             })
-            .Select(a => a.authorsGrouped.Distinct(new AuthorComparerByName()));
+            .Select(a => a.authorsGrouped.Distinct(new AuhtorComparerById()));
     }
 
     // 11. (Extentions syntax) Select authors different (unique) for all libs
     public static void Query11(List<Author> authors, List<BookOfLibrary> bookOfLibraryList, List<BookOfAuthor> bookOfAuthorList)
     {
         var authorsGroupedByLib = GetAuthorsGroupedByLib(authors, bookOfLibraryList, bookOfAuthorList);
-        AuthorComparerByName comparer = new AuthorComparerByName();
+        AuhtorComparerById comparer = new AuhtorComparerById();
         var query11 = authorsGroupedByLib
             .Aggregate((first, next) => first
-                .Union(next, new AuthorComparerByName())
+                .Union(next, new AuhtorComparerById())
                 .Except(authorsGroupedByLib
                     .SelectMany(a => a)
                     .Where(a => authorsGroupedByLib.SelectMany(a1 => a1)
@@ -406,7 +411,7 @@ class Program
     //    Console.WriteLine();
     //}
 
-    /// 13. (Extentions syntax) Select 'percentFilter' number of books ordered by number of sum of copies in all libraries from max to min
+    /// 13. (Query syntax + Extentions syntax) Select 'percentFilter' number of books ordered by number of sum of copies in all libraries from max to min
     public static void Query13(List<Book> books, List<BookOfLibrary> bookOfLibraryList, double percentFilter = 0.3)
     {
         var query13 = (from b in books

@@ -28,7 +28,7 @@ namespace laba1
         public string Title => _title;
         public double Price => _price;
         public DateOnly PublishingDate => _publishingDate;
-        public int Publisher => _publisherId;
+        public int PublisherId => _publisherId;
 
         public Book(int id, string title, double price, DateOnly date, int publisherId)
         {

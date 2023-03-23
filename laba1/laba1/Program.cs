@@ -171,8 +171,8 @@ class Program
         //19. (Query syntax) Group books by their publishing month
         Query19(books);
 
-        ////20. (Query syntax) Show books that have only one inventory number
-        //Query20();
+        //20. (Query syntax) Show books that have only one inventory number
+        Query20(books, publishers);
     }
 
     /// (Extentions syntax)
@@ -523,14 +523,21 @@ class Program
         Console.WriteLine();
     }
 
-    //    /// 20. (Query syntax) 
-    //    public static void Query20(Library lib)
-    //    {
-    //        var query20 =
-    //        Console.WriteLine($"20. :");
-    //        foreach (var item in query20)
-    //            Console.WriteLine("\t"+item);
-    //        Console.WriteLine();
-    //    }
+    // 20. (Query syntax + Extentions syntax) Select as one string book and its publisher
+    public static void Query20(List<Book> books, List<Publisher> publishers)
+    {
+        IEnumerable<string> titles = from b in books
+                                     orderby b.Title
+                                     select b.Title;
+        IEnumerable<string> publishersOfBooks = from b in books
+                                                orderby b.Title
+                                                join p in publishers on b.PublisherId equals p.PublisherId
+                                                select p.PublisherName;
+        var query20 = titles.Zip(publishersOfBooks, (t, p) => String.Concat(t.PadRight(23), ", ", p));
+        Console.WriteLine($"20. Books and their publishers:");
+        foreach (var item in query20)
+            Console.WriteLine("\t" + item);
+        Console.WriteLine();
+    }
 }
 

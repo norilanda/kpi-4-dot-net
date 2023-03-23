@@ -147,8 +147,8 @@ class Program
         //11. (Extentions syntax) Select authors different for all libraries
         Query11(authors, bookOfLibraryList, bookOfAuthorList);
 
-        ////12. (Extentions syntax) Show authors in all libraries and publishers of their books
-        //Query12(books, authors, bookOfAuthorList, publishers);
+        //12. (Query syntax) Show publishers that have Names started with 'B' letter
+        Query12(publishers);
 
         //13. (Query syntax + Extentions syntax) 
         Query13(books, bookOfLibraryList, 0.5);
@@ -401,17 +401,19 @@ class Program
         Console.WriteLine();
     }
 
-    ///// 12. (Extentions syntax) 
-    //public static void Query12(List<Book> books, List<Author> authors, List<BookOfAuthor> bookOfAuthorList, List<Publisher> publishers)
-    //{
-    //    var query12 =
-    //    Console.WriteLine("12. Authors and publishers of their books:");
-    //    foreach (var item in query12)
-    //        Console.WriteLine($"\t{item.author.ToString().PadRight(18)}\t{String.Join(", ", item.publishers)}");
-    //    Console.WriteLine();
-    //}
+    /// 12. (Query syntax) Select publishers that has Name started with a 'B' letter
+    public static void Query12(List<Publisher> publishers)
+    {
+        var query12 = from p in publishers
+                      where p.PublisherName.ToUpper().First() == 'B'
+                      select p;
+        Console.WriteLine("12. Publishers that has Name started with a 'B' letter:");
+        foreach (var item in query12)
+            Console.WriteLine($"\t{item}");
+        Console.WriteLine();
+    }
 
-    /// 13. (Query syntax + Extentions syntax) Select 'percentFilter' number of books ordered by number of sum of copies in all libraries from max to min
+    // 13. (Query syntax + Extentions syntax) Select 'percentFilter' number of books ordered by number of sum of copies in all libraries from max to min
     public static void Query13(List<Book> books, List<BookOfLibrary> bookOfLibraryList, double percentFilter = 0.3)
     {
         var query13 = (from b in books
@@ -438,7 +440,7 @@ class Program
         Console.WriteLine();
     }
 
-    /// 14. (Extentions syntax) Select n-th book from list ordered by date
+    // 14. (Extentions syntax) Select n-th book from list ordered by date
     public static void Query14(List<Book> books, int n = 5)
     {
         int indexOfBookInList = n - 1;
@@ -449,7 +451,7 @@ class Program
         Console.WriteLine();
     }
 
-    /// 15. (Extentions syntax) Select books with shortest Title
+    // 15. (Extentions syntax) Select books with shortest Title
     public static void Query15(List<Book> books)
     {
         var query15 = books.Where(b => b.Title.Count()
@@ -460,7 +462,7 @@ class Program
         Console.WriteLine();
     }
 
-    /// 16. (Extentions syntax) Select all books that have price bigger than average price of all books
+    // 16. (Extentions syntax) Select all books that have price bigger than average price of all books
     public static void Query16(List<Book> books)
     {
         double averagePriceOfBooksInlib2 = books.Average(b => b.Price);
@@ -471,7 +473,7 @@ class Program
         Console.WriteLine();
     }
 
-    /// 17. (Extentions syntax) Select the top 'topNumberFilter' most frequent words in book titles
+    // 17. (Extentions syntax) Select the top 'topNumberFilter' most frequent words in book titles
     public static void Query17(List<Book> books, int topNumberFilter = 5)
     {
         Regex rgx = new Regex("[^a-zA-Z0-9 -]");
@@ -494,7 +496,7 @@ class Program
         Console.WriteLine();
     }
 
-    /// 18. (Extentions syntax) Select percent of sum of all books for every book
+    // 18. (Extentions syntax) Select percent of sum of all books for every book
     public static void Query18(List<Book> books)
     {
         double sumPriceOfAllBooks = books.Sum(b => b.Price);
@@ -505,7 +507,7 @@ class Program
         Console.WriteLine();
     }
 
-    /// 19. (Query syntax) Group books by their publishing month
+    // 19. (Query syntax) Group books by their publishing month
     public static void Query19(List<Book> books)
     {
         var query19 = from book in books

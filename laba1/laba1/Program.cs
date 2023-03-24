@@ -138,7 +138,7 @@ class Program
         //8. (Query syntax) Select books with max price
         Query8(books);
 
-        //9. (Extentions syntax) 
+        //9. (Extentions syntax) Select first 'numberToTake' and last 'numberToTake' books, ordered by price
         Query9(books, 2);
 
         //10. (Extentions syntax) Select authors that are common for all libraries
@@ -150,7 +150,7 @@ class Program
         //12. (Query syntax) Show publishers that have Names started with 'B' letter
         Query12(publishers);
 
-        //13. (Query syntax + Extentions syntax) 
+        //13. (Query syntax + Extentions syntax) Select 'percentFilter' number of books ordered by number of sum of copies in all libraries from max to min
         Query13(books, bookOfLibraryList, 0.5);
 
         //14. (Extentions syntax) Select 5-th book from list ordered by date
@@ -185,8 +185,8 @@ class Program
         book => book.IdOfAuthor,
         (auth, bs) => new
         {
-            author = auth,
-            book = bs.Select(b => b.IdOfBook).Join(
+            Author = auth,
+            Book = bs.Select(b => b.IdOfBook).Join(
                                    books,
                                    bookId => bookId,
                                    book => book.BookId,
@@ -194,16 +194,7 @@ class Program
         }
     );
         Console.WriteLine("1. Authors and all their books titles:");
-        foreach (var bookOfAuthor in query1)
-        {
-            Console.WriteLine($"\t{bookOfAuthor.author}:");
-            foreach (var book in bookOfAuthor.book)
-            {
-                Console.WriteLine("\t\t"+book.Title);
-            }
-            Console.WriteLine();
-        }
-        Console.WriteLine();
+        Output.PrintToConsole(query1.Select(item => new Tuple<Author, IEnumerable<Book>>(item.Author, item.Book)));
     }
 
     // (Query syntax)
@@ -214,17 +205,14 @@ class Program
                      where b.Price > priceToFilter
                      select new
                      {
-                         book = b,
-                         authors = (from ab in bookOfAuthorList
+                         Book = b,
+                         Authors = (from ab in bookOfAuthorList
                                     join a in authors on ab.IdOfAuthor equals a.AuthorId
                                     where b.BookId == ab.IdOfBook
                                     select a).ToList()
                      };
         Console.WriteLine($"2. Books that have price > {priceToFilter} and their authors:");
-        foreach (var item in query2)
-            Console.WriteLine($"\t{item.book.Title.PadRight(25)}\t{item.book.Price}" +
-                $"\n\t\t{String.Join(", ", item.authors)}");
-        Console.WriteLine();
+        Output.PrintToConsole(query2.Select(item => new Tuple<Book, IEnumerable<Author>>(item.Book, item.Authors)));
     }
 
     // (Extentions syntax)
@@ -234,12 +222,10 @@ class Program
         var query3 = books.OrderBy(b => b.Title)
                 .Where(b => b.PublishingDate.Year < yearFilter);
         Console.WriteLine($"3. Ordered by titles list of books published before {yearFilter}:");
-        foreach (var item in query3)
-            Console.WriteLine($"\t{item}");
-        Console.WriteLine();
+        Output.PrintToConsole(query3);
     }
 
-    /// 4. (Query syntax) Show books and libraries they are in
+    // 4. (Query syntax) Show books and libraries they are in
     public static void Query4(List<Book> books, List<Library> libs, List<BookOfLibrary> bookOfLibraryList)
     {
         var query4 = from bl in bookOfLibraryList
@@ -247,21 +233,15 @@ class Program
                      into g
                      select new
                      {
-                         library = (from l in libs
+                         Library = (from l in libs
                                    where l.LibraryId == g.Key
                                    select l).Single(),
-                         booksInlib = from b in books
+                         Books = from b in books
                                       join g1 in g on b.BookId equals g1.BookId
                                       select b
                      };
         Console.WriteLine("4. Books and libraries they are in:");
-        foreach (var item in query4)
-        { 
-            Console.WriteLine($"\t{item.library}"); 
-            foreach(var item2 in item.booksInlib)
-                Console.WriteLine($"\t\t{item2}");
-        }
-        Console.WriteLine();
+        Output.PrintToConsole(query4.Select(item => new Tuple<Library, IEnumerable<Book>>(item.Library, item.Books)));
     }
 
     // 5. (Extentions syntax) Select book with minimum price for every library
@@ -280,19 +260,13 @@ class Program
         var query5 = booksGrouped
                         .Select(item => new
                         {
-                            Key = item.Key,
+                            Library = item.Key,
                             minBookCollection = item.booksCollection
                             .Where(x => x.Price == item.booksCollection
                             .Min(y => y.Price))
                         });
         Console.WriteLine($"5. Book with minimum price for every library");
-        foreach (var item in query5)
-        { 
-            Console.WriteLine($"\t{item.Key}");
-            foreach(var book in item.minBookCollection)
-                Console.WriteLine($"\t\t{book}");
-        }
-        Console.WriteLine();
+        Output.PrintToConsole(query5.Select(item => new Tuple<Library, IEnumerable<Book>>(item.Library, item.minBookCollection)));
     }
 
     // 6. (Extentions syntax) Show top 'topNumberFilter' most expensive books and its/their author/-s
@@ -308,8 +282,8 @@ class Program
                 ab => ab.IdOfBook,
                 (b, ab) => new
                 {
-                    book = b,
-                    authors = ab.Select(x => x.IdOfAuthor)
+                    Book = b,
+                    Authors = ab.Select(x => x.IdOfAuthor)
                             .Join(
                                 authors,
                                 ab => ab,
@@ -318,9 +292,7 @@ class Program
                 }
             );
         Console.WriteLine($"6. Top {topNumberFilter} expensive books and their authors");
-        foreach (var item in query6)
-            Console.WriteLine($"\t{item.book} {String.Join(", ", item.authors)}");
-        Console.WriteLine();
+        Output.PrintToConsole(query6.Select(item => new Tuple<Book, IEnumerable<Author>>(item.Book, item.Authors)));
     }
 
     //  7. (Query syntax) Show sum of all books for every author and order them by book number from bigger to smaller and then by author firstname
@@ -332,17 +304,15 @@ class Program
                          into authorGroup
                          select new
                          {
-                             author = (from a in authors
+                             Author = (from a in authors
                                        where a.AuthorId == authorGroup.Key
                                        select a).Single(),
-                             bookNum = authorGroup.Count()
+                             BookNum = authorGroup.Count()
                          })
-                     orderby aBookn.bookNum descending, aBookn.author.Firstname
+                     orderby aBookn.BookNum descending, aBookn.Author.Firstname
                      select aBookn;
         Console.WriteLine("7. Authors' number of books, ordered by this number and then by author's first name:");
-        foreach (var item in query7)
-            Console.WriteLine($"\t{item.author.ToString().PadRight(18)} {item.bookNum}");
-        Console.WriteLine();
+        Output.PrintToConsole(query7.Select(item => new Tuple<Author, double>(item.Author, item.BookNum)));
     }
 
     // 8. (Query syntax) Select books with max price
@@ -353,9 +323,7 @@ class Program
                                        select b1.Price).Max()
                      select b;
         Console.WriteLine("8. All books which price is max:");
-        foreach (var item in query8)
-            Console.WriteLine("\t" + item);
-        Console.WriteLine();
+        Output.PrintToConsole(query8);
     }
 
     // 9. (Extentions syntax) Select first 'numberToTake' and last 'numberToTake' books, ordered by price
@@ -368,9 +336,7 @@ class Program
                     .Union(
                     orderedBooks.TakeLast(numberToTake), new BookComparerById());
         Console.WriteLine($"9. There are first {numberToTake} and last {numberToTake} number of books from book list ordered by price and title:");
-        foreach (var item in query9)
-            Console.WriteLine($"\t{item}");
-        Console.WriteLine();
+        Output.PrintToConsole(query9);
     }
 
     // 10. (Extentions syntax) Select authors that are common for all libraries
@@ -380,9 +346,7 @@ class Program
         var query10 = authorsGroupedByLib
             .Aggregate((first, next) => first.Intersect(next, new AuhtorComparerById()));
         Console.WriteLine("10. All authors that are in all libraries:");
-        foreach (var item in query10)
-            Console.WriteLine($"\t{item.Firstname} {item.Lastname}");
-        Console.WriteLine();
+        Output.PrintToConsole(query10);
     }
     //returns authors objects grouped by library
     public static IEnumerable<IEnumerable<Author>> GetAuthorsGroupedByLib(List<Author> authors, List<BookOfLibrary> bookOfLibraryList, List<BookOfAuthor> bookOfAuthorList)
@@ -417,21 +381,17 @@ class Program
                     .Where(a => authorsGroupedByLib.SelectMany(a1 => a1)
                                                    .Count(x => comparer.Equals(x, a)) > 1)));
         Console.WriteLine("11. All authors that are different for all libraries:");
-        foreach (var item in query11)
-            Console.WriteLine("\t" + item);
-        Console.WriteLine();
+        Output.PrintToConsole(query11);
     }
 
-    /// 12. (Query syntax) Select publishers that has Name started with a 'B' letter
+    // 12. (Query syntax) Select publishers that has Name started with a 'B' letter
     public static void Query12(List<Publisher> publishers)
     {
         var query12 = from p in publishers
                       where p.PublisherName.ToUpper().First() == 'B'
                       select p;
         Console.WriteLine("12. Publishers that has Name started with a 'B' letter:");
-        foreach (var item in query12)
-            Console.WriteLine($"\t{item}");
-        Console.WriteLine();
+        Output.PrintToConsole(query12);
     }
 
     // 13. (Query syntax + Extentions syntax) Select 'percentFilter' number of books ordered by number of sum of copies in all libraries from max to min
@@ -450,15 +410,13 @@ class Program
                           on b.BookId equals gb.Key
                       select new
                       {
-                          book = b,
+                          Book = b,
                           CountOfCopies = gb.CountOfCopies
                       })
                       .OrderByDescending(item => item.CountOfCopies)
                       .Take((int)(books.Count()* percentFilter));
         Console.WriteLine("13. :");
-        foreach (var item in query13)
-            Console.WriteLine($"\t{item.book} copies num={item.CountOfCopies}");
-        Console.WriteLine();
+        Output.PrintToConsole(query13.Select(item => new Tuple<Book, double>(item.Book, item.CountOfCopies)));
     }
 
     // 14. (Extentions syntax) Select n-th book from list ordered by date
@@ -468,8 +426,7 @@ class Program
         var query14 = books.OrderBy(b => b.PublishingDate)
                 .ElementAtOrDefault(indexOfBookInList);
         Console.WriteLine($"14. {indexOfBookInList + 1}th book in ordered by date list of books:");
-        Console.WriteLine($"\t{query14}");
-        Console.WriteLine();
+        Console.WriteLine($"\t{query14}\n");
     }
 
     // 15. (Extentions syntax) Select books with shortest Title
@@ -478,9 +435,7 @@ class Program
         var query15 = books.Where(b => b.Title.Count()
                                     == books.Min(b => b.Title.Count()));
         Console.WriteLine("15. All books with shortest titles:");
-        foreach (var item in query15)
-            Console.WriteLine("\t" + item);
-        Console.WriteLine();
+        Output.PrintToConsole(query15);
     }
 
     // 16. (Extentions syntax) Select all books that have price bigger than average price of all books
@@ -488,10 +443,8 @@ class Program
     {
         double averagePriceOfBooksInlib2 = books.Average(b => b.Price);
         var query16 = books.Where(b => b.Price > averagePriceOfBooksInlib2);
-        Console.WriteLine($"16. Books in lib1 that have price bigger than average price of books in lib2({averagePriceOfBooksInlib2}):");
-        foreach (var item in query16)
-            Console.WriteLine("\t" + item);
-        Console.WriteLine();
+        Console.WriteLine($"16. Books in lib1 that have price bigger than average price of books in lib2 ( {Math.Round(averagePriceOfBooksInlib2, 3)} ):");
+        Output.PrintToConsole(query16);
     }
 
     // 17. (Extentions syntax) Select the top 'topNumberFilter' most frequent words in book titles
@@ -512,20 +465,17 @@ class Program
                                 .ThenBy(item => item.Word)
                                 .Take(topNumberFilter);
         Console.WriteLine($"17. Top {topNumberFilter} most frequent words in books' titles:");
-        foreach (var item in query17)
-            Console.WriteLine($"\t{item.Word.PadRight(12)} {item.Num}");
-        Console.WriteLine();
+        Output.PrintToConsole(query17.Select(item => new Tuple<string, int>(item.Word, item.Num)));
     }
 
     // 18. (Extentions syntax) Select percent of sum of all books for every book
     public static void Query18(List<Book> books)
     {
         double sumPriceOfAllBooks = books.Sum(b => b.Price);
-        var query18 = books.Select(b => new { book = b, Percent = (double)b.Price / sumPriceOfAllBooks });
+        var query18 = books.Select(b => new { Book = b,
+                                              Percent = (double)b.Price / sumPriceOfAllBooks });
         Console.WriteLine("18. Percentage of price for every book: ");
-        foreach (var b in query18)
-            Console.WriteLine($"\t{b.book} {b.Percent.ToString("0.00")}%");
-        Console.WriteLine();
+        Output.PrintToConsole(query18.Select(item => new Tuple<Book, double>(item.Book, Math.Round(item.Percent,2))));
     }
 
     // 19. (Query syntax) Group books by their publishing month
@@ -537,13 +487,7 @@ class Program
                       orderby groupByMonths.Key
                       select groupByMonths;
         Console.WriteLine("19. Books grouped by month they where published:");
-        foreach (var item in query19)
-        {
-            Console.WriteLine($"\tMonth {item.Key}");
-            foreach (var item1 in item)
-                Console.WriteLine($"\t\t{item1}");
-        }
-        Console.WriteLine();
+        Output.PrintToConsole(query19);
     }
 
     // 20. (Query syntax + Extentions syntax) Select as one string book and its publisher
@@ -558,9 +502,7 @@ class Program
                                                 select p.PublisherName;
         var query20 = titles.Zip(publishersOfBooks, (t, p) => String.Concat(t.PadRight(23), ", ", p));
         Console.WriteLine($"20. Books and their publishers:");
-        foreach (var item in query20)
-            Console.WriteLine("\t" + item);
-        Console.WriteLine();
+        Output.PrintToConsole(query20);
     }
 }
 

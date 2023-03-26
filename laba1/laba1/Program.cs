@@ -31,29 +31,27 @@ class Program
                 new Book(1, "Dandelion Wine", 1900, new DateOnly(1957, 09, 21), publishers[1].PublisherId),
                 new Book(2, "The Martian Chronicles", 100, new DateOnly(1950, 04, 06), publishers[1].PublisherId),
                 new Book(3, "Pride and Prejudice", 962, new DateOnly(1813, 01, 28), publishers[2].PublisherId),
-                new Book(4, "The Great Gatsby", 1200, new DateOnly(1925, 04, 10), publishers[3].PublisherId),
-                new Book(5, "The Sun Also Rises", 3210, new DateOnly(1926, 10, 22), publishers[4].PublisherId),
-                new Book(6, "A Farewell to Arms", 1090, new DateOnly(1926, 10, 22), publishers[4].PublisherId),
-                new Book(7, "The Theory of Everything", 1300, new DateOnly(2010, 09, 07), publishers[5].PublisherId),
-                new Book(8, "A Brief History of Time", 1300, new DateOnly(1988, 03, 19), publishers[5].PublisherId),
-                new Book(9, "The Hobbit", 3210, new DateOnly(1937, 09, 21), publishers[6].PublisherId),
-                new Book(10, "The Lord of the Rings", 3055, new DateOnly(1954, 09, 21), publishers[6].PublisherId),
-                new Book(11, "A Tale of Two Cities", 830, new DateOnly(1959, 04, 30), publishers[7].PublisherId),
-                new Book(12, "The Metamorphosis", 743, new DateOnly(1915, 08, 25), publishers[8].PublisherId),
-                new Book(13, "The Trial", 3045, new DateOnly(1925, 09, 21), publishers[9].PublisherId),
+                new Book(4, "The Sun Also Rises", 3210, new DateOnly(1926, 10, 22), publishers[4].PublisherId),
+                new Book(5, "A Farewell to Arms", 1090, new DateOnly(1926, 10, 22), publishers[4].PublisherId),
+                new Book(6, "The Theory of Everything", 1300, new DateOnly(2010, 09, 07), publishers[5].PublisherId),
+                new Book(7, "A Brief History of Time", 1300, new DateOnly(1988, 03, 19), publishers[5].PublisherId),
+                new Book(8, "The Hobbit", 3210, new DateOnly(1937, 09, 21), publishers[6].PublisherId),
+                new Book(9, "The Lord of the Rings", 3055, new DateOnly(1954, 09, 21), publishers[6].PublisherId),
+                new Book(10, "A Tale of Two Cities", 830, new DateOnly(1959, 04, 30), publishers[7].PublisherId),
+                new Book(11, "The Metamorphosis", 743, new DateOnly(1915, 08, 25), publishers[8].PublisherId),
+                new Book(12, "The Trial", 3045, new DateOnly(1925, 09, 21), publishers[9].PublisherId),
             };
         //creating list of authors
         List<Author> authors = new List<Author>()
             {
                 new Author(0, "Ray", "Bradbury"),
                 new Author(1, "Jane", "Austen"),
-                new Author(2, "Scott", "Fitzgerald"),
-                new Author(3, "Ernest", "Hemingway"),
-                new Author(4, "Stephen", "Hawkingon"),
-                new Author(5, "Leonard", "Mlodinow"),
-                new Author(6, "J. R. R.", "Tolkien"),
-                new Author(7, "Charles", "Dickens"),
-                new Author(8, "Franz", "Kafka"),
+                new Author(2, "Ernest", "Hemingway"),
+                new Author(3, "Stephen", "Hawkingon"),
+                new Author(4, "Leonard", "Mlodinow"),
+                new Author(5, "J. R. R.", "Tolkien"),
+                new Author(6, "Charles", "Dickens"),
+                new Author(7, "Franz", "Kafka"),
             };
 
         //creating list of BookOfAuthor objects that connect books and corresponding authors from lists
@@ -66,16 +64,15 @@ class Program
             bookOfAuthorList.Add(new BookOfAuthor(books[2].BookId, authors[0].AuthorId));
             bookOfAuthorList.Add(new BookOfAuthor(books[3].BookId, authors[1].AuthorId));
             bookOfAuthorList.Add(new BookOfAuthor(books[4].BookId, authors[2].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[5].BookId, authors[3].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[5].BookId, authors[2].AuthorId));
             bookOfAuthorList.Add(new BookOfAuthor(books[6].BookId, authors[3].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[7].BookId, authors[4].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[7].BookId, authors[5].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[8].BookId, authors[4].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[9].BookId, authors[6].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[6].BookId, authors[4].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[7].BookId, authors[3].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[8].BookId, authors[5].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[9].BookId, authors[5].AuthorId));
             bookOfAuthorList.Add(new BookOfAuthor(books[10].BookId, authors[6].AuthorId));
             bookOfAuthorList.Add(new BookOfAuthor(books[11].BookId, authors[7].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[12].BookId, authors[8].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[13].BookId, authors[8].AuthorId));
+            bookOfAuthorList.Add(new BookOfAuthor(books[12].BookId, authors[7].AuthorId));
         }
         catch (IndexOutOfRangeException e)
         { Console.WriteLine(e.Message); }
@@ -93,25 +90,24 @@ class Program
         {
             new BookOfLibrary(libraries[0].LibraryId, books[0].BookId, new List<int>(){1, 2, 3, 4, 5} ),
             new BookOfLibrary(libraries[0].LibraryId, books[1].BookId, new List<int>(){6, 7, 8} ),
-            new BookOfLibrary(libraries[0].LibraryId, books[2].BookId, new List<int>(){9, 10} ),
-            new BookOfLibrary(libraries[0].LibraryId, books[3].BookId, new List<int>(){11, 12} ),
-            new BookOfLibrary(libraries[0].LibraryId, books[4].BookId, new List<int>(){13} ),
-            new BookOfLibrary(libraries[0].LibraryId, books[5].BookId, new List<int>(){14, 15} ),
-            new BookOfLibrary(libraries[0].LibraryId, books[6].BookId, new List<int>(){16, 17, 18} ),
-            new BookOfLibrary(libraries[0].LibraryId, books[7].BookId, new List<int>(){19, 20} ),
-            new BookOfLibrary(libraries[0].LibraryId, books[8].BookId, new List<int>(){21, 22, 23} ),
-            new BookOfLibrary(libraries[0].LibraryId, books[9].BookId, new List<int>(){24} ),
-            new BookOfLibrary(libraries[0].LibraryId, books[10].BookId, new List<int>(){25, 26, 27, 28} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[2].BookId, new List<int>(){9, 10, 11} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[3].BookId, new List<int>(){12} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[4].BookId, new List<int>(){13, 14, 15} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[5].BookId, new List<int>(){16, 17, 18} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[6].BookId, new List<int>(){19, 20} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[7].BookId, new List<int>(){21, 22, 23} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[8].BookId, new List<int>(){24} ),
+            new BookOfLibrary(libraries[0].LibraryId, books[9].BookId, new List<int>(){25, 26, 27, 28} ),
 
             new BookOfLibrary(libraries[1].LibraryId, books[0].BookId, new List<int>(){1, 2, 3}  ),
             new BookOfLibrary(libraries[1].LibraryId, books[1].BookId, new List<int>(){4, 5}  ),
-            new BookOfLibrary(libraries[1].LibraryId, books[9].BookId, new List<int>(){6} ),
-            new BookOfLibrary(libraries[1].LibraryId, books[11].BookId, new List<int>(){7, 8} ),
-            new BookOfLibrary(libraries[1].LibraryId, books[12].BookId, new List<int>(){9, 10} ),
+            new BookOfLibrary(libraries[1].LibraryId, books[8].BookId, new List<int>(){6} ),
+            new BookOfLibrary(libraries[1].LibraryId, books[10].BookId, new List<int>(){7, 8} ),
+            new BookOfLibrary(libraries[1].LibraryId, books[11].BookId, new List<int>(){9, 10} ),
 
-            new BookOfLibrary(libraries[2].LibraryId, books[13].BookId, new List<int>(){1, 2, 3} ),
+            new BookOfLibrary(libraries[2].LibraryId, books[12].BookId, new List<int>(){1, 2, 3} ),
             new BookOfLibrary(libraries[2].LibraryId, books[0].BookId, new List<int>(){4} ),
-            new BookOfLibrary(libraries[2].LibraryId, books[7].BookId, new List<int>(){5, 6} )
+            new BookOfLibrary(libraries[2].LibraryId, books[6].BookId, new List<int>(){5, 6} )
     };
 
         //1. (Extentions syntax) Selects all authors and titles of all their books from all libraries

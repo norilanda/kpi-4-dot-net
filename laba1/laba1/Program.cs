@@ -53,30 +53,6 @@ class Program
                 new Author(6, "Charles", "Dickens"),
                 new Author(7, "Franz", "Kafka"),
             };
-
-        //creating list of BookOfAuthor objects that connect books and corresponding authors from lists
-        List<BookOfAuthor> bookOfAuthorList = new List<BookOfAuthor>();
-        try
-        {
-            //connecting books with authors from first lists
-            bookOfAuthorList.Add(new BookOfAuthor(books[0].BookId, authors[0].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[1].BookId, authors[0].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[2].BookId, authors[0].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[3].BookId, authors[1].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[4].BookId, authors[2].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[5].BookId, authors[2].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[6].BookId, authors[3].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[6].BookId, authors[4].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[7].BookId, authors[3].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[8].BookId, authors[5].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[9].BookId, authors[5].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[10].BookId, authors[6].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[11].BookId, authors[7].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[12].BookId, authors[7].AuthorId));
-        }
-        catch (IndexOutOfRangeException e)
-        { Console.WriteLine(e.Message); }
-
         //creating 3 libraries
         List<Library> libraries = new List<Library>()
         {
@@ -84,6 +60,24 @@ class Program
             new Library(1, "Library 2"),
             new Library(2, "Library 3")
         };
+
+        //creating list of BookOfAuthor objects that connect books and corresponding authors from lists
+        List<BookOfAuthor> bookOfAuthorList = new List<BookOfAuthor>();
+        //connecting books with authors from first lists
+        bookOfAuthorList.Add(new BookOfAuthor(books[0].BookId, authors[0].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[1].BookId, authors[0].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[2].BookId, authors[0].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[3].BookId, authors[1].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[4].BookId, authors[2].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[5].BookId, authors[2].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[6].BookId, authors[3].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[6].BookId, authors[4].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[7].BookId, authors[3].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[8].BookId, authors[5].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[9].BookId, authors[5].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[10].BookId, authors[6].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[11].BookId, authors[7].AuthorId));
+        bookOfAuthorList.Add(new BookOfAuthor(books[12].BookId, authors[7].AuthorId));
 
         //creating connections between books and libraries
         List<BookOfLibrary> bookOfLibraryList = new List<BookOfLibrary>()
@@ -190,7 +184,7 @@ class Program
         Console.WriteLine("1. Authors and all their books titles:");
         Output.PrintToConsole(query1.Select(item => new Tuple<Author, IEnumerable<Book>>(item.Author, item.Book)));
     }
-    // 2. (Query syntax) Select all publishers and books published by them (left join)
+    // (Query syntax) 2. Select all publishers and books published by them (left join)
     public static void Query2(List<Book> books, List<Publisher> publishers)
     {
         var query2 = from publisher in publishers
@@ -221,7 +215,7 @@ class Program
                         $"There are publishers, whose name contains {letterToSearch} letter" :
                         "NO publishers have such a name";
         Console.WriteLine($"4. Are there any publishers whose Name contains {letterToSearch} letter?");
-        Console.WriteLine($"\t{query4}");
+        Console.WriteLine($"\t{query4}\n");
     }
 
     // returns libraries and their books as a Tuple<Library, IEnumerable<Book>>
@@ -448,7 +442,7 @@ class Program
         double sumPriceOfAllBooks = books.Sum(b => b.Price);
         var query18 = books.Select(b => new { Book = b,
                                               Percent = (double)b.Price / sumPriceOfAllBooks });
-        Console.WriteLine("18. Percentage of price for every book: ");
+        Console.WriteLine("18. Percentage of price for every book (percentage is in last column): ");
         Output.PrintToConsole(query18.Select(item => new Tuple<Book, double>(item.Book, Math.Round(item.Percent,3))));
     }
 

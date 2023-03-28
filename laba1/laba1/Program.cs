@@ -427,8 +427,7 @@ class Program
                                                                         .ToLower()
                                                                         .Split());
         var query17 = allWordsInTitles.GroupBy(word => word,
-                                               word => allWordsInTitles.Count(w => w.Equals(word)),
-                                         (word, num) => new { Word = word, Num = num.Count() })
+                                               (word, num) => new { Word = word, Num = num.Count() })
                                 .OrderByDescending(item => item.Num)
                                 .ThenBy(item => item.Word)
                                 .Take(topNumberFilter);

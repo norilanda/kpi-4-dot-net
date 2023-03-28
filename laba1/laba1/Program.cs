@@ -267,19 +267,17 @@ class Program
     //  7. (Query syntax) Show number of books for every author and order them by book number from bigger to smaller and then by author firstname
     public static void Query7(List<Author> authors, List<BookOfAuthor> bookOfAuthorList)
     {
-        var query7 = from authorBookNumber in (
-                         from ab in bookOfAuthorList
-                         group ab by ab.IdOfAuthor
+        var query7 =     from ab in bookOfAuthorList
+                         join a in authors on ab.IdOfAuthor equals a.AuthorId
+                         group ab by a
                          into authorGroup
                          select new
                          {
-                             Author = (from a in authors
-                                       where a.AuthorId == authorGroup.Key
-                                       select a).Single(),
+                             Author = authorGroup.Key,
                              BookNum = authorGroup.Count()
-                         })
-                     orderby authorBookNumber.BookNum descending, authorBookNumber.Author.Firstname
-                     select authorBookNumber;
+                         } into authorBookNumber
+                        orderby authorBookNumber.BookNum descending, authorBookNumber.Author.Firstname
+                        select authorBookNumber;
         Console.WriteLine("7. Authors' number of books, ordered by this number and then by author's first name:");
         Output.PrintToConsole(query7.Select(item => new Tuple<Author, double>(item.Author, item.BookNum)));
     }

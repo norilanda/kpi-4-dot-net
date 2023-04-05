@@ -1,4 +1,5 @@
 ﻿using laba1;
+using System.Xml.Serialization;
 
 namespace laba2
 {
@@ -110,6 +111,15 @@ namespace laba2
             container.Libraries = libraries;
             container.BookOfAuthorList = bookOfAuthorList;
             container.BookOfLibraryList = bookOfLibraryList;
+
+            string path = "books.xml";
+            XmlManager.WriteBookInLibraryToXml(container, path );
+            //XmlSerializer serializer = new XmlSerializer(typeof(BookInlLibraryContainer));
+            //using (StreamWriter writer = new StreamWriter(path))
+            //{
+            //    serializer.Serialize(writer, container);
+            //}
+            BookInlLibraryContainer containerFromFile = XmlManager.DeserializeFromXml(path);
         }
     }
 }

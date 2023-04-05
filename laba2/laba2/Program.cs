@@ -58,22 +58,24 @@ namespace laba2
         };
 
             //creating list of BookOfAuthor objects that connect books and corresponding authors from lists
-            List<BookOfAuthor> bookOfAuthorList = new List<BookOfAuthor>();
+            List<BookOfAuthor> bookOfAuthorList = new List<BookOfAuthor>()
+            { 
             //connecting books with authors from first lists
-            bookOfAuthorList.Add(new BookOfAuthor(books[0].BookId, authors[0].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[1].BookId, authors[0].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[2].BookId, authors[0].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[3].BookId, authors[1].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[4].BookId, authors[2].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[5].BookId, authors[2].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[6].BookId, authors[3].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[6].BookId, authors[4].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[7].BookId, authors[3].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[8].BookId, authors[5].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[9].BookId, authors[5].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[10].BookId, authors[6].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[11].BookId, authors[7].AuthorId));
-            bookOfAuthorList.Add(new BookOfAuthor(books[12].BookId, authors[7].AuthorId));
+            new BookOfAuthor(books[0].BookId, authors[0].AuthorId),
+            new BookOfAuthor(books[1].BookId, authors[0].AuthorId),
+            new BookOfAuthor(books[2].BookId, authors[0].AuthorId),
+            new BookOfAuthor(books[3].BookId, authors[1].AuthorId),
+            new BookOfAuthor(books[4].BookId, authors[2].AuthorId),
+            new BookOfAuthor(books[5].BookId, authors[2].AuthorId),
+            new BookOfAuthor(books[6].BookId, authors[3].AuthorId),
+            new BookOfAuthor(books[6].BookId, authors[4].AuthorId),
+            new BookOfAuthor(books[7].BookId, authors[3].AuthorId),
+            new BookOfAuthor(books[8].BookId, authors[5].AuthorId),
+            new BookOfAuthor(books[9].BookId, authors[5].AuthorId),
+            new BookOfAuthor(books[10].BookId, authors[6].AuthorId),
+            new BookOfAuthor(books[11].BookId, authors[7].AuthorId),
+            new BookOfAuthor(books[12].BookId, authors[7].AuthorId),
+        };
 
             //creating connections between books and libraries
             List<BookOfLibrary> bookOfLibraryList = new List<BookOfLibrary>()
@@ -98,7 +100,16 @@ namespace laba2
             new BookOfLibrary(libraries[2].LibraryId, books[12].BookId, new List<int>(){1, 2, 3} ),
             new BookOfLibrary(libraries[2].LibraryId, books[0].BookId, new List<int>(){4} ),
             new BookOfLibrary(libraries[2].LibraryId, books[6].BookId, new List<int>(){5, 6} )
-    };
+        };
+
+            //adding all lists to container
+            BookInlLibraryContainer container = new BookInlLibraryContainer();
+            container.Publishers = publishers;
+            container.Books = books;
+            container.Authors = authors;
+            container.Libraries = libraries;
+            container.BookOfAuthorList = bookOfAuthorList;
+            container.BookOfLibraryList = bookOfLibraryList;
         }
     }
 }

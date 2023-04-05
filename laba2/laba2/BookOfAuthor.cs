@@ -12,17 +12,14 @@ namespace laba1
     ///     Attributes _idOfBook and _idOfAuthor represent ids of objects of corresponding classes
     /// </summary>
     public class BookOfAuthor
-    {
-        private int _idOfBook;
-        private int _idOfAuthor;
-
-        public int IdOfBook => _idOfBook;
-        public int IdOfAuthor => _idOfAuthor;
+    { 
+        public int IdOfBook { get; set; }
+        public int IdOfAuthor { get; set; }
 
         public BookOfAuthor(int book, int author)
         {
-            this._idOfBook = book;
-            this._idOfAuthor = author;
+            this.IdOfBook = book;
+            this.IdOfAuthor = author;
         }
     }
 }

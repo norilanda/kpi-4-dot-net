@@ -14,20 +14,17 @@ namespace laba1
     /// </summary>
     public class Library
     {
-        private int _libraryId;
-        private string _libraryName;
-
-        public int LibraryId => _libraryId;
-        public string Name => _libraryName;
+        public int LibraryId { get; set; }
+        public string LibraryName { get; set; }
 
         public Library(int id, string name)
         {
-            this._libraryId = id;
-            this._libraryName = name;
+            this.LibraryId = id;
+            this.LibraryName = name;
         }
         public override string ToString()
         {
-            return $"{_libraryId.ToString().PadRight(3)} {_libraryName.PadRight(17)}";
+            return $"{LibraryId.ToString().PadRight(3)} {LibraryName.PadRight(17)}";
         }
     }
 }

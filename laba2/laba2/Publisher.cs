@@ -13,20 +13,17 @@ namespace laba1
     /// </summary>
     public class Publisher
     {
-        private int _publisherId;
-        private string _publisherName;
-
-        public int PublisherId => _publisherId;
-        public string PublisherName => _publisherName;
+        public int PublisherId { get; set; }
+        public string PublisherName { get; set; }
 
         public Publisher(int id, string name)
         {
-            this._publisherId = id;
-            this._publisherName = name;
+            this.PublisherId = id;
+            this.PublisherName = name;
         }
         public override string ToString()
         {
-            return $"{_publisherId.ToString().PadRight(3)} {_publisherName.PadRight(20)}";
+            return $"{PublisherId.ToString().PadRight(3)} {PublisherName.PadRight(20)}";
         }
     }
 }

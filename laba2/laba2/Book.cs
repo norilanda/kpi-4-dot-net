@@ -18,29 +18,23 @@ namespace laba1
     /// </summary>
     public class Book
     {
-        private int _bookId;
-        private string _title;
-        private double _price;
-        private DateOnly _publishingDate;
-        private int _publisherId;
-
-        public int BookId => _bookId;
-        public string Title => _title;
-        public double Price => _price;
-        public DateOnly PublishingDate => _publishingDate;
-        public int PublisherId => _publisherId;
+        public int BookId { get; set; }
+        public string Title { get; set; }
+        public double Price { get; set; }
+        public DateOnly PublishingDate { get; set; }
+        public int PublisherId { get; set; }
 
         public Book(int id, string title, double price, DateOnly date, int publisherId)
         {
-            this._bookId = id;
-            this._title = title;
-            this._price = price;
-            this._publishingDate = date;
-            this._publisherId = publisherId;
+            this.BookId = id;
+            this.Title = title;
+            this.Price = price;
+            this.PublishingDate = date;
+            this.PublisherId = publisherId;
         }
         public override string ToString()
         {
-            string str = $"{_bookId.ToString().PadRight(3)} {_title.PadRight(25)} {_price.ToString().PadRight(7)} {_publishingDate}    {_publisherId.ToString().PadRight(3)}";
+            string str = $"{BookId.ToString().PadRight(3)} {Title.PadRight(25)} {Price.ToString().PadRight(7)} {PublishingDate}    {PublisherId.ToString().PadRight(3)}";
             return str;
         }
     }

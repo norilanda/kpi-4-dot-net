@@ -14,23 +14,20 @@ namespace laba1
     /// </summary>
     public class Author
     {
-        private int _authorId;
-        private string _firstName;
-        private string _lastName;
 
-        public int AuthorId => _authorId;
-        public string Firstname => _firstName;
-        public string Lastname => _lastName;
+        public int AuthorId { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
 
         public Author(int id, string firstName, string lastName)
         {
-            this._authorId = id;
-            this._firstName = firstName;
-            this._lastName = lastName;
+            this.AuthorId = id;
+            this.Firstname = firstName;
+            this.Lastname = lastName;
         }
         public override string ToString()
         {
-            string str = $"{_firstName} {_lastName}";
+            string str = $"{Firstname} {Lastname}";
             return str;
         }
     }

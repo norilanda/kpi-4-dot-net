@@ -121,34 +121,100 @@ namespace laba2
             //    serializer.Serialize(writer, container);
             //}
             Container containerFromFile = XmlManager.DeserializeFromXml(path);
-            Output.DisplayToConsole( containerFromFile );
+            Output.PrintToConsole( containerFromFile );
+            Console.WriteLine("===========================================================================================\n");
 
             XDocument data = XDocument.Load(path);
+
+            var query1 = Query1(data);
+            Console.WriteLine("1. Authors and all their books titles:");
+            Output.PrintToConsole( query1 );
+
+            Query2(data);
+
+            var query3 = Query3(data, (x) => x > 1950 && x < 2000);
+            Console.WriteLine($"3. Ordered by date list of books published on years that > 1950 but < 2000:");
+            Output.PrintToConsole(query3);
+
+            char param4 = 'y';
+            var query4 = Query4(data, param4);
+            Console.WriteLine($"4. All publishers whose Name contains '{param4}' letter: ");
+            if (query4.Any())
+                Output.PrintToConsole(query4);
+            else Console.WriteLine($"\tThere are no publishers whose Name contains '{param4}' letter");
+
+            Query5(data);
+
+            int param6 = 5;
+            var query6 = Query6(data, param6);
+            Console.WriteLine($"6. Top {param6} the most expensive books:");
+            Output.PrintToConsole (query6);
+
+            Query7(data);
+            Query8(data);
+            Query9(data);
+            Query10(data);
+            Query11(data);
+            Query12(data);
+            Query13(data);
+            Query14(data);
+            Query15(data);
+            Query16(data);
+            Query17(data);
+            Query18(data);
+            Query19(data);
+            Query20(data);
+
         }
 
-        public static void Query1(XDocument data)
+        //1. Select all authors and all their books
+        public static IEnumerable<Tuple<Author, IEnumerable<Book>>> Query1(XDocument data)
         {
-            //var query1 = 
+            var query1 = from author in data.Descendants("Author")
+                         join ab in data.Descendants("BookOfAuthor") on author.Element("AuthorId").Value equals ab.Element("IdOfAuthor").Value
+                         join book in data.Descendants("Book") on ab.Element("IdOfBook").Value equals book.Element("BookId").Value
+                         group book by author into g
+                         select new { 
+                             Author = Author.Parse(g.Key),
+                             Book = g.Select(book => Book.Parse(book))
+                         };
+            return query1.Select(item => new Tuple<Author, IEnumerable<Book>>(item.Author, item.Book));
         }
         public static void Query2(XDocument data)
         {
             //var query2 = 
         }
-        public static void Query3(XDocument data)
+        //3. Order books published on years that satisfy 'Condition'
+        public static IEnumerable<Book> Query3(XDocument data, Func<int, bool> Condition)
         {
-            //var query3 = 
+            var query3 = data.Descendants("Book")
+                            .Where(book => Condition(DateOnly.Parse(book.Element("PublishingDate").Value).Year))
+                            .OrderBy(book => DateOnly.Parse(book.Element("PublishingDate").Value))
+                            .Select(book => Book.Parse(book));
+            return query3;
         }
-        public static void Query4(XDocument data)
+
+        // 4. Select all publishers whose Name contains 'letterToSearch' letter
+        public static IEnumerable<Publisher> Query4(XDocument data, char letterToSearch)
         {
-            //var query4 = 
+            var query4 = from publisher in data.Descendants("Publisher")
+                         where publisher.Element("PublisherName").Value.Contains(letterToSearch)
+                         select Publisher.Parse(publisher);
+            return query4;
         }
         public static void Query5(XDocument data)
         {
             //var query5 = 
         }
-        public static void Query6(XDocument data)
+
+        // 6. Show top 'topNumberFilter' the most expensive books
+        public static IEnumerable<Book> Query6(XDocument data, int topNumberFilter)
         {
-            //var query6 = 
+            var query6 = data.Descendants("Book")
+                                .OrderByDescending(book => (double)book.Element("Price"))
+                                .Take(topNumberFilter)
+                                .Select(book => Book.Parse(book));
+            return query6;
         }
         public static void Query7(XDocument data)
         {

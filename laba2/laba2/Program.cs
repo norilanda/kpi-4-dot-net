@@ -1,4 +1,5 @@
 ﻿using laba1;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace laba2
@@ -121,6 +122,89 @@ namespace laba2
             //}
             Container containerFromFile = XmlManager.DeserializeFromXml(path);
             Output.DisplayToConsole( containerFromFile );
+
+            XDocument data = XDocument.Load(path);
+        }
+
+        public static void Query1(XDocument data)
+        {
+            //var query1 = 
+        }
+        public static void Query2(XDocument data)
+        {
+            //var query2 = 
+        }
+        public static void Query3(XDocument data)
+        {
+            //var query3 = 
+        }
+        public static void Query4(XDocument data)
+        {
+            //var query4 = 
+        }
+        public static void Query5(XDocument data)
+        {
+            //var query5 = 
+        }
+        public static void Query6(XDocument data)
+        {
+            //var query6 = 
+        }
+        public static void Query7(XDocument data)
+        {
+            //var query7 = 
+        }
+        public static void Query8(XDocument data)
+        {
+            //var query8 = 
+        }
+        public static void Query9(XDocument data)
+        {
+            //var query9 = 
+        }
+        public static void Query10(XDocument data)
+        {
+            //var query10 = 
+        }
+        public static void Query11(XDocument data)
+        {
+            //var query11 = 
+        }
+        public static void Query12(XDocument data)
+        {
+            //var query12 = 
+        }
+        public static void Query13(XDocument data)
+        {
+            //var query13 = 
+        }
+        public static void Query14(XDocument data)
+        {
+            //var query14 = 
+        }
+        public static void Query15(XDocument data)
+        {
+            //var query15 = 
+        }
+        public static void Query16(XDocument data)
+        {
+            //var query16 = 
+        }
+        public static void Query17(XDocument data)
+        {
+            //var query17 = 
+        }
+        public static void Query18(XDocument data)
+        {
+            //var query18 = 
+        }
+        public static void Query19(XDocument data)
+        {
+            //var query19 = 
+        }
+        public static void Query20(XDocument data)
+        {
+            //var query20 = 
         }
     }
 }

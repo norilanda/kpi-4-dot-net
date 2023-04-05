@@ -19,6 +19,7 @@ namespace laba1
         public string Firstname { get; set; }
         public string Lastname { get; set; }
 
+        public Author() { }
         public Author(int id, string firstName, string lastName)
         {
             this.AuthorId = id;

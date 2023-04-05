@@ -16,6 +16,7 @@ namespace laba1
         public int PublisherId { get; set; }
         public string PublisherName { get; set; }
 
+        public Publisher() { }
         public Publisher(int id, string name)
         {
             this.PublisherId = id;

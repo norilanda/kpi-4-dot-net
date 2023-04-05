@@ -16,6 +16,7 @@ namespace laba1
         public int IdOfBook { get; set; }
         public int IdOfAuthor { get; set; }
 
+        public BookOfAuthor() { }
         public BookOfAuthor(int book, int author)
         {
             this.IdOfBook = book;

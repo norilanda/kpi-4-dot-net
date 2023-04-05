@@ -24,6 +24,7 @@ namespace laba1
         public DateOnly PublishingDate { get; set; }
         public int PublisherId { get; set; }
 
+        public Book() { }
         public Book(int id, string title, double price, DateOnly date, int publisherId)
         {
             this.BookId = id;

@@ -18,6 +18,7 @@ namespace laba1
         public int BookId { get; set; }
         public List<int> InventoryNumbers { get; set; }
 
+        public BookOfLibrary() { }
         public BookOfLibrary(int libraryId, int bookId, List<int> inventoryNumbers)
         {
             this.LibraryId = libraryId;

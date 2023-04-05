@@ -17,6 +17,7 @@ namespace laba1
         public int LibraryId { get; set; }
         public string LibraryName { get; set; }
 
+        public Library() { }
         public Library(int id, string name)
         {
             this.LibraryId = id;

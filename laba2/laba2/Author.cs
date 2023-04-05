@@ -28,7 +28,7 @@ namespace laba1
         }
         public override string ToString()
         {
-            string str = $"{Firstname} {Lastname}";
+            string str = $"{AuthorId} {Firstname} {Lastname}";
             return str;
         }
     }

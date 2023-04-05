@@ -120,6 +120,7 @@ namespace laba2
             //    serializer.Serialize(writer, container);
             //}
             Container containerFromFile = XmlManager.DeserializeFromXml(path);
+            Output.DisplayToConsole( containerFromFile );
         }
     }
 }

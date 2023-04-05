@@ -22,5 +22,9 @@ namespace laba1
             this.IdOfBook = book;
             this.IdOfAuthor = author;
         }
+        public override string ToString()
+        {
+            return $"book id: {IdOfBook}\tauthor id {IdOfAuthor}";
+        }
     }
 }

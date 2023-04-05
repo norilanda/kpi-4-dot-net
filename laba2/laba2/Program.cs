@@ -104,7 +104,7 @@ namespace laba2
         };
 
             //adding all lists to container
-            BookInlLibraryContainer container = new BookInlLibraryContainer();
+            Container container = new Container();
             container.Publishers = publishers;
             container.Books = books;
             container.Authors = authors;
@@ -119,7 +119,7 @@ namespace laba2
             //{
             //    serializer.Serialize(writer, container);
             //}
-            BookInlLibraryContainer containerFromFile = XmlManager.DeserializeFromXml(path);
+            Container containerFromFile = XmlManager.DeserializeFromXml(path);
         }
     }
 }

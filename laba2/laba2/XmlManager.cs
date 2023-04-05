@@ -11,14 +11,14 @@ namespace laba2
 {
     public static class XmlManager
     {
-        public static void WriteBookInLibraryToXml(BookInlLibraryContainer container, string path)
+        public static void WriteBookInLibraryToXml(Container container, string path)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             settings.IndentChars = "\t";
 
             XmlWriter writer = XmlWriter.Create(path, settings);
-            writer.WriteStartElement("BookInlLibraryContainer");
+            writer.WriteStartElement("Container");
             //writing Publishers
             writer.WriteStartElement("Publishers");
             foreach (Publisher publisher in container.Publishers)
@@ -96,13 +96,13 @@ namespace laba2
             writer.WriteEndElement();
             writer.Close();
         }
-        public static BookInlLibraryContainer DeserializeFromXml(string path)
+        public static Container DeserializeFromXml(string path)
         {
-            BookInlLibraryContainer container;
-            XmlSerializer serializer = new XmlSerializer(typeof(BookInlLibraryContainer));
+            Container container;
+            XmlSerializer serializer = new XmlSerializer(typeof(Container));
             using (StreamReader sr = new StreamReader(path))
             {
-                container = (BookInlLibraryContainer)serializer.Deserialize(sr);
+                container = (Container)serializer.Deserialize(sr);
             }
             return container;
         }

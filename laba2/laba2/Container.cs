@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace laba2
 {
-    public class BookInlLibraryContainer
+    public class Container
     {
         public List<Publisher> Publishers {  get; set; }
         public List<Book> Books { get; set; }
@@ -15,7 +15,7 @@ namespace laba2
         public List<Library> Libraries { get; set; }
         public List<BookOfAuthor> BookOfAuthorList { get; set; }
         public List<BookOfLibrary> BookOfLibraryList { get; set; }
-        public BookInlLibraryContainer()
+        public Container()
         {
             
         }

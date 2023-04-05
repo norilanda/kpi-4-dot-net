@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace laba1
 {
@@ -37,6 +38,11 @@ namespace laba1
         {
             string str = $"{BookId.ToString().PadRight(3)} {Title.PadRight(25)} {Price.ToString().PadRight(7)} {PublishingDate}    {PublisherId.ToString().PadRight(3)}";
             return str;
+        }
+        public static Book Parse(XElement book)
+        {
+            return new Book(int.Parse(book.Element("BookId").Value), book.Element("Title").Value, double.Parse(book.Element("Price").Value),
+                            DateOnly.Parse(book.Element("PublishingDate").Value), int.Parse(book.Element("PublisherId").Value));
         }
     }
 }

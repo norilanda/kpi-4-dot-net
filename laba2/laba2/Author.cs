@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace laba1
 {
@@ -30,6 +31,10 @@ namespace laba1
         {
             string str = $"{AuthorId} {Firstname} {Lastname}";
             return str;
+        }
+        public static Author Parse(XElement author)
+        {
+            return new Author(int.Parse(author.Element("AuthorId").Value), author.Element("Firstname").Value, author.Element("Lastname").Value);
         }
     }
 }

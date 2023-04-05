@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace laba1
 {
@@ -25,6 +26,10 @@ namespace laba1
         public override string ToString()
         {
             return $"{PublisherId.ToString().PadRight(3)} {PublisherName.PadRight(20)}";
+        }
+        public static Publisher Parse(XElement publisher)
+        {
+            return new Publisher(int.Parse(publisher.Element("PublisherId").Value), publisher.Element("PublisherName").Value);
         }
     }
 }

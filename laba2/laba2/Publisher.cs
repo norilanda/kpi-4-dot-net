@@ -29,7 +29,7 @@ namespace laba1
         }
         public static Publisher Parse(XElement publisher)
         {
-            return new Publisher(int.Parse(publisher.Element("PublisherId").Value), publisher.Element("PublisherName").Value);
+            return new Publisher((int)publisher.Element("PublisherId"), (string)publisher.Element("PublisherName"));
         }
     }
 }

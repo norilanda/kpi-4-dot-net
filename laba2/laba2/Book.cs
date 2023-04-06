@@ -41,8 +41,8 @@ namespace laba1
         }
         public static Book Parse(XElement book)
         {
-            return new Book(int.Parse(book.Element("BookId").Value), book.Element("Title").Value, double.Parse(book.Element("Price").Value),
-                            DateOnly.Parse(book.Element("PublishingDate").Value), int.Parse(book.Element("PublisherId").Value));
+            return new Book((int)book.Element("BookId"), (string)book.Element("Title"), (double)(book.Element("Price")),
+                            DateOnly.Parse(book.Element("PublishingDate").Value), (int)(book.Element("PublisherId")));
         }
     }
 }

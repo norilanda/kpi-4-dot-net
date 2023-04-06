@@ -34,7 +34,7 @@ namespace laba1
         }
         public static Author Parse(XElement author)
         {
-            return new Author(int.Parse(author.Element("AuthorId").Value), author.Element("Firstname").Value, author.Element("Lastname").Value);
+            return new Author((int)author.Element("AuthorId"), (string)author.Element("Firstname"), (string)author.Element("Lastname"));
         }
     }
 }

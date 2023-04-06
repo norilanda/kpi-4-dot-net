@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace laba1
 {
@@ -26,6 +27,10 @@ namespace laba1
         public override string ToString()
         {
             return $"{LibraryId.ToString().PadRight(3)} {LibraryName.PadRight(17)}";
+        }
+        public static Library Parse(XElement library)
+        {
+            return new Library((int)library.Element("LibraryId"), (string)library.Element("LibraryName"));
         }
     }
 }

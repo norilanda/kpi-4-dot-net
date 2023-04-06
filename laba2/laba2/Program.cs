@@ -1,6 +1,7 @@
 ﻿using laba1;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace laba2
 {
@@ -143,26 +144,59 @@ namespace laba2
                 Output.PrintToConsole(query4);
             else Console.WriteLine($"\tThere are no publishers whose Name contains '{param4}' letter");
 
-            Query5(data);
+            var query5 = Query5(data);
+            Console.WriteLine($"5. Books that have minimum price for every library");
+            Output.PrintToConsole(query5);
 
             int param6 = 5;
             var query6 = Query6(data, param6);
             Console.WriteLine($"6. Top {param6} the most expensive books:");
             Output.PrintToConsole (query6);
 
-            Query7(data);
-            Query8(data);
-            Query9(data);
-            Query10(data);
-            Query11(data);
-            Query12(data);
+            var query7 = Query7(data);
+            Console.WriteLine("7. Authors and their number of books:");
+            Output.PrintToConsole(query7);
+
+            var query8 = Query8(data);
+            Console.WriteLine("8. All books which price is max:");
+            Output.PrintToConsole(query8);
+
+            int param9 = 1;
+            var query9 = Query9(data, param9);
+            Console.WriteLine($"9. How many copies with id '{param9}' are in every library:");
+            Output.PrintToConsole(query9);
+
+            var query10 = Query10(data);
+            Console.WriteLine("10. Publishers of books for every author:");
+            Output.PrintToConsole(query10);
+
+            var query11 = Query11(data);
+            Console.WriteLine("11. Books that are common for all libraries:");
+            Output.PrintToConsole(query11);
+
+            var query12 = Query12(data);
+            Console.WriteLine("12. Select number of objects in every array (such as Books, Authors, Publishers, Libraries and so on):");
+            Output.PrintToConsole(query12);
+
             Query13(data);
             Query14(data);
-            Query15(data);
-            Query16(data);
+
+            var query15 = Query15(data);
+            Console.WriteLine("15. All books with shortest titles:");
+            Output.PrintToConsole(query15);
+
+            double param16;
+            var query16 = Query16(data, out param16);
+            Console.WriteLine($"16. Books that have price bigger than average price of all books ( {Math.Round(param16, 3)} ):");
+            Output.PrintToConsole(query16);
+
             Query17(data);
             Query18(data);
-            Query19(data);
+
+            var query19 = Query19(data);
+            Console.WriteLine("19. Books grouped by month they where published:");
+            Output.PrintToConsole(query19);
+
             Query20(data);
 
         }
@@ -202,9 +236,22 @@ namespace laba2
                          select Publisher.Parse(publisher);
             return query4;
         }
-        public static void Query5(XDocument data)
+        // 5. Select books with minimum price for every library
+        public static IEnumerable<Tuple<Library, Book>> Query5(XDocument data)
         {
-            //var query5 = 
+            var query5 = data.Descendants("Library").Join(data.Descendants("BookOfLibrary"),
+                                                          l => (string)l.Element("LibraryId"),
+                                                          bl => (string)bl.Element("LibraryId"),
+                                                          (l, bl) => new { Library = l, BookOfLibrary = bl })
+                                                    .Join(data.Descendants("Book"),
+                                                               first => (string)first.BookOfLibrary.Element("BookId"),
+                                                               b => (string)b.Element("BookId"),
+                                                               (first, b) => new { first.Library, Book = b })
+                                                    .GroupBy(item => item.Library,
+                                                             item => item.Book)
+                                                    .Select(item => new { Library = Library.Parse(item.Key),
+                                                        Book = Book.Parse(item.MinBy(book => (double)book.Element("Price"))) });
+            return query5.Select(item => new Tuple<Library, Book>(item.Library, item.Book));
         }
 
         // 6. Show top 'topNumberFilter' the most expensive books
@@ -216,29 +263,82 @@ namespace laba2
                                 .Select(book => Book.Parse(book));
             return query6;
         }
-        public static void Query7(XDocument data)
+
+        // 7. Select authors and number of their books
+        public static IEnumerable<Tuple<Author, int>> Query7(XDocument data)
         {
-            //var query7 = 
+            var query7 = data.Descendants("Author").GroupJoin(data.Descendants("BookOfAuthor"),
+                                                              author => (string)author.Element("AuthorId"),
+                                                              ab => (string)ab.Element("IdOfAuthor"),
+                                                              (a, ab) => new
+                                                              {
+                                                                  Author = Author.Parse(a),
+                                                                  BookNumber = ab.Count()
+                                                              })
+                                                   .OrderByDescending(item => item.BookNumber);
+            return query7.Select(item => new Tuple<Author, int>(item.Author, item.BookNumber));
         }
-        public static void Query8(XDocument data)
+
+        // 8. Select books with max price
+        public static IEnumerable<Book> Query8(XDocument data)
         {
-            //var query8 = 
+            double maxPrice = data.Descendants("Book")
+                                  .Elements("Price")
+                                  .Select(price => (double)price)
+                                  .Max();
+            var query8 = data.Descendants("Book")
+                             .Where(b => (double)b.Element("Price") == maxPrice)
+                             .Select(b => Book.Parse(b));
+            return query8;
         }
-        public static void Query9(XDocument data)
+
+        // 9. For book with 'bookToSearchId' show how many copies there are in every library
+        public static IEnumerable<Tuple<Library, int>> Query9(XDocument data, int bookToSearchId)
         {
-            //var query9 = 
+            var bookToSearchInLibs = data.Descendants("BookOfLibrary").Where(bl => (int)bl.Element("BookId") == bookToSearchId);
+            var query9 = data.Descendants("Library")
+                             .GroupJoin(bookToSearchInLibs,
+                                        l => (string)l.Element("LibraryId"),
+                                        bl => (string)bl.Element("LibraryId"),
+                                        (l, bl) => new { Library = Library.Parse(l),
+                                                         BookCopiesNumber = bl.Elements("InventoryNumbers")
+                                                                              .Elements("int").Count()
+                                        });
+            return query9.Select(item => new Tuple<Library, int>(item.Library, item.BookCopiesNumber));
         }
-        public static void Query10(XDocument data)
+
+        // 10. For every author select publishers of his books
+        public static IEnumerable<Tuple<Author, IEnumerable<Publisher>>> Query10(XDocument data)
         {
-            //var query10 = 
+            var query10 = from author in data.Descendants("Author")
+                          join ab in data.Descendants("BookOfAuthor") on author.Element("AuthorId").Value equals ab.Element("IdOfAuthor").Value
+                          join book in data.Descendants("Book") on ab.Element("IdOfBook").Value equals book.Element("BookId").Value
+                          join publisher in data.Descendants("Publisher") on book.Element("PublisherId").Value equals publisher.Element("PublisherId").Value
+                          group publisher by author into g
+                          select new { 
+                              Author = Author.Parse(g.Key),
+                              Publishers = g.Select(p => Publisher.Parse(p)).DistinctBy(p => p.PublisherId)
+                          };
+            return query10.Select(item => new Tuple<Author, IEnumerable<Publisher>>(item.Author, item.Publishers));
         }
-        public static void Query11(XDocument data)
+
+        // 11. Select books that are common for every library
+        public static IEnumerable<Book> Query11(XDocument data)
         {
-            //var query11 = 
+            var booksGroupedByLib = from book in data.Descendants("Book")
+                                    join bl in data.Descendants("BookOfLibrary") on book.Element("BookId").Value equals bl.Element("BookId").Value
+                                    group book by bl.Element("LibraryId").Value into g
+                                    select g.Select(b => Book.Parse(b));
+            var query11 = booksGroupedByLib.Aggregate((first, next) => first.Intersect(next, new BookComparerById()) );
+            return query11;
         }
-        public static void Query12(XDocument data)
+
+        // 12. Select number of objects in every array (such as Books, Authors, Publishers, Libraries and so on)
+        public static IEnumerable<Tuple<string, int>> Query12(XDocument data)
         {
-            //var query12 = 
+            var query12 = data.Root.Elements().Select(child => new { Name = child.Name.ToString(),
+                                                                   NumberOfElements = child.Elements().Count() });
+            return query12.Select(item => new Tuple<string, int>(item.Name, item.NumberOfElements));
         }
         public static void Query13(XDocument data)
         {
@@ -248,13 +348,25 @@ namespace laba2
         {
             //var query14 = 
         }
-        public static void Query15(XDocument data)
+
+        // 15. Select books with the shortest Title
+        public static IEnumerable<Book> Query15(XDocument data)
         {
-            //var query15 = 
+            int lengthOfShortestTitle = data.Descendants("Book").Min(b => ((string)b.Element("Title")).Count());
+            var query15 = from book in data.Descendants("Book")
+                          where ((string)book.Element("Title")).Count() == lengthOfShortestTitle
+                          select Book.Parse(book);
+            return query15;           
         }
-        public static void Query16(XDocument data)
+
+        // 16. Select all books that have price bigger than average price of all books
+        public static IEnumerable<Book> Query16(XDocument data, out double averagePrice)
         {
-            //var query16 = 
+            double average = data.Descendants("Book").Select(book => (double)book.Element("Price")).Average();
+            var query16 = data.Descendants("Book").Where(book => (double)book.Element("Price") > average)
+                                                  .Select(book => Book.Parse(book));
+            averagePrice = average;
+            return query16;
         }
         public static void Query17(XDocument data)
         {
@@ -264,9 +376,16 @@ namespace laba2
         {
             //var query18 = 
         }
-        public static void Query19(XDocument data)
+
+        // 19. Group books by their publishing month
+        public static IEnumerable<IGrouping<int, Book>> Query19(XDocument data)
         {
-            //var query19 = 
+            var query19 = from book in data.Descendants("Book")
+                          group Book.Parse(book) by DateOnly.Parse(book.Element("PublishingDate").Value).Month 
+                          into g
+                          orderby g.Key
+                          select g;
+            return query19;
         }
         public static void Query20(XDocument data)
         {

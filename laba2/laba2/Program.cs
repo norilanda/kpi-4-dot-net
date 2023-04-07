@@ -131,7 +131,9 @@ namespace laba2
             Console.WriteLine("1. Authors and all their books titles:");
             Output.PrintToConsole( query1 );
 
-            Query2(data);
+            var query2 = Query2(data);
+            Console.WriteLine("2. Publisher and books they have published (left join):");
+            Output.PrintToConsole( query2 );
 
             var query3 = Query3(data, (x) => x > 1950 && x < 2000);
             Console.WriteLine($"3. Ordered by date list of books published on years that > 1950 but < 2000:");
@@ -163,7 +165,7 @@ namespace laba2
 
             int param9 = 1;
             var query9 = Query9(data, param9);
-            Console.WriteLine($"9. How many copies with id '{param9}' are in every library:");
+            Console.WriteLine($"9. How many copies of book with id '{param9}' are in every library:");
             Output.PrintToConsole(query9);
 
             var query10 = Query10(data);
@@ -214,9 +216,19 @@ namespace laba2
                          };
             return query1.Select(item => new Tuple<Author, IEnumerable<Book>>(item.Author, item.Book));
         }
-        public static void Query2(XDocument data)
+
+        //2. Select publishers and their books (left join)
+        public static IEnumerable<Tuple<string, string>> Query2(XDocument data)
         {
-            //var query2 = 
+            var query2 = data.Descendants("Publisher").GroupJoin(data.Descendants("Book"),
+                                                                 p => p.Element("PublisherId").Value,
+                                                                 b => b.Element("PublisherId").Value,
+                                                                 (p, b) => new { Publisher = p, Books = b }
+                                                                )
+                                                      .SelectMany(item => item.Books.DefaultIfEmpty(),
+                                                                  (p, b) => new { Publisher = (string) p.Publisher.Element("PublisherName"),
+                                                                                  Book= b == null ? "" : (string)b.Element("Title")});
+            return query2.Select(item => new Tuple<string, string>(item.Publisher, item.Book));
         }
         //3. Order books published on years that satisfy 'Condition'
         public static IEnumerable<Book> Query3(XDocument data, Func<int, bool> Condition)

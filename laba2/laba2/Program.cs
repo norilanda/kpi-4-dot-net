@@ -180,24 +180,24 @@ namespace laba2
             Console.WriteLine("12. Select number of objects in every array (such as Books, Authors, Publishers, Libraries and so on):");
             Output.PrintToConsole(query12);
 
-            Query13(data);
-            Query14(data);
+            var query13 = Query13(data);
+            Console.WriteLine("13. All books with shortest titles:");
+            Output.PrintToConsole(query13);
+
+            double param14;
+            var query14 = Query14(data, out param14);
+            Console.WriteLine($"14. Books that have price bigger than average price of all books ( {Math.Round(param14, 3)} ):");
+            Output.PrintToConsole(query14);
 
             var query15 = Query15(data);
-            Console.WriteLine("15. All books with shortest titles:");
+            Console.WriteLine("15. Books grouped by month they where published:");
             Output.PrintToConsole(query15);
 
-            double param16;
-            var query16 = Query16(data, out param16);
-            Console.WriteLine($"16. Books that have price bigger than average price of all books ( {Math.Round(param16, 3)} ):");
-            Output.PrintToConsole(query16);
+            Query16(data);
 
             Query17(data);
             Query18(data);
-
-            var query19 = Query19(data);
-            Console.WriteLine("19. Books grouped by month they where published:");
-            Output.PrintToConsole(query19);
+            Query19(data);
 
             Query20(data);
 
@@ -352,34 +352,42 @@ namespace laba2
                                                                    NumberOfElements = child.Elements().Count() });
             return query12.Select(item => new Tuple<string, int>(item.Name, item.NumberOfElements));
         }
-        public static void Query13(XDocument data)
-        {
-            //var query13 = 
-        }
-        public static void Query14(XDocument data)
-        {
-            //var query14 = 
-        }
 
-        // 15. Select books with the shortest Title
-        public static IEnumerable<Book> Query15(XDocument data)
+        // 13. Select books with the shortest Title
+        public static IEnumerable<Book> Query13(XDocument data)
         {
             int lengthOfShortestTitle = data.Descendants("Book").Min(b => ((string)b.Element("Title")).Count());
-            var query15 = from book in data.Descendants("Book")
+            var query13 = from book in data.Descendants("Book")
                           where ((string)book.Element("Title")).Count() == lengthOfShortestTitle
                           select Book.Parse(book);
-            return query15;           
+            return query13;
         }
-
-        // 16. Select all books that have price bigger than average price of all books
-        public static IEnumerable<Book> Query16(XDocument data, out double averagePrice)
+        // 14. Select all books that have price bigger than average price of all books
+        public static IEnumerable<Book> Query14(XDocument data, out double averagePrice)
         {
             double average = data.Descendants("Book").Select(book => (double)book.Element("Price")).Average();
-            var query16 = data.Descendants("Book").Where(book => (double)book.Element("Price") > average)
+            var query14 = data.Descendants("Book").Where(book => (double)book.Element("Price") > average)
                                                   .Select(book => Book.Parse(book));
             averagePrice = average;
-            return query16;
+            return query14;
         }
+
+        // 15. Group books by their publishing month
+        public static IEnumerable<IGrouping<int, Book>> Query15(XDocument data)
+        {
+            var query15 = from book in data.Descendants("Book")
+                          group Book.Parse(book) by DateOnly.Parse(book.Element("PublishingDate").Value).Month
+                          into g
+                          orderby g.Key
+                          select g;
+            return query15;
+        }
+
+        public static void Query16(XDocument data)
+        {
+            //var query16 =            
+        }
+
         public static void Query17(XDocument data)
         {
             //var query17 = 
@@ -389,15 +397,9 @@ namespace laba2
             //var query18 = 
         }
 
-        // 19. Group books by their publishing month
-        public static IEnumerable<IGrouping<int, Book>> Query19(XDocument data)
+        public static void Query19(XDocument data)
         {
-            var query19 = from book in data.Descendants("Book")
-                          group Book.Parse(book) by DateOnly.Parse(book.Element("PublishingDate").Value).Month 
-                          into g
-                          orderby g.Key
-                          select g;
-            return query19;
+            //var query19 =            
         }
         public static void Query20(XDocument data)
         {

@@ -1,4 +1,6 @@
 ﻿using laba1;
+using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using static System.Reflection.Metadata.BlobBuilder;
@@ -127,9 +129,16 @@ namespace laba2
 
             XDocument data = XDocument.Load(path);
 
-            var query1 = Query1(data);
-            Console.WriteLine("1. Authors and all their books titles:");
-            Output.PrintToConsole( query1 );
+            try
+            {
+                var query1 = Query1(data);
+                Console.WriteLine("1. Authors and all their books titles:");
+                Output.PrintToConsole(query1);
+            }
+            catch(ArgumentNullException e)
+            { Console.WriteLine(e.Message + "\n"); }
+            catch(NullReferenceException e)
+            { Console.WriteLine(e.Message + "\n"); }
 
             var query2 = Query2(data);
             Console.WriteLine("2. Publisher and books they have published (left join):");
@@ -194,12 +203,10 @@ namespace laba2
             Output.PrintToConsole(query15);
 
             Query16(data);
-
-            Query17(data);
-            Query18(data);
-            Query19(data);
-
-            Query20(data);
+            Query17(path, "some new publisher");
+            Query18(path, 2);
+            Query19(path, 0, "A NEW BOOK TITLE!");
+            Query20(path);
 
         }
 
@@ -383,27 +390,68 @@ namespace laba2
             return query15;
         }
 
+        // ===================================================================================================================
+        // Creates a new xml document in which are only authors. Every author has his Id as attribute, last and first name as elements inside
         public static void Query16(XDocument data)
         {
-            //var query16 =            
+            string newPath = "queries-results/query16.xml";
+            var query16 = new XDocument(
+                          new XElement("Authors", data.Descendants("Author")
+                                                  .Select(author => new XElement(author.Name,
+                                                                    new XAttribute("AuthorId", author.Element("AuthorId").Value),
+                                                                    author.Element("AuthorId").ElementsAfterSelf()) ))
+                          );
+            query16.Save(newPath);
         }
 
-        public static void Query17(XDocument data)
+        // Adding a new publisher to a document
+        public static void Query17(string path, string publisherName)
         {
-            //var query17 = 
-        }
-        public static void Query18(XDocument data)
-        {
-            //var query18 = 
+            string newPath = "queries-results/query17.xml";
+            XDocument data = XDocument.Load(path);
+            int last_publisher_id = (int)data.Descendants("Publisher").LastOrDefault().Element("PublisherId");
+            data.Descendants("Publisher")
+                              .LastOrDefault()
+                              .AddAfterSelf(new XElement("Publisher", new XElement("PublisherId", last_publisher_id + 1),
+                                                                      new XElement("PublisherName", publisherName)));
+            data.Save(newPath);
         }
 
-        public static void Query19(XDocument data)
+        // Deleting inventory numbers for library with id 'libraryId'
+        public static void Query18(string path, int libraryId)
         {
-            //var query19 =            
+            string newPath = "queries-results/query18.xml";
+            XDocument data = XDocument.Load(path);
+            var query18 = data.Descendants("BookOfLibrary")
+                              .Where(bl => (int)bl.Element("LibraryId") == libraryId)
+                              .Elements("InventoryNumbers")
+                              .SelectMany(bl => bl.Elements());
+            query18.Remove();
+            data.Save(newPath);
         }
-        public static void Query20(XDocument data)
+
+        // Replacing title of book that has Id == 'bookId' with 'newTitle'
+        public static void Query19(string path, int bookId, string newTitle)
         {
-            //var query20 = 
+            string newPath = "queries-results/query19.xml";
+            XDocument data = XDocument.Load(path);
+            var query19 = data.Descendants("Book")
+                              .Where(b => (int)b.Element("BookId") == bookId)
+                              .Select(b => b.Element("Title"))
+                              .FirstOrDefault();
+            if (query19 != null)
+                query19.ReplaceWith(new XElement("Title", newTitle));
+            data.Save(newPath);
+        }
+
+        // Order publishers by their names and save this to a new document
+        public static void Query20(string path)
+        {
+            string newPath = "queries-results/query20.xml";
+            XDocument data = XDocument.Load(path);
+            var orderedPublishers = data.Descendants("Publisher").OrderBy(item => (string)item.Element("PublisherName"));
+            data.Descendants("Publishers").FirstOrDefault().ReplaceAll(orderedPublishers);
+            data.Save(newPath);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace laba1
     /// <summary>
     ///     Contains information about connections between books and authors.
     ///     Shows authors of each book and books of each authors
-    ///     Attributes _idOfBook and _idOfAuthor represent ids of objects of corresponding classes
+    ///     Attributes IdOfBook and IdOfAuthor represent ids of objects of corresponding classes
     /// </summary>
     public class BookOfAuthor
     { 

@@ -8,9 +8,9 @@ namespace laba1
 {
     /// <summary>
     ///     Class shows connections between library and books. Its attributes:
-    ///     _libraryId - id of a library;
-    ///     _bookId - id of a book;
-    ///     _inventoryNumbers - numbers that numerate copies of book; 
+    ///      LibraryId - id of a library;
+    ///      BookId - id of a book;
+    ///      InventoryNumbers - numbers that numerate copies of book; 
     /// </summary>
     public class BookOfLibrary
     {

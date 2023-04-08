@@ -11,11 +11,11 @@ namespace laba1
     /// <summary>
     ///     Class contains information about specific book in a library.
     ///     Its attributes are: 
-    ///     _bookId - a unique id of a book;
-    ///     _title - title of a book;
-    ///     _price - book's price;
-    ///     _publishingDate - date when book was published at the first time
-    ///     _publisherId - id of a publisher;
+    ///      BookId - a unique id of a book;
+    ///      Title - title of a book;
+    ///      Price - book's price;
+    ///      PublishingDate - date when book was published at the first time
+    ///      PublisherId - id of a publisher;
     /// </summary>
     public class Book
     {

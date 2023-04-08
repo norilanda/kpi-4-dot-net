@@ -9,9 +9,9 @@ namespace laba1
 {
     /// <summary>
     ///     Author class contains such attributes as 
-    ///     _authorId - unique id of an author. Same authors in different libraries may have different ids;
-    ///     _firstName - author's first name;
-    ///     _lastName - last name;
+    ///      AuthorId - unique id of an author. Same authors in different libraries may have different ids;
+    ///      FirstName - author's first name;
+    ///      LastName - last name;
     /// </summary>
     public class Author
     {

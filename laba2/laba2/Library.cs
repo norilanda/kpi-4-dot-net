@@ -10,8 +10,8 @@ namespace laba1
     /// <summary>
     ///     Contains information about library.
     ///     The attributes of the class are:
-    ///     _libraryId - unique library id
-    ///     _name - library name;
+    ///      LibraryId - unique library id
+    ///      Name - library name;
     /// </summary>
     public class Library
     {

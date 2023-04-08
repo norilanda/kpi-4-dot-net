@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace laba2
 {
+    /// <summary>
+    ///     Class for outputing information to user
+    /// </summary>
     public static class Output
     {
         public static void PrintToConsole(Container container)

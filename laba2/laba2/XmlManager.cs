@@ -9,6 +9,9 @@ using System.Xml.Serialization;
 
 namespace laba2
 {
+    /// <summary>
+    ///     Contains methods for writing and deserialization xml files
+    /// </summary>
     public static class XmlManager
     {
         public static void WriteBookInLibraryToXml(Container container, string path)

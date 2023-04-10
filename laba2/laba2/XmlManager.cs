@@ -14,6 +14,7 @@ namespace laba2
     /// </summary>
     public static class XmlManager
     {
+        //creating xml using XmlWriter
         public static void WriteBookInLibraryToXml(Container container, string path)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -41,7 +42,7 @@ namespace laba2
                     writer.WriteElementString("BookId", book.BookId.ToString());
                     writer.WriteElementString("Title", book.Title);
                     writer.WriteElementString("Price", book.Price.ToString());
-                    writer.WriteElementString("PublishingDate", book.PublishingDate.ToString());
+                    writer.WriteElementString("PublishingDate", book.PublishingDate.ToString("yyyy-MM-dd"));
                     writer.WriteElementString("PublisherId", book.PublisherId.ToString());
                 writer.WriteEndElement();
             }
@@ -99,6 +100,7 @@ namespace laba2
             writer.WriteEndElement();
             writer.Close();
         }
+        //deserializing xml to Container object
         public static Container DeserializeFromXml(string path)
         {
             Container container;

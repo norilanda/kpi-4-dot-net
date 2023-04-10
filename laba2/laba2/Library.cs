@@ -28,6 +28,7 @@ namespace laba1
         {
             return $"{LibraryId.ToString().PadRight(3)} {LibraryName.PadRight(17)}";
         }
+        // creating Library object from XElement
         public static Library Parse(XElement library)
         {
             return new Library((int)library.Element("LibraryId"), (string)library.Element("LibraryName"));

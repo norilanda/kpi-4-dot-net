@@ -11,6 +11,7 @@ namespace laba2
     {
         static void Main(string[] args)
         {
+            #region Objects Creation
             //creating publisher list
             List<Publisher> publishers = new List<Publisher>()
         {
@@ -28,19 +29,19 @@ namespace laba2
             //creating list of books
             List<Book> books = new List<Book>()
             {
-                new Book(0, "Fahrenheit 451", 1000, new DateOnly(1953, 10, 19), publishers[0].PublisherId),
-                new Book(1, "Dandelion Wine", 1900, new DateOnly(1957, 09, 21), publishers[1].PublisherId),
-                new Book(2, "The Martian Chronicles", 690, new DateOnly(1950, 04, 06), publishers[1].PublisherId),
-                new Book(3, "Pride and Prejudice", 962, new DateOnly(1813, 01, 28), publishers[2].PublisherId),
-                new Book(4, "The Sun Also Rises", 3210, new DateOnly(1926, 10, 22), publishers[4].PublisherId),
-                new Book(5, "A Farewell to Arms", 1090, new DateOnly(1926, 10, 22), publishers[4].PublisherId),
-                new Book(6, "The Theory of Everything", 1300, new DateOnly(2010, 09, 07), publishers[5].PublisherId),
-                new Book(7, "A Brief History of Time", 1300, new DateOnly(1988, 03, 19), publishers[5].PublisherId),
-                new Book(8, "The Hobbit", 3210, new DateOnly(1937, 09, 21), publishers[6].PublisherId),
-                new Book(9, "The Lord of the Rings", 3055, new DateOnly(1954, 09, 21), publishers[6].PublisherId),
-                new Book(10, "A Tale of Two Cities", 830, new DateOnly(1959, 04, 30), publishers[7].PublisherId),
-                new Book(11, "The Metamorphosis", 743, new DateOnly(1915, 08, 25), publishers[8].PublisherId),
-                new Book(12, "The Trial", 3045, new DateOnly(1925, 09, 21), publishers[9].PublisherId),
+                new Book(0, "Fahrenheit 451", 1000, new DateTime(1953, 10, 19), publishers[0].PublisherId),
+                new Book(1, "Dandelion Wine", 1900, new DateTime(1957, 09, 21), publishers[1].PublisherId),
+                new Book(2, "The Martian Chronicles", 690, new DateTime(1950, 04, 06), publishers[1].PublisherId),
+                new Book(3, "Pride and Prejudice", 962, new DateTime(1813, 01, 28), publishers[2].PublisherId),
+                new Book(4, "The Sun Also Rises", 3210, new DateTime(1926, 10, 22), publishers[4].PublisherId),
+                new Book(5, "A Farewell to Arms", 1090, new DateTime(1926, 10, 22), publishers[4].PublisherId),
+                new Book(6, "The Theory of Everything", 1300, new DateTime(2010, 09, 07), publishers[5].PublisherId),
+                new Book(7, "A Brief History of Time", 1300, new DateTime(1988, 03, 19), publishers[5].PublisherId),
+                new Book(8, "The Hobbit", 3210, new DateTime(1937, 09, 21), publishers[6].PublisherId),
+                new Book(9, "The Lord of the Rings", 3055, new DateTime(1954, 09, 21), publishers[6].PublisherId),
+                new Book(10, "A Tale of Two Cities", 830, new DateTime(1959, 04, 30), publishers[7].PublisherId),
+                new Book(11, "The Metamorphosis", 743, new DateTime(1915, 08, 25), publishers[8].PublisherId),
+                new Book(12, "The Trial", 3045, new DateTime(1925, 09, 21), publishers[9].PublisherId),
             };
             //creating list of authors
             List<Author> authors = new List<Author>()
@@ -115,30 +116,24 @@ namespace laba2
             container.Libraries = libraries;
             container.BookOfAuthorList = bookOfAuthorList;
             container.BookOfLibraryList = bookOfLibraryList;
+            #endregion
 
+            #region Writing/Loading/Reading XML file
             string path = "books.xml";
             XmlManager.WriteBookInLibraryToXml(container, path );
-            //XmlSerializer serializer = new XmlSerializer(typeof(BookInlLibraryContainer));
-            //using (StreamWriter writer = new StreamWriter(path))
-            //{
-            //    serializer.Serialize(writer, container);
-            //}
+          
             Container containerFromFile = XmlManager.DeserializeFromXml(path);
             Output.PrintToConsole( containerFromFile );
             Console.WriteLine("===========================================================================================\n");
 
+            // Loading file with XmlDocument.Load method
             XDocument data = XDocument.Load(path);
+            #endregion
 
-            try
-            {
-                var query1 = Query1(data);
-                Console.WriteLine("1. Authors and all their books titles:");
-                Output.PrintToConsole(query1);
-            }
-            catch(ArgumentNullException e)
-            { Console.WriteLine(e.Message + "\n"); }
-            catch(NullReferenceException e)
-            { Console.WriteLine(e.Message + "\n"); }
+            #region Queries
+            var query1 = Query1(data);
+            Console.WriteLine("1. Authors and all their books titles:");
+            Output.PrintToConsole(query1);
 
             var query2 = Query2(data);
             Console.WriteLine("2. Publisher and books they have published (left join):");
@@ -186,7 +181,7 @@ namespace laba2
             Output.PrintToConsole(query11);
 
             var query12 = Query12(data);
-            Console.WriteLine("12. Select number of objects in every array (such as Books, Authors, Publishers, Libraries and so on):");
+            Console.WriteLine("12. For every class in xml file count number of its' objects:");
             Output.PrintToConsole(query12);
 
             var query13 = Query13(data);
@@ -207,7 +202,7 @@ namespace laba2
             Query18(path, 2);
             Query19(path, 0, "A NEW BOOK TITLE!");
             Query20(path);
-
+            #endregion
         }
 
         //1. Select all authors and all their books
@@ -352,7 +347,7 @@ namespace laba2
             return query11;
         }
 
-        // 12. Select number of objects in every array (such as Books, Authors, Publishers, Libraries and so on)
+        // 12. For every class in xml file count number of its' objects
         public static IEnumerable<Tuple<string, int>> Query12(XDocument data)
         {
             var query12 = data.Root.Elements().Select(child => new { Name = child.Name.ToString(),
@@ -391,7 +386,9 @@ namespace laba2
         }
 
         // ===================================================================================================================
-        // Creates a new xml document in which are only authors. Every author has his Id as attribute, last and first name as elements inside
+        // THE RESULT OF NEXT QUERIES IS A NEW XML FILE
+        // ===================================================================================================================
+        // Create a new xml document in which are only authors. Every author has his Id as attribute, last and first name as elements inside
         public static void Query16(XDocument data)
         {
             string newPath = "queries-results/query16.xml";
@@ -404,7 +401,7 @@ namespace laba2
             query16.Save(newPath);
         }
 
-        // Adding a new publisher to a document
+        // Add a new publisher to a document
         public static void Query17(string path, string publisherName)
         {
             string newPath = "queries-results/query17.xml";
@@ -417,7 +414,7 @@ namespace laba2
             data.Save(newPath);
         }
 
-        // Deleting inventory numbers for library with id 'libraryId'
+        // Delete inventory numbers for library with id 'libraryId'
         public static void Query18(string path, int libraryId)
         {
             string newPath = "queries-results/query18.xml";
@@ -430,7 +427,7 @@ namespace laba2
             data.Save(newPath);
         }
 
-        // Replacing title of book that has Id == 'bookId' with 'newTitle'
+        // Replace title of book that has Id == 'bookId' with 'newTitle'
         public static void Query19(string path, int bookId, string newTitle)
         {
             string newPath = "queries-results/query19.xml";

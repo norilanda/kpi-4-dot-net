@@ -27,6 +27,7 @@ namespace laba1
         {
             return $"{PublisherId.ToString().PadRight(3)} {PublisherName.PadRight(20)}";
         }
+        // creating Publisher object from XElement
         public static Publisher Parse(XElement publisher)
         {
             return new Publisher((int)publisher.Element("PublisherId"), (string)publisher.Element("PublisherName"));

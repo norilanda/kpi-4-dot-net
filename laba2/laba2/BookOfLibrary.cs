@@ -27,7 +27,7 @@ namespace laba1
         }
         public override string ToString()
         {
-            return $"{LibraryId.ToString().PadRight(3)} {BookId.ToString().PadRight(3)} [{new string(string.Join(", ", InventoryNumbers.ToArray()) + "]").PadRight(18)}";
+            return $"lib_id: {LibraryId.ToString().PadRight(3)} book_id: {BookId.ToString().PadRight(3)} inventory_numbers: [{new string(string.Join(", ", InventoryNumbers.ToArray()) + "]").PadRight(18)}";
         }
     }
 }

@@ -15,7 +15,6 @@ namespace laba1
     /// </summary>
     public class Author
     {
-
         public int AuthorId { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
@@ -32,6 +31,7 @@ namespace laba1
             string str = $"{AuthorId} {Firstname} {Lastname}";
             return str;
         }
+        // creating Author object from XElement
         public static Author Parse(XElement author)
         {
             return new Author((int)author.Element("AuthorId"), (string)author.Element("Firstname"), (string)author.Element("Lastname"));

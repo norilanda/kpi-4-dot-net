@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using static laba3.Event;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace laba3
+namespace laba3.EventOperations
 {
     public static class EventGenerator
     {

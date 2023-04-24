@@ -8,8 +8,12 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace laba3.EventOperations
 {
+    /// <summary>
+    ///     Class for generating events
+    /// </summary>
     public static class EventGenerator
     {
+        // possible sources and messages for Info events
         private static Dictionary<string, List<string>> sourcesInfo = new Dictionary<string, List<string>>  {
             { "RestartManager", new List<string>() { "Ending session 1 started ", "Starting session 1" } },
             { "DockerService", new List<string>() { "PowerEvent handled successfully by the service." } },
@@ -17,6 +21,7 @@ namespace laba3.EventOperations
             { "File Server", new List<string>() { "File \"report.docx\" has been uploaded to the server", "File \"config.txt\" has been uploaded to the server", "File \"requirements.txt\" has been uploaded to the server" } },
 
         };
+        // possible sources and messages for Warning events
         private static Dictionary<string, List<string>> sourcesWarning = new Dictionary<string, List<string>>
         {
             { "MyApp", new List<string>() { "WARNING: Low disk space on drive C:\\" } },
@@ -24,6 +29,7 @@ namespace laba3.EventOperations
             { "Security", new List<string>() { "WARNING: Low disk space on drive C:\\" } },
             { "Network", new List<string>() { "WARNING: Network connection lost" } },
         };
+        // possible sources and messages for Error events
         private static Dictionary<string, List<string>> sourcesError = new Dictionary<string, List<string>>
         {
             { ".NET Runtime", new List<string>() { "The process was terminated due to an unhandled exception."} },
@@ -36,6 +42,8 @@ namespace laba3.EventOperations
         };
 
         private static Random random = new Random();
+
+        // generates 'numberOfEvents' events
         public static List<Event> Generate(int numberOfEvents)
         {
             List<Event> events = new List<Event>();
@@ -54,6 +62,8 @@ namespace laba3.EventOperations
             }
             return events;
         }
+
+        // generates source and message based on event level
         private static void GetSourceAndMessageBasedOnLevel(LevelType level, out string source, out string message)
         {
             Dictionary<string, List<string>> sources;

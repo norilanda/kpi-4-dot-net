@@ -8,13 +8,18 @@ using static laba3.Event;
 
 namespace laba3.EventLogs
 {
+    /// <summary>
+    ///     Writing and reading Text event logs
+    /// </summary>
     public class TextEventLog : EventLog
     {
+        // creates a new file and store events there
         public override void CreateEventLog(string fileName, List<Event> events)
         {
             string lines = TransformEventsToLines(events);
             File.WriteAllText(fileName, lines);
         }
+        // append events to the existing file or creates new if it doesn't exists
         public override void UpdateEventLog(string fileName, List<Event> events)
         {
             string lines = "";
@@ -31,6 +36,7 @@ namespace laba3.EventLogs
             }
             catch { throw; }
         }
+        // reads events from file
         public override List<Event> Load(string fileName)
         {
             try
@@ -41,6 +47,7 @@ namespace laba3.EventLogs
             }
             catch { throw; }
         }
+        // transforming events to one string
         private string TransformEventsToLines(List<Event> events)
         {
             StringBuilder strbuild = new StringBuilder();
@@ -53,6 +60,7 @@ namespace laba3.EventLogs
             }
             return strbuild.ToString().Trim('\n');
         }
+        //transforming string to events
         private List<Event> TransformLinesToEvents(string lines)
         {
             List<Event> events = new List<Event>();

@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace laba3
 {
+    /// <summary>
+    ///     Class for input and output from/to Console
+    /// </summary>
     public static class InputOutput
     {
+        // displaying events
         public static void DisplayEvents(List<Event> events)
         {
             Console.WriteLine("N  LEVEL\t SOURCE \tTIME\n=======================================================");
@@ -18,6 +22,8 @@ namespace laba3
                 Console.WriteLine();
             }
         }
+
+        // getting user's input
         public static void GetUserInput(out string fileName, out int eventNumberToGenerate, out bool shouldCreateNewFile)
         {
             Console.WriteLine("Enter file name with extension (Ex.: file.txt)");

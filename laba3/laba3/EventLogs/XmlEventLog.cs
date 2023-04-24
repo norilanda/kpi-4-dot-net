@@ -9,8 +9,12 @@ using System.Xml.Serialization;
 
 namespace laba3.EventLogs
 {
+    /// <summary>
+    ///     Writing and reading Xml event logs
+    /// </summary>
     public class XmlEventLog : EventLog
     {
+        // creates a new file and store events there
         public override void CreateEventLog(string fileName, List<Event> events)
         {
             XmlSerializer serializer = new XmlSerializer(events.GetType());
@@ -19,6 +23,7 @@ namespace laba3.EventLogs
                 serializer.Serialize(sw, events);
             }
         }
+        // append events to the existing file or creates new if it doesn't exists
         public override void UpdateEventLog(string fileName, List<Event> events)
         {
             try
@@ -45,6 +50,7 @@ namespace laba3.EventLogs
                 CreateEventLog(fileName, events);
             }
         }
+        // reads events from file
         public override List<Event> Load(string fileName)
         {
             List<Event> events = new List<Event>();

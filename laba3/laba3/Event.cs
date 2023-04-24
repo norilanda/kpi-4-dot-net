@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace laba3
 {
+    /// <summary>
+    ///     Represents Event. Has properties:
+    ///         - Level - type of the event (Info, Warning or Error)
+    ///         - Source - where the event comes from
+    ///         - DateAndTime - date and time of the event
+    ///         - Message - message of the event
+    /// </summary>
     public class Event
     {
         public enum LevelType

@@ -8,8 +8,12 @@ using laba3.EventLogs;
 
 namespace laba3
 {
+    /// <summary>
+    ///     Create an instance of one of the EventLog derived classes
+    /// </summary>
     public static class EventLogFactory
     {
+        // creates EventLog based on fileName extension
         public static EventLog Create(string fileName)
         {
             string extention = Path.GetExtension(fileName);

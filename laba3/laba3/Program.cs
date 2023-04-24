@@ -21,9 +21,12 @@ namespace laba3
             InputOutput.GetUserInput(out fileName, out eventNumberToGenerate, out shouldCreateNewFile);
             try
             {
+                // creating an object of the one of the derived classes from EventLog
                 EventLog eventLog = EventLogFactory.Create(fileName);
+                // generating events
                 List<Event> events = EventGenerator.Generate(eventNumberToGenerate);
 
+                // creating new file or updating existing
                 if (shouldCreateNewFile)
                     eventLog.CreateEventLog(fileName, events);
                 else

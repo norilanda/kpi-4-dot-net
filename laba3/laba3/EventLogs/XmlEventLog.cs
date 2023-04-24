@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -22,14 +23,27 @@ namespace laba3.EventLogs
         {
             try
             {
-                XDocument data = XDocument.Load(fileName);
-                List<XElement> xElements = TransformEventsToXElements(events);
-                data.Descendants("Event")
-                    .LastOrDefault()
-                    .AddAfterSelf(xElements);
-                data.Save(fileName);
+                if (File.Exists(fileName))
+                {
+                    XDocument data = XDocument.Load(fileName);
+                    if (data.Descendants("Event").Any())
+                    {
+                        List<XElement> xElements = TransformEventsToXElements(events);
+                        data.Descendants("Event")
+                            .LastOrDefault()
+                            .AddAfterSelf(xElements);
+                        data.Save(fileName);
+                    }
+                    else
+                        CreateEventLog(fileName, events);
+                }
+                else
+                    CreateEventLog(fileName, events);
             }
-            catch { throw; }
+            catch (XmlException)
+            {
+                CreateEventLog(fileName, events);
+            }
         }
         public override List<Event> Load(string fileName)
         {

@@ -17,8 +17,11 @@ namespace laba3.EventLogs
         }
         public override void UpdateEventLog(string fileName, List<Event> events)
         {
-            string lines = "\n";
-            lines += TransformEventsToLines(events);
+            string lines = "";
+            if (File.Exists(fileName) && new FileInfo(fileName).Length > 0)
+                lines = "\n" + TransformEventsToLines(events);
+            else
+                lines = TransformEventsToLines(events);
             try
             {
                 using (StreamWriter sw = File.AppendText(fileName))
@@ -59,15 +62,19 @@ namespace laba3.EventLogs
             DateTime date;
 
             int i = 0;
-            while(i < linesArray.Length)
+            try
             {
-                Enum.TryParse(linesArray[i++], out level);
-                source = linesArray[i++];
-                date = DateTime.Parse(linesArray[i++]);
-                message = linesArray[i++];
-                events.Add(new Event(level, source, date, message));
+                while (i < linesArray.Length)
+                {
+                    level = Enum.Parse< LevelType>(linesArray[i++]);
+                    source = linesArray[i++];
+                    date = DateTime.Parse(linesArray[i++]);
+                    message = linesArray[i++];
+                    events.Add(new Event(level, source, date, message));
+                }
+                return events;
             }
-            return events;
+            catch  { throw new ArgumentException("The data in file seems to be corrupted! Cannot operate on file!"); }
         }
     }
 }

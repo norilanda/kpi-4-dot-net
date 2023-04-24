@@ -35,6 +35,7 @@ namespace laba3
 
                 //getting last 10 events and printing them to Console
                 List<Event> lastEvents = EventProcessor.TakeLastEvents(eventsFromFile, NUMBER_EVENTS_TO_PRINT);
+                Console.WriteLine($"\nHere are {lastEvents.Count()} latest event:");
                 InputOutput.DisplayEvents(lastEvents);
             }
             catch (ArgumentException ex)

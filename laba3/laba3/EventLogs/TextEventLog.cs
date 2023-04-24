@@ -27,14 +27,11 @@ namespace laba3.EventLogs
                 lines = "\n" + TransformEventsToLines(events);
             else
                 lines = TransformEventsToLines(events);
-            try
+
+            using (StreamWriter sw = File.AppendText(fileName))
             {
-                using (StreamWriter sw = File.AppendText(fileName))
-                {
-                    sw.Write(lines);
-                }
+                sw.Write(lines);
             }
-            catch { throw; }
         }
         // reads events from file
         public override List<Event> Load(string fileName)
@@ -45,7 +42,8 @@ namespace laba3.EventLogs
                 List<Event> events = TransformLinesToEvents(lines);
                 return events;
             }
-            catch { throw; }
+            catch (FileNotFoundException) { throw; }
+            catch (ArgumentException) { throw; }
         }
         // transforming events to one string
         private string TransformEventsToLines(List<Event> events)
@@ -74,7 +72,7 @@ namespace laba3.EventLogs
             {
                 while (i < linesArray.Length)
                 {
-                    level = Enum.Parse< LevelType>(linesArray[i++]);
+                    level = Enum.Parse<LevelType>(linesArray[i++]);
                     source = linesArray[i++];
                     date = DateTime.Parse(linesArray[i++]);
                     message = linesArray[i++];

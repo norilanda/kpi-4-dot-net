@@ -10,16 +10,33 @@ namespace laba3.EventLogs
 {
     public class TextEventLog : EventLog
     {
-        public override void Save(string fileName, List<Event> events)
+        public override void CreateEventLog(string fileName, List<Event> events)
         {
             string lines = TransformEventsToLines(events);
             File.WriteAllText(fileName, lines);
         }
+        public override void UpdateEventLog(string fileName, List<Event> events)
+        {
+            string lines = "\n";
+            lines += TransformEventsToLines(events);
+            try
+            {
+                using (StreamWriter sw = File.AppendText(fileName))
+                {
+                    sw.Write(lines);
+                }
+            }
+            catch { throw; }
+        }
         public override List<Event> Load(string fileName)
         {
-            string lines = File.ReadAllText(fileName);
-            List<Event> events = TransformLinesToEvents(lines);
-            return events;
+            try
+            {
+                string lines = File.ReadAllText(fileName);
+                List<Event> events = TransformLinesToEvents(lines);
+                return events;
+            }
+            catch { throw; }
         }
         private string TransformEventsToLines(List<Event> events)
         {

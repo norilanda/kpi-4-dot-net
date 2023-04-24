@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace laba3.EventLogs
 {
     public class XmlEventLog : EventLog
     {
-        public override void Save(string fileName, List<Event> events)
+        public override void CreateEventLog(string fileName, List<Event> events)
         {
             XmlSerializer serializer = new XmlSerializer(events.GetType());
             using (StreamWriter sw = new StreamWriter(fileName))
@@ -17,15 +18,46 @@ namespace laba3.EventLogs
                 serializer.Serialize(sw, events);
             }
         }
+        public override void UpdateEventLog(string fileName, List<Event> events)
+        {
+            try
+            {
+                XDocument data = XDocument.Load(fileName);
+                List<XElement> xElements = TransformEventsToXElements(events);
+                data.Descendants("Event")
+                    .LastOrDefault()
+                    .AddAfterSelf(xElements);
+                data.Save(fileName);
+            }
+            catch { throw; }
+        }
         public override List<Event> Load(string fileName)
         {
             List<Event> events = new List<Event>();
             XmlSerializer serializer = new XmlSerializer(events.GetType());
-            using(StreamReader sr = new StreamReader(fileName))
+            try
             {
-                events = (List<Event>)serializer.Deserialize(sr);
+                using (StreamReader sr = new StreamReader(fileName))
+                {
+                    events = (List<Event>)serializer.Deserialize(sr);
+                }
+                return events;
             }
-            return events;
+            catch { throw; }
+        }
+        private List<XElement> TransformEventsToXElements(List<Event> events)
+        {
+            List<XElement> result = new List<XElement>();
+            foreach (Event e in events)
+            {
+                result.Add(new XElement("Event",
+                                new XElement("Level", e.Level),
+                                new XElement("Source", e.Source),
+                                new XElement("DateAndTime", e.DateAndTime),
+                                new XElement("Message", e.Message)
+                                ));
+            }
+            return result;
         }
     }
 }

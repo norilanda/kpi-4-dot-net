@@ -22,7 +22,7 @@ namespace laba3
             try
             {
                 // creating an object of the one of the derived classes from EventLog
-                EventLog eventLog = EventLogFactory.Create(fileName);
+                IEventLog eventLog = EventLogFactory.Create(fileName);
                 // generating events
                 List<Event> events = EventGenerator.Generate(eventNumberToGenerate);
 

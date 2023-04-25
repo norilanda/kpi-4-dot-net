@@ -11,16 +11,16 @@ namespace laba3.EventLogs
     /// <summary>
     ///     Writing and reading Text event logs
     /// </summary>
-    public class TextEventLog : EventLog
+    public class TextEventLog : IEventLog
     {
         // creates a new file and store events there
-        public override void CreateEventLog(string fileName, List<Event> events)
+        public void CreateEventLog(string fileName, List<Event> events)
         {
             string lines = TransformEventsToLines(events);
             File.WriteAllText(fileName, lines);
         }
         // append events to the existing file or creates new if it doesn't exists
-        public override void UpdateEventLog(string fileName, List<Event> events)
+        public void UpdateEventLog(string fileName, List<Event> events)
         {
             string lines = "";
             if (File.Exists(fileName) && new FileInfo(fileName).Length > 0)
@@ -34,7 +34,7 @@ namespace laba3.EventLogs
             }
         }
         // reads events from file
-        public override List<Event> Load(string fileName)
+        public List<Event> Load(string fileName)
         {
             try
             {

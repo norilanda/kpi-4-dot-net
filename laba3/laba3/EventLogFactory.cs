@@ -14,7 +14,7 @@ namespace laba3
     public static class EventLogFactory
     {
         // creates EventLog based on fileName extension
-        public static EventLog Create(string fileName)
+        public static IEventLog Create(string fileName)
         {
             string extention = Path.GetExtension(fileName);
             switch (extention)

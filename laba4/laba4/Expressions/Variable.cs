@@ -20,10 +20,9 @@ namespace laba4.Expressions
         }
         public double Calculate(Dictionary<string, double> parameters)
         {
-            double number;
-            if (!Double.TryParse(_name, out number))
+            if (!parameters.ContainsKey(_name))
                 throw new FormatException($"Variable {_name} has no value!");
-            return number;
+            return parameters[_name];
         }
     }
 }

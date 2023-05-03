@@ -11,6 +11,8 @@ namespace laba4.Expressions
         public IExpression LeftExpression { get; set; }
         public IExpression RightExpression { get; set; }
         public char OperationSign { get; set; }
+
+        public ComplexExpression() { }
         public ComplexExpression(IExpression left, IExpression right, char operationSign)
         {
             LeftExpression = left;

@@ -24,5 +24,10 @@ namespace laba4.Expressions
                 throw new FormatException($"Variable {_name} has no value!");
             return parameters[_name];
         }
+        public void GetAllVariables(ref List<string> vars)
+        {
+            vars.Add(_name);
+        }
+
     }
 }

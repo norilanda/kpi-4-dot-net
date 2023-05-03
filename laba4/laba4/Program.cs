@@ -19,10 +19,16 @@ namespace laba4
             try
             {
                 IExpression expr = ExpressionParser.CreateExpression(str);
+                List<string> vars = new List<string>();
+                expr.GetAllVariables(ref vars);
                 string composedExpression = expr.ComposeExpression();
                 double exprResult = expr.Calculate(parameters);
             } 
             catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (FormatException ex)
             {
                 Console.WriteLine(ex.Message);
             }

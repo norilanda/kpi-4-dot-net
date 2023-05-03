@@ -44,5 +44,11 @@ namespace laba4.Expressions
             }
             catch (FormatException) { throw; }
         }
+        public void GetAllVariables(ref List<string> vars)
+        {
+            LeftExpression.GetAllVariables(ref vars);
+            RightExpression.GetAllVariables(ref vars);
+        }
+
     }
 }

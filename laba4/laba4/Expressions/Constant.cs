@@ -20,5 +20,6 @@ namespace laba4.Expressions
         {
             return _number;
         }
+        public void GetAllVariables(ref List<string> vars) { }
     }
 }

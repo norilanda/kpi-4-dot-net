@@ -55,8 +55,6 @@ namespace laba4
                         pos = i;
                     }
                 }
-                //if (minPrior == 10) 
-                //    throw new ArgumentException("Expression cannot processed!");
                 ComplexExpression expr = new ComplexExpression();
                 expr.OperationSign = str[pos];
                 expr.LeftExpression = CreateExpressionRecursion(str, firstPos, pos - 1);

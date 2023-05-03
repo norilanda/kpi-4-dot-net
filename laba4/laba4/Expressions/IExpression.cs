@@ -10,5 +10,6 @@ namespace laba4.Expressions
     {
         public string ComposeExpression();
         public double Calculate(Dictionary<string, double> parameters);
+        public void GetAllVariables(ref List<string> vars);
     }
 }

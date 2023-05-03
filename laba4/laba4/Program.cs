@@ -14,15 +14,18 @@ namespace laba4
         static void Main(string[] args)
         {
             string str = "4+x-9";
-            Dictionary<string,double> parameters = new Dictionary<string,double>();
-            parameters["x"] = 1;
             try
             {
                 IExpression expr = ExpressionParser.CreateExpression(str);
                 List<string> vars = new List<string>();
                 expr.GetAllVariables(ref vars);
+                Console.WriteLine("Enter all variables:");
+                Dictionary<string, double> parameters = InputOutput.InputVariables(vars);
+
                 string composedExpression = expr.ComposeExpression();
+                Console.WriteLine($"Entered expression: {composedExpression}");
                 double exprResult = expr.Calculate(parameters);
+                Console.WriteLine($"The result of this expression = {exprResult}");
             } 
             catch (ArgumentException ex)
             {

@@ -24,11 +24,10 @@ namespace laba4
         }
         private static IExpression CreateExpressionRecursion(string str, int firstPos, int lastPos)
         {
-            string delims = "/*+-";
             string sub = str.Substring(firstPos, lastPos - firstPos + 1);
             try
             {
-                if (sub.IndexOfAny(delims.ToCharArray()) == -1)
+                if (IsSimpleExpression(sub))
                     return CreateSimpleExpression(sub);
                 int pos = 0;
                 int prior, minPrior = 10;
@@ -47,9 +46,9 @@ namespace laba4
                         case '*':
                             prior = 3;
                             break;
-                        default: prior = 10; break;
+                        default: prior = 11; break;
                     }
-                    if (prior < minPrior)
+                    if (prior <= minPrior)
                     {
                         minPrior = prior;
                         pos = i;
@@ -62,6 +61,16 @@ namespace laba4
                 return expr;
             }
             catch (ArgumentException) { throw; }
+        }
+        private static bool IsSimpleExpression(string str)
+        {
+            string delims = "/*+-";
+            if (str.IndexOfAny(delims.ToCharArray()) == -1)
+                return true;
+            double temp;
+            if (str.StartsWith("-") && double.TryParse(str.Substring(1), out temp))
+                return true;
+            return false;
         }
         private static IExpression CreateSimpleExpression(string expression)
         {

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace laba4.Expressions
 {
+    /// <summary>
+    ///     Represents complex expression that contains left expression, right expression and operation sign
+    /// </summary>
     public class ComplexExpression : IExpression
     {
         public IExpression LeftExpression { get; set; }
@@ -19,6 +22,8 @@ namespace laba4.Expressions
             RightExpression = right;
             OperationSign = operationSign;
         }
+
+        // combines left, right expression and operation sign to a single string
         public string ComposeExpression()
         {
             string result = string.Empty;
@@ -27,6 +32,8 @@ namespace laba4.Expressions
             result += RightExpression.ComposeExpression();
             return result;
         }
+
+        // calculates result
         public double Calculate(Dictionary<string, double> parameters)
         {
             try
@@ -44,6 +51,8 @@ namespace laba4.Expressions
             }
             catch (FormatException) { throw; }
         }
+
+        // searches for variables in left and right expression
         public void GetAllVariables(ref List<string> vars)
         {
             LeftExpression.GetAllVariables(ref vars);

@@ -13,6 +13,7 @@ namespace laba4
     /// </summary>
     public static class ExpressionParser
     {
+        // public method that is used to parse string to expression
         public static IExpression CreateExpression(string expression)
         {
             expression = expression.Replace(" ", "");
@@ -22,6 +23,7 @@ namespace laba4
             }
             catch (ArgumentException) { throw; }
         }
+        // creates expression from string with using recursion
         private static IExpression CreateExpressionRecursion(string str, int firstPos, int lastPos)
         {
             string sub = str.Substring(firstPos, lastPos - firstPos + 1);
@@ -62,6 +64,7 @@ namespace laba4
             }
             catch (ArgumentException) { throw; }
         }
+        // checking if string can be parsed to a simple expression
         private static bool IsSimpleExpression(string str)
         {
             string delims = "/*+-";
@@ -72,6 +75,8 @@ namespace laba4
                 return true;
             return false;
         }
+
+        // creates simple expression (Variable or Constant), based on passed string
         private static IExpression CreateSimpleExpression(string expression)
         {
             try

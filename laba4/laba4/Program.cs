@@ -13,17 +13,25 @@ namespace laba4
     {
         static void Main(string[] args)
         {
-            string str = "4+x-9";
+            // inputting the expression as a string
+            string str = InputOutput.InputExpression();
             try
             {
+                // parsing string to expression
                 IExpression expr = ExpressionParser.CreateExpression(str);
+                // getting all variables avaliable in expression
                 List<string> vars = new List<string>();
                 expr.GetAllVariables(ref vars);
-                Console.WriteLine("Enter all variables:");
+                if (vars.Count > 0)
+                {
+                    Console.WriteLine("Enter all variables:");
+                }
                 Dictionary<string, double> parameters = InputOutput.InputVariables(vars);
 
+                // getting expression as a string
                 string composedExpression = expr.ComposeExpression();
                 Console.WriteLine($"Entered expression: {composedExpression}");
+                // calculate the result of expression using inputed variables
                 double exprResult = expr.Calculate(parameters);
                 Console.WriteLine($"The result of this expression = {exprResult}");
             } 

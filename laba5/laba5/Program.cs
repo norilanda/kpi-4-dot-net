@@ -10,9 +10,16 @@ namespace laba5
     {
         static void Main(string[] args)
         {
+            int arrSize = 100;
+            //arrSize = InputOutput.InputSize();
             double[] arr = { 2, 5, 3, 4, 1 };
+            arr = ArrayGenerator.Genereate(arrSize);
+
             Sorting sort = new Sorting(new MergeSort());
+            InputOutput.DisplayArray(arr);
             sort.Sort(arr);
+            InputOutput.DisplayArray(arr);
+
             //Searching search = new Searching(new SimpleSearch());
             Searching search = new Searching(new MergeSearch());
             double? maxNum = search.FindMax(arr);

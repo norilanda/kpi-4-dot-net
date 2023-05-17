@@ -1,4 +1,6 @@
-﻿using laba5.Sort;
+﻿using laba5.Search;
+using laba5.Search.SearchAlgo;
+using laba5.Sort;
 using laba5.Sort.SortAlgo;
 
 namespace laba5
@@ -11,6 +13,10 @@ namespace laba5
             double[] arr = { 2, 5, 3, 4, 1 };
             Sorting sort = new Sorting(new MergeSort());
             sort.Sort(arr);
+            //Searching search = new Searching(new SimpleSearch());
+            Searching search = new Searching(new MergeSearch());
+            double? maxNum = search.FindMax(arr);
+            double? minNum = search.FindMin(arr);
         }
     }
 }

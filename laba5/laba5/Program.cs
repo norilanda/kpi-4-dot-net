@@ -11,19 +11,30 @@ namespace laba5
         static void Main(string[] args)
         {
             int arrSize = 100;
+            int sortMethod, searchMethod;
+            string messageSort = "Choose sort method ( 0 - Buble Sort, 1 - Merge Sort ): ";
+            string messageSearch = "Choose search method ( 0 - Simple Search, 1 - Merge Search ):";
             //arrSize = InputOutput.InputSize();
             double[] arr = { 2, 5, 3, 4, 1 };
             arr = ArrayGenerator.Genereate(arrSize);
 
-            Sorting sort = new Sorting(new MergeSort());
+            sortMethod = 0;
+            //sortMethod = InputOutput.InputMethod(messageSort);
+
+            Sorting sort = new Sorting(ChooseSortAlgo.Create((ChooseSortAlgo.SortMehod)sortMethod));
+            Console.WriteLine("Initial array:");
             InputOutput.DisplayArray(arr);
             sort.Sort(arr);
+            Console.WriteLine("Sorted array:");
             InputOutput.DisplayArray(arr);
 
-            //Searching search = new Searching(new SimpleSearch());
-            Searching search = new Searching(new MergeSearch());
+            searchMethod = 0;
+            //sortMethod = InputOutput.InputMethod(messageSearch);
+
+            Searching search = new Searching(ChooseSearchAlgo.Create((ChooseSearchAlgo.SearchMehod)searchMethod));
             double? maxNum = search.FindMax(arr);
             double? minNum = search.FindMin(arr);
+            InputOutput.DisplayMinMax(maxNum, minNum);
         }
     }
 }

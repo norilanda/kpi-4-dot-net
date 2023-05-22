@@ -27,7 +27,7 @@ namespace laba5
             do
             {
                 sortMethod = InputOutput.InputMethod(messageSort);
-                sort.SetSortingAlgorithm(ChooseSortAlgo.Create((ChooseSortAlgo.SortMehod)sortMethod));
+                sort.SetSortingAlgorithm(ChooseSortAlgo.Create(sortMethod));
 
                 Console.WriteLine("Initial array:");
                 InputOutput.DisplayArray(arr);
@@ -47,7 +47,7 @@ namespace laba5
             do
             {
                 searchMethod = InputOutput.InputMethod(messageSearch);
-                search.SetSearchingAlgorithm(ChooseSearchAlgo.Create((ChooseSearchAlgo.SearchMehod)searchMethod));
+                search.SetSearchingAlgorithm(ChooseSearchAlgo.Create(searchMethod));
 
                 stopwatch.Restart();
                 double? maxNum = search.FindMax(arr);

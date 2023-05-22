@@ -1,10 +1,12 @@
 ﻿using laba5.Search.SearchAlgo;
+using laba5.Sort;
 using laba5.Sort.SortAlgo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static laba5.Search.ChooseSearchAlgo;
 
 namespace laba5.Search
 {
@@ -15,9 +17,12 @@ namespace laba5.Search
             Simple,
             Merge,
         }
-        public static SearchingAlgorithm Create(SearchMehod method)
+        public static SearchingAlgorithm Create(int method)
         {
-            switch (method)
+            if (!Enum.IsDefined(typeof(SearchMehod), method))
+                return null;
+            SearchMehod searchMethod = (SearchMehod)method;
+            switch (searchMethod)
             {
                 case SearchMehod.Simple: return new SimpleSearch();
                 default:

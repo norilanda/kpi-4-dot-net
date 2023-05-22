@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static laba5.Search.ChooseSearchAlgo;
 
 namespace laba5.Sort
 {
@@ -14,9 +15,12 @@ namespace laba5.Sort
             Buble,
             Merge,
         }
-        public static SortingAlgorithm Create(SortMehod method)
+        public static SortingAlgorithm Create(int method)
         {
-            switch (method)
+            if (!Enum.IsDefined(typeof(SortMehod), method))
+                return null;
+            SortMehod sortMethod = (SortMehod)method;
+            switch (sortMethod)
             {
                 case SortMehod.Buble: return new BubleSort();
                 default:

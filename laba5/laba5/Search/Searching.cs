@@ -12,6 +12,8 @@ namespace laba5.Search
     {
         private SearchingAlgorithm algorithm;
 
+        public Searching() { }
+        
         public Searching(SearchingAlgorithm algorithm) 
         { this.algorithm = algorithm; }
 

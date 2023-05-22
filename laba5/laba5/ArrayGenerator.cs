@@ -14,7 +14,6 @@ namespace laba5
             Random rnd = new Random();
             for (int i = 0; i < size; i++)
                 arr[i] = rnd.Next(min, max);
-            //arr[i] = Math.Round(rnd.NextDouble() * (max - min) + min, 1);
             return arr;
         }
     }

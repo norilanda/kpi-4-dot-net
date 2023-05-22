@@ -11,6 +11,7 @@ namespace laba5.Sort
     {
         private SortingAlgorithm algorithm;
 
+        public Sorting() { }
         public Sorting(SortingAlgorithm algorithm)
         {
             this.algorithm = algorithm;

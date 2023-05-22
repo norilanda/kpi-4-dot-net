@@ -2,6 +2,7 @@
 using laba5.Search.SearchAlgo;
 using laba5.Sort;
 using laba5.Sort.SortAlgo;
+using System.Diagnostics;
 
 namespace laba5
 {
@@ -10,31 +11,53 @@ namespace laba5
     {
         static void Main(string[] args)
         {
-            int arrSize = 100;
+            int arrSize;
             int sortMethod, searchMethod;
             string messageSort = "Choose sort method ( 0 - Buble Sort, 1 - Merge Sort ): ";
-            string messageSearch = "Choose search method ( 0 - Simple Search, 1 - Merge Search ):";
-            //arrSize = InputOutput.InputSize();
-            double[] arr = { 2, 5, 3, 4, 1 };
-            arr = ArrayGenerator.Genereate(arrSize);
+            string messageSearch = "Choose search method ( 0 - Simple Search, 1 - Merge Search ): ";
+            double[] arr;
+            Sorting sort = new Sorting();
+            Searching search = new Searching();
+            Stopwatch stopwatch = new Stopwatch();
 
-            sortMethod = 0;
-            //sortMethod = InputOutput.InputMethod(messageSort);
+            arrSize = InputOutput.InputSize();
+            arr = ArrayGenerator.Genereate(arrSize, 0, Math.Max(arrSize, 100));
+            double[] arrCopy = new double[arr.Length];
 
-            Sorting sort = new Sorting(ChooseSortAlgo.Create((ChooseSortAlgo.SortMehod)sortMethod));
-            Console.WriteLine("Initial array:");
-            InputOutput.DisplayArray(arr);
-            sort.Sort(arr);
-            Console.WriteLine("Sorted array:");
-            InputOutput.DisplayArray(arr);
+            do
+            {
+                sortMethod = InputOutput.InputMethod(messageSort);
+                sort.SetSortingAlgorithm(ChooseSortAlgo.Create((ChooseSortAlgo.SortMehod)sortMethod));
 
-            searchMethod = 0;
-            //sortMethod = InputOutput.InputMethod(messageSearch);
+                Console.WriteLine("Initial array:");
+                InputOutput.DisplayArray(arr);
 
-            Searching search = new Searching(ChooseSearchAlgo.Create((ChooseSearchAlgo.SearchMehod)searchMethod));
-            double? maxNum = search.FindMax(arr);
-            double? minNum = search.FindMin(arr);
-            InputOutput.DisplayMinMax(maxNum, minNum);
+                Array.Copy(arr, arrCopy, arr.Length);
+                stopwatch.Restart();
+                sort.Sort(arrCopy);
+                stopwatch.Stop();
+
+                Console.WriteLine("Sorted array:");
+                InputOutput.DisplayArray(arrCopy);
+                InputOutput.DisplayTime(stopwatch.Elapsed);
+                Console.WriteLine();
+            }
+            while (InputOutput.ShouldTryAnotherMethod());
+
+            do
+            {
+                searchMethod = InputOutput.InputMethod(messageSearch);
+                search.SetSearchingAlgorithm(ChooseSearchAlgo.Create((ChooseSearchAlgo.SearchMehod)searchMethod));
+
+                stopwatch.Restart();
+                double? maxNum = search.FindMax(arr);
+                double? minNum = search.FindMin(arr);
+                stopwatch.Stop();
+                InputOutput.DisplayMinMax(min: minNum, max: maxNum);
+                InputOutput.DisplayTime(stopwatch.Elapsed);
+                Console.WriteLine();
+            }
+            while (InputOutput.ShouldTryAnotherMethod());
         }
     }
 }

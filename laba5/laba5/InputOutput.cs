@@ -29,6 +29,30 @@ namespace laba5
             }
             return method;
         }
+
+        public static bool ShouldTryAnotherMethod()
+        {
+            Console.Write("Do u want to try another method for this array? (Y/N): ");
+            string? answer = Console.ReadLine();
+            while (!IsYesOrNot(answer))
+            {
+                Console.Write("(Y/N): ");
+                answer = Console.ReadLine();
+            }
+            if (answer.ToLower()[0] == 'y')
+                return true;
+            return false;
+        }
+
+        private static bool IsYesOrNot(string? answer)
+        {
+            if (answer == null || answer.Length == 0)
+                return false;
+            answer = answer.Trim().ToLower();
+            if (answer[0] != 'y' && answer[0] != 'n')
+                return false;
+            return true;
+        }
         public static void DisplayArray(double[] arr)
         {
             const int MAX_ARR_SIZE_TO_DISPLAY = 50;
@@ -47,12 +71,17 @@ namespace laba5
                 for (int i = 0; i < arr.Length; i++)
                     Console.Write(arr[i] + " ");
             }
-            Console.WriteLine("\n");
+            Console.WriteLine();
         }
         public static void DisplayMinMax(double? min, double? max)
         {
             Console.WriteLine($"Min: {min}");
             Console.WriteLine($"Max: {max}");
+        }
+
+        public static void DisplayTime(TimeSpan ts)
+        {
+            Console.WriteLine("\tElapsed Time is {0:00}:{1:00}:{2:00}.{3}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds);
         }
     }
 }

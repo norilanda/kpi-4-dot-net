@@ -24,13 +24,12 @@ namespace laba5
             arr = ArrayGenerator.Genereate(arrSize, 0, Math.Max(arrSize, 100));
             double[] arrCopy = new double[arr.Length];
 
+            Console.WriteLine("Initial array:");
+            InputOutput.DisplayArray(arr);
             do
             {
                 sortMethod = InputOutput.InputMethod(messageSort);
                 sort.SetSortingAlgorithm(ChooseSortAlgo.Create(sortMethod));
-
-                Console.WriteLine("Initial array:");
-                InputOutput.DisplayArray(arr);
 
                 Array.Copy(arr, arrCopy, arr.Length);
                 stopwatch.Restart();

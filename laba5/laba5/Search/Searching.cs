@@ -10,22 +10,22 @@ namespace laba5.Search
 {
     public class Searching
     {
-        private SearchingAlgorithm algorithm;
+        private SearchingAlgorithm _algorithm;
 
         public Searching() { }
         
         public Searching(SearchingAlgorithm algorithm) 
-        { this.algorithm = algorithm; }
+        { this._algorithm = algorithm; }
 
-        public void SetSearchingAlgorithm(SearchingAlgorithm algorithm) { this.algorithm = algorithm; }
+        public void SetSearchingAlgorithm(SearchingAlgorithm algorithm) { this._algorithm = algorithm; }
 
         public double? FindMin(double[]? arr)
         {
-            return algorithm.FindMin(arr);
+            return _algorithm.FindMin(arr);
         }
         public double? FindMax(double[]? arr)
         {
-            return algorithm.FindMax(arr);
+            return _algorithm.FindMax(arr);
         }
 
     }

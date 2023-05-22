@@ -8,7 +8,7 @@ namespace laba5.Sort.SortAlgo
 {
     public class BubleSort : SortingAlgorithm
     {
-        public override double[]? Sort(double[]? arr)
+        public double[]? Sort(double[]? arr)
         {
             if (arr == null) return arr;
             double temp;

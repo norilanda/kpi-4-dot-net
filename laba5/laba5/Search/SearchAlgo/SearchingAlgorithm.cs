@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace laba5.Search.SearchAlgo
 {
-    public abstract class SearchingAlgorithm
+    public interface SearchingAlgorithm
     {
-        public abstract double? FindMin(double[]? arr);
-        public abstract double? FindMax(double[]? arr);
+        public double? FindMin(double[]? arr);
+        public double? FindMax(double[]? arr);
 
     }
 }

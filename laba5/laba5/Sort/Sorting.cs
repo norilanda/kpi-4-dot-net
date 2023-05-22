@@ -9,17 +9,17 @@ namespace laba5.Sort
 {
     public class Sorting
     {
-        private SortingAlgorithm algorithm;
+        private SortingAlgorithm _algorithm;
 
         public Sorting() { }
         public Sorting(SortingAlgorithm algorithm)
         {
-            this.algorithm = algorithm;
+            this._algorithm = algorithm;
         }
-        public void SetSortingAlgorithm(SortingAlgorithm algorithm) { this.algorithm = algorithm; }
+        public void SetSortingAlgorithm(SortingAlgorithm algorithm) { this._algorithm = algorithm; }
         public double[]? Sort(double[]? arr)
         {
-            return algorithm.Sort(arr);
+            return _algorithm.Sort(arr);
         }
     }
 }

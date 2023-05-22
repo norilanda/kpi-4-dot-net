@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace laba5.Sort.SortAlgo
 {
-    public abstract class SortingAlgorithm
+    public interface SortingAlgorithm
     {
-        public abstract double[]? Sort(double[]? arr);
+        public double[]? Sort(double[]? arr);
     }
 }

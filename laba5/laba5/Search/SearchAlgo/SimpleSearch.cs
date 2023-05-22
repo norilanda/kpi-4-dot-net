@@ -8,17 +8,17 @@ namespace laba5.Search.SearchAlgo
 {
     public class SimpleSearch : SearchingAlgorithm
     {
-        public override double? FindMax(double[]? arr)
+        public double? FindMax(double[]? arr)
         {
             return FindByCompareCondition(arr, (maxNum, currentNum) => maxNum < currentNum);
         }
 
-        public override double? FindMin(double[]? arr)
+        public double? FindMin(double[]? arr)
         {
             return FindByCompareCondition(arr, (minNum, currentNum) => minNum > currentNum);
         }
 
-        protected double? FindByCompareCondition(double[]? arr, Func<double, double, bool> compareCondition)
+        private double? FindByCompareCondition(double[]? arr, Func<double, double, bool> compareCondition)
         {
             if (arr == null || arr.Length == 0) return null;
             double numberToSearch = arr[0];
